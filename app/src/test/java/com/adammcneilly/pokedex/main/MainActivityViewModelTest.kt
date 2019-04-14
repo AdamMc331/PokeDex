@@ -16,7 +16,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.mock
 
-
 class MainActivityViewModelTest {
     @JvmField
     @Rule
