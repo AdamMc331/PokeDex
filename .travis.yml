@@ -18,5 +18,10 @@ sudo: required
 jdk:
 - oraclejdk8
 
-script:
-- ./gradlew clean build test --stacktrace
+jobs:
+  include:
+    - stage: build
+      script: ./gradlew clean build
+
+    - stage: test
+      script: ./gradlew test
