@@ -12,10 +12,6 @@ import com.adammcneilly.pokedex.utils.RecyclerViewMatcher
 
 class MainActivityRobot {
 
-    fun assertLoadingDisplayed() = apply {
-        onView(progressBarMatcher).check(matches(isDisplayed()))
-    }
-
     fun assertDataDisplayed() = apply {
         onView(recyclerViewMatcher).check(matches(isDisplayed()))
     }
@@ -34,7 +30,6 @@ class MainActivityRobot {
         private const val recyclerViewId = R.id.pokemon_list
         private const val pokemonNameId = R.id.pokemon_name
 
-        private val progressBarMatcher = withId(R.id.progress_bar)
         private val recyclerViewMatcher = withId(R.id.pokemon_list)
     }
 }
