@@ -4,7 +4,7 @@ import androidx.test.espresso.IdlingRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.adammcneilly.pokedex.R
-import com.adammcneilly.pokedex.ViewGoneIdlingResource
+import com.adammcneilly.pokedex.utils.ViewGoneIdlingResource
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -21,7 +21,8 @@ class MainActivityTest {
 
     @Before
     fun setup() {
-        progressBarIdlingResource = ViewGoneIdlingResource(activityTestRule.activity.findViewById(R.id.progress_bar))
+        progressBarIdlingResource =
+            ViewGoneIdlingResource(activityTestRule.activity.findViewById(R.id.progress_bar))
     }
 
     @After
@@ -35,5 +36,8 @@ class MainActivityTest {
             .assertLoadingDisplayed()
             .waitForCondition(progressBarIdlingResource)
             .assertDataDisplayed()
+            .assertPokemonAtPosition(0, "Bulbasaur")
+            .assertPokemonAtPosition(1, "Ivysaur")
+            .assertPokemonAtPosition(2, "Venusaur")
     }
 }

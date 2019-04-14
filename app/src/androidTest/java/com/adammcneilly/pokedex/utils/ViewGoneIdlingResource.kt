@@ -1,4 +1,4 @@
-package com.adammcneilly.pokedex
+package com.adammcneilly.pokedex.utils
 
 import android.view.View
 import androidx.test.espresso.IdlingResource
