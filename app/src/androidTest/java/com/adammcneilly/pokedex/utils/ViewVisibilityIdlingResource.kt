@@ -3,20 +3,21 @@ package com.adammcneilly.pokedex.utils
 import android.view.View
 import androidx.test.espresso.IdlingResource
 
-class ViewGoneIdlingResource(
-    private val view: View
+class ViewVisibilityIdlingResource(
+    private val view: View,
+    private val expectedVisibility: Int
 ) : IdlingResource {
     private var resourceCallback: IdlingResource.ResourceCallback? = null
     private var isIdle: Boolean = false
 
     override fun getName(): String {
-        return ViewGoneIdlingResource::class.java.name
+        return ViewVisibilityIdlingResource::class.java.name + ":" + view.id + ":" + expectedVisibility
     }
 
     override fun isIdleNow(): Boolean {
         if (isIdle) return true
 
-        isIdle = view.visibility == View.GONE
+        isIdle = view.visibility == expectedVisibility
 
         if (isIdle) {
             resourceCallback?.onTransitionToIdle()
