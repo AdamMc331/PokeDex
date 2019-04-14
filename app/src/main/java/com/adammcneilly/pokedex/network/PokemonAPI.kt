@@ -3,6 +3,8 @@ package com.adammcneilly.pokedex.network
 import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.models.PokemonResponse
 import io.reactivex.Single
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -18,6 +20,7 @@ interface PokemonAPI {
                 .baseUrl(PokeApp.instance.baseUrl)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build())
                 .build()
                 .create(PokemonAPI::class.java)
     }

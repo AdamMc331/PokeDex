@@ -1,0 +1,19 @@
+{
+  "count": 964,
+  "next": "https://pokeapi.co/api/v2/pokemon/?offset=3&limit=3",
+  "previous": null,
+  "results": [
+    {
+      "name": "AdamOne",
+      "url": "https://pokeapi.co/api/v2/pokemon/1/"
+    },
+    {
+      "name": "AdamTwo",
+      "url": "https://pokeapi.co/api/v2/pokemon/2/"
+    },
+    {
+      "name": "AdamThree",
+      "url": "https://pokeapi.co/api/v2/pokemon/3/"
+    }
+  ]
+}
