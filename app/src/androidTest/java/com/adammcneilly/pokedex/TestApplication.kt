@@ -7,7 +7,7 @@ class TestApplication : PokeApp() {
     }
 
     override val baseUrl: String
-        get() = "http://127.0.0.1:8080"
+        get() = "http://127.0.0.1:${BuildConfig.PORT}"
 
     companion object {
         private var sInstance: TestApplication? = null

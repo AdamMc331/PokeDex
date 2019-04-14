@@ -4,7 +4,9 @@ import android.view.View
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
+import com.adammcneilly.pokedex.BuildConfig
 import com.adammcneilly.pokedex.R
+import com.adammcneilly.pokedex.utils.ErrorDispatcher
 import com.adammcneilly.pokedex.utils.SuccessDispatcher
 import com.adammcneilly.pokedex.utils.ViewVisibilityIdlingResource
 import okhttp3.mockwebserver.MockWebServer
@@ -26,13 +28,7 @@ class MainActivityTest {
 
     @Before
     fun setup() {
-        mockWebServer.start(8080)
-        mockWebServer.setDispatcher(SuccessDispatcher())
-
-        activityTestRule.launchActivity(null)
-
-        progressBarGoneIdlingResource =
-            ViewVisibilityIdlingResource(activityTestRule.activity.findViewById(R.id.progress_bar), View.GONE)
+        mockWebServer.start(BuildConfig.PORT)
     }
 
     @After
@@ -44,11 +40,28 @@ class MainActivityTest {
 
     @Test
     fun displayPokemon() {
+        mockWebServer.setDispatcher(SuccessDispatcher())
+        activityTestRule.launchActivity(null)
+        progressBarGoneIdlingResource =
+            ViewVisibilityIdlingResource(activityTestRule.activity.findViewById(R.id.progress_bar), View.GONE)
+
         MainActivityRobot()
             .waitForCondition(progressBarGoneIdlingResource)
             .assertDataDisplayed()
             .assertPokemonAtPosition(0, "AdamOne")
             .assertPokemonAtPosition(1, "AdamTwo")
             .assertPokemonAtPosition(2, "AdamThree")
+    }
+
+    @Test
+    fun displayError() {
+        mockWebServer.setDispatcher(ErrorDispatcher())
+        activityTestRule.launchActivity(null)
+        progressBarGoneIdlingResource =
+            ViewVisibilityIdlingResource(activityTestRule.activity.findViewById(R.id.progress_bar), View.GONE)
+
+        MainActivityRobot()
+            .waitForCondition(progressBarGoneIdlingResource)
+            .assertErrorDisplayed()
     }
 }

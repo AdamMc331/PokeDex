@@ -16,6 +16,10 @@ class MainActivityRobot {
         onView(recyclerViewMatcher).check(matches(isDisplayed()))
     }
 
+    fun assertErrorDisplayed() = apply {
+        onView(errorViewMatcher).check(matches(isDisplayed()))
+    }
+
     fun waitForCondition(idlingResource: IdlingResource?) = apply {
         IdlingRegistry.getInstance().register(idlingResource)
     }
@@ -31,5 +35,6 @@ class MainActivityRobot {
         private const val pokemonNameId = R.id.pokemon_name
 
         private val recyclerViewMatcher = withId(R.id.pokemon_list)
+        private val errorViewMatcher = withId(R.id.error_view)
     }
 }

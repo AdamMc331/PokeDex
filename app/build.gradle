@@ -19,6 +19,9 @@ android {
         testInstrumentationRunner "com.adammcneilly.pokedex.MockTestRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "Integer", "PORT", "8080"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
