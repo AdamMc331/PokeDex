@@ -3,7 +3,6 @@ package com.adammcneilly.pokedex.network
 import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.models.PokemonResponse
 import io.reactivex.Single
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
