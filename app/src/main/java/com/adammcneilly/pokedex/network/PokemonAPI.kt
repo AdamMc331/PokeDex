@@ -1,6 +1,7 @@
 package com.adammcneilly.pokedex.network
 
 import com.adammcneilly.pokedex.PokeApp
+import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
 import io.reactivex.Single
 import okhttp3.OkHttpClient
@@ -9,10 +10,14 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface PokemonAPI {
     @GET("v2/pokemon")
     fun getPokemon(): Single<PokemonResponse>
+
+    @GET("v2/pokemon/{name}")
+    fun getPokemonByName(@Path("name") name: String): Single<Pokemon>
 
     companion object {
         val defaultInstance: PokemonAPI
