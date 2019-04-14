@@ -6,7 +6,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 
-class PokemonRepository(
+open class PokemonRepository(
     private val api: PokemonAPI,
     private val disposables: CompositeDisposable,
     private val processScheduler: Scheduler = Schedulers.io(),
