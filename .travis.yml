@@ -25,3 +25,6 @@ jobs:
 
     - stage: test
       script: ./gradlew test
+
+    - stage: lint check
+      script: ./gradlew ktlint
