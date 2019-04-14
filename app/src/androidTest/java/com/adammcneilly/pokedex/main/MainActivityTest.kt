@@ -5,7 +5,9 @@ import androidx.test.espresso.IdlingRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.adammcneilly.pokedex.R
+import com.adammcneilly.pokedex.utils.SuccessDispatcher
 import com.adammcneilly.pokedex.utils.ViewVisibilityIdlingResource
+import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -16,18 +18,27 @@ import org.junit.runner.RunWith
 class MainActivityTest {
     @JvmField
     @Rule
-    val activityTestRule = ActivityTestRule(MainActivity::class.java)
+    val activityTestRule = ActivityTestRule(MainActivity::class.java, true, false)
+
+    private val mockWebServer = MockWebServer()
 
     private var progressBarGoneIdlingResource: ViewVisibilityIdlingResource? = null
 
     @Before
     fun setup() {
+        mockWebServer.start(8080)
+        mockWebServer.setDispatcher(SuccessDispatcher())
+
+        activityTestRule.launchActivity(null)
+
         progressBarGoneIdlingResource =
             ViewVisibilityIdlingResource(activityTestRule.activity.findViewById(R.id.progress_bar), View.GONE)
     }
 
     @After
     fun teardown() {
+        mockWebServer.shutdown()
+
         IdlingRegistry.getInstance().unregister(progressBarGoneIdlingResource)
     }
 
@@ -36,8 +47,8 @@ class MainActivityTest {
         MainActivityRobot()
             .waitForCondition(progressBarGoneIdlingResource)
             .assertDataDisplayed()
-            .assertPokemonAtPosition(0, "Bulbasaur")
-            .assertPokemonAtPosition(1, "Ivysaur")
-            .assertPokemonAtPosition(2, "Venusaur")
+            .assertPokemonAtPosition(0, "AdamOne")
+            .assertPokemonAtPosition(1, "AdamTwo")
+            .assertPokemonAtPosition(2, "AdamThree")
     }
 }
