@@ -5,6 +5,7 @@ import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
 import com.adammcneilly.pokedex.network.PokemonAPI
 import com.adammcneilly.pokedex.network.PokemonRepository
+import com.adammcneilly.pokedex.testObserver
 import com.adammcneilly.pokedex.whenever
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
@@ -58,6 +59,6 @@ class MainActivityViewModelTest {
         assertFalse(viewModel.showLoading)
         assertTrue(viewModel.showData)
         assertFalse(viewModel.showError)
-        assertEquals(testPokemon, viewModel.pokemon.value)
+        assertEquals(testPokemon, viewModel.pokemon.testObserver().observedValue)
     }
 }
