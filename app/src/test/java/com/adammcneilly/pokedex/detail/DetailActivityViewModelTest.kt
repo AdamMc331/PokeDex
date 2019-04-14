@@ -51,7 +51,7 @@ class DetailActivityViewModelTest {
     fun getPokemon() {
         val testPokemon = Pokemon(name = "Adam")
         whenever(mockAPI.getPokemonByName(anyString())).thenReturn(Single.just(testPokemon))
-        val viewModel = DetailActivityViewModel(repository, "")
+        val viewModel = DetailActivityViewModel(repository, testPokemon.name.orEmpty())
 
         Assert.assertFalse(viewModel.showLoading)
         Assert.assertTrue(viewModel.showData)
