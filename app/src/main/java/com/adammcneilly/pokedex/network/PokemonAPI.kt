@@ -3,6 +3,7 @@ package com.adammcneilly.pokedex.network
 import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
+import com.adammcneilly.pokedex.models.Species
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,6 +19,9 @@ interface PokemonAPI {
 
     @GET("v2/pokemon/{name}")
     fun getPokemonByName(@Path("name") name: String): Single<Pokemon>
+
+    @GET("v2/pokemon-species/{name}")
+    fun getPokemonSpecies(@Path("name") name: String): Single<Species>
 
     companion object {
         val defaultInstance: PokemonAPI

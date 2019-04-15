@@ -14,6 +14,7 @@ open class PokemonRepository(
 ) {
     val pokemonResponseState = PublishSubject.create<NetworkState>()
     val pokemonState = PublishSubject.create<NetworkState>()
+    val pokemonSpecies = PublishSubject.create<NetworkState>()
 
     fun fetchPokemon() {
         val subscription = api.getPokemon()
@@ -47,6 +48,24 @@ open class PokemonRepository(
                 NetworkState.Error(it)
             }
             .subscribe(pokemonState::onNext)
+
+        disposables.add(subscription)
+    }
+
+    fun fetchPokemonSpecies(name: String) {
+        val subscription = api.getPokemonSpecies(name)
+            .subscribeOn(processScheduler)
+            .observeOn(observerScheduler)
+            .map {
+                NetworkState.Loaded(it) as NetworkState
+            }
+            .doOnSubscribe {
+                pokemonSpecies.onNext(NetworkState.Loading)
+            }
+            .onErrorReturn {
+                NetworkState.Error(it)
+            }
+            .subscribe(pokemonSpecies::onNext)
 
         disposables.add(subscription)
     }
