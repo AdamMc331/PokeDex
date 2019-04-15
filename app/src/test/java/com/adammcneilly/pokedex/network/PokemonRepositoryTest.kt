@@ -2,6 +2,7 @@ package com.adammcneilly.pokedex.network
 
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
+import com.adammcneilly.pokedex.models.Species
 import com.adammcneilly.pokedex.whenever
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
@@ -45,6 +46,22 @@ class PokemonRepositoryTest {
 
         testSub
             .assertValueCount(2)
+            .assertValueAt(0) {
+                it is NetworkState.Loading
+            }
+            .assertValueAt(1) {
+                it is NetworkState.Loaded<*>
+            }
+    }
+
+    @Test
+    fun loadPokemonSpecies() {
+        val testSub = repository.pokemonSpecies.test()
+
+        whenever(mockAPI.getPokemonSpecies(anyString())).thenReturn(Single.just(Species()))
+        repository.fetchPokemonSpecies("")
+
+        testSub
             .assertValueCount(2)
             .assertValueAt(0) {
                 it is NetworkState.Loading
@@ -77,6 +94,23 @@ class PokemonRepositoryTest {
 
         whenever(mockAPI.getPokemonByName(anyString())).thenReturn(Single.error<Pokemon>(Throwable("Whoops")))
         repository.fetchPokemonByName("")
+
+        testSub
+            .assertValueCount(2)
+            .assertValueAt(0) {
+                it is NetworkState.Loading
+            }
+            .assertValueAt(1) {
+                it is NetworkState.Error
+            }
+    }
+
+    @Test
+    fun loadingPokemonSpeciesError() {
+        val testSub = repository.pokemonSpecies.test()
+
+        whenever(mockAPI.getPokemonSpecies(anyString())).thenReturn(Single.error<Species>(Throwable("whoops")))
+        repository.fetchPokemonSpecies("")
 
         testSub
             .assertValueCount(2)
