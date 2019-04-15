@@ -28,6 +28,9 @@ class DetailActivityViewModel(
     val toolbarTextColorRes: Int
         get() = currentState.species?.color?.getComplementaryColorRes() ?: R.color.mds_white
 
+    val imageUrl: String
+        get() = currentState.pokemon?.sprites?.frontDefault.orEmpty()
+
     val showLoading: Boolean
         get() = currentState.loading
 
