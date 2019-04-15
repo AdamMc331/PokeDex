@@ -46,6 +46,5 @@ class ColorTest {
 
         val defaultColor = Color("blah")
         assertEquals(R.color.mds_white, defaultColor.getComplementaryColorRes())
-
     }
 }
