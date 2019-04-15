@@ -1,11 +1,13 @@
 package com.adammcneilly.pokedex.network
 
+import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
 import com.adammcneilly.pokedex.whenever
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.junit.Test
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito.mock
 
 class PokemonRepositoryTest {
@@ -18,7 +20,7 @@ class PokemonRepositoryTest {
     )
 
     @Test
-    fun loadData() {
+    fun loadPokemonList() {
         val testSub = repository.pokemonResponseState.test()
 
         whenever(mockAPI.getPokemon()).thenReturn(Single.just(PokemonResponse()))
@@ -35,11 +37,46 @@ class PokemonRepositoryTest {
     }
 
     @Test
-    fun loadingError() {
+    fun loadPokemonByName() {
+        val testSub = repository.pokemonState.test()
+
+        whenever(mockAPI.getPokemonByName(anyString())).thenReturn(Single.just(Pokemon()))
+        repository.fetchPokemonByName("")
+
+        testSub
+            .assertValueCount(2)
+            .assertValueCount(2)
+            .assertValueAt(0) {
+                it is NetworkState.Loading
+            }
+            .assertValueAt(1) {
+                it is NetworkState.Loaded<*>
+            }
+    }
+
+    @Test
+    fun loadingPokemonListError() {
         val testSub = repository.pokemonResponseState.test()
 
         whenever(mockAPI.getPokemon()).thenReturn(Single.error<PokemonResponse>(Throwable("Whoops")))
         repository.fetchPokemon()
+
+        testSub
+            .assertValueCount(2)
+            .assertValueAt(0) {
+                it is NetworkState.Loading
+            }
+            .assertValueAt(1) {
+                it is NetworkState.Error
+            }
+    }
+
+    @Test
+    fun loadingPokemonByNameError() {
+        val testSub = repository.pokemonState.test()
+
+        whenever(mockAPI.getPokemonByName(anyString())).thenReturn(Single.error<Pokemon>(Throwable("Whoops")))
+        repository.fetchPokemonByName("")
 
         testSub
             .assertValueCount(2)

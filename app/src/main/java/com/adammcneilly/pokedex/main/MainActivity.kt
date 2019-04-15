@@ -1,5 +1,6 @@
 package com.adammcneilly.pokedex.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -12,13 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.databinding.ActivityMainBinding
+import com.adammcneilly.pokedex.detail.DetailActivity
+import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.network.PokemonAPI
 import com.adammcneilly.pokedex.network.PokemonRepository
 import com.adammcneilly.pokedex.views.PokemonAdapter
 import io.reactivex.disposables.CompositeDisposable
 
 class MainActivity : AppCompatActivity() {
-    private val pokemonAdapter = PokemonAdapter()
+    private val pokemonAdapter = PokemonAdapter(this::pokemonClicked)
     private val compositeDisposable = CompositeDisposable()
 
     private lateinit var viewModel: MainActivityViewModel
@@ -63,5 +66,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.pokemon.observe(this, Observer {
             it?.let(pokemonAdapter::items::set)
         })
+    }
+
+    private fun pokemonClicked(pokemon: Pokemon) {
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.ARG_POKEMON_NAME, pokemon.name)
+        startActivity(intent)
     }
 }

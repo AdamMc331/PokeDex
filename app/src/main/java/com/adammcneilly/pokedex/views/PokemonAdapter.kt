@@ -7,7 +7,9 @@ import com.adammcneilly.pokedex.databinding.ListItemPokemonBinding
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.viewmodels.PokemonViewModel
 
-class PokemonAdapter : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
+class PokemonAdapter(
+    private val pokemonClickListener: ((Pokemon) -> Unit)
+) : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
 
     var items: List<Pokemon> = emptyList()
         set(value) {
@@ -15,26 +17,32 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() 
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonAdapter.PokemonViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         val binding = ListItemPokemonBinding.inflate(inflater, parent, false)
-        return PokemonViewHolder(binding)
+        return PokemonViewHolder(binding, pokemonClickListener)
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
-    override fun onBindViewHolder(holder: PokemonAdapter.PokemonViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         holder.bindPokemon(items[position])
     }
 
-    class PokemonViewHolder(private val binding: ListItemPokemonBinding) : RecyclerView.ViewHolder(binding.root) {
+    class PokemonViewHolder(
+        private val binding: ListItemPokemonBinding,
+        pokemonClickListener: (Pokemon) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
         private val viewModel = PokemonViewModel()
 
         init {
             binding.viewModel = viewModel
+            binding.root.setOnClickListener {
+                viewModel.pokemon?.let(pokemonClickListener::invoke)
+            }
         }
 
         fun bindPokemon(pokemon: Pokemon) {
