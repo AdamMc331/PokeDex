@@ -10,11 +10,7 @@ class TestApplication : PokeApp() {
         get() = "http://127.0.0.1:${BuildConfig.PORT}"
 
     companion object {
-        private var sInstance: TestApplication? = null
-
-        @Synchronized
-        fun getInstance(): TestApplication {
-            return sInstance!!
-        }
+        lateinit var sInstance: TestApplication
+            private set
     }
 }

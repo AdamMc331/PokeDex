@@ -9,7 +9,7 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
 
 class SuccessDispatcher(
-    private val context: Context = TestApplication.getInstance()
+    private val context: Context = TestApplication.sInstance
 ) : Dispatcher() {
     private val responseFilesByPath: Map<String, String> = mapOf(
         APIPaths.POKEMON_LIST to MockFiles.POKEMON_LIST_SUCCESS
