@@ -9,4 +9,4 @@ If you landed here to learn about Espresso testing and MockWebServer, check out 
 
 * This [pull request](https://github.com/AdamMc331/PokeDex/pull/8/files) to implement MockWebServer.
 * This [blog post](https://dev.to/adammc331/leveraging-the-robot-pattern-for-espresso-tests) on the robot pattern.
-* This [blog post](https://tech.okcupid.com/ui-tests-with-wiremock-and-espresso/) on MockWebServer.
+* This [blog post](https://tech.okcupid.com/ui-tests-with-mockwebserver/) on MockWebServer.
