@@ -2,14 +2,14 @@ package com.adammcneilly.pokedex.utils
 
 import android.content.Context
 import android.net.Uri
-import com.adammcneilly.pokedex.TestApplication
+import androidx.test.platform.app.InstrumentationRegistry
 import com.adammcneilly.pokedex.utils.AssetReaderUtil.asset
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
 
 class SuccessDispatcher(
-    private val context: Context = TestApplication.sInstance
+    private val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
 ) : Dispatcher() {
     private val responseFilesByPath: Map<String, String> = mapOf(
         APIPaths.POKEMON_LIST to MockFiles.POKEMON_LIST_SUCCESS

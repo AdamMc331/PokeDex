@@ -1,6 +1,5 @@
 package com.adammcneilly.pokedex.network
 
-import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
 import com.adammcneilly.pokedex.models.Species
@@ -24,13 +23,14 @@ interface PokemonAPI {
     fun getPokemonSpecies(@Path("name") name: String): Single<Species>
 
     companion object {
-        val defaultInstance: PokemonAPI
-            get() = Retrofit.Builder()
-                .baseUrl(PokeApp.instance.baseUrl)
+        fun defaultInstance(baseUrl: String): PokemonAPI {
+            return Retrofit.Builder()
+                .baseUrl(baseUrl)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build())
                 .build()
                 .create(PokemonAPI::class.java)
+        }
     }
 }
