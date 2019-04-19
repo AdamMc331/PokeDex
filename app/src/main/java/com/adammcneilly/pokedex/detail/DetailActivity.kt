@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.databinding.ActivityDetailBinding
 import com.adammcneilly.pokedex.network.PokemonAPI
@@ -20,7 +21,7 @@ class DetailActivity : AppCompatActivity() {
 
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val pokemonAPI = PokemonAPI.defaultInstance
+            val pokemonAPI = PokemonAPI.defaultInstance((application as? PokeApp)?.baseUrl.orEmpty())
             val repository = PokemonRepository(pokemonAPI, compositeDisposable)
             val pokemonName = this@DetailActivity.intent.getStringExtra(ARG_POKEMON_NAME)
 
