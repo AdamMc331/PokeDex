@@ -50,6 +50,29 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
+            <TextView
+                android:id="@+id/first_type"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/second_type"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_image"
+                android:text="Testing"
+                android:padding="8dp"
+                android:background="@drawable/pill_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/second_type"
+                app:layout_constraintStart_toEndOf="@id/first_type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/first_type"
+                android:text="Testing2"
+                android:padding="8dp"
+                android:background="@drawable/pill_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ProgressBar
