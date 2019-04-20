@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.adammcneilly.pokedex.BuildConfig
 import com.adammcneilly.pokedex.R
+import com.adammcneilly.pokedex.detail.DetailActivityRobot
 import com.adammcneilly.pokedex.utils.ErrorDispatcher
 import com.adammcneilly.pokedex.utils.SuccessDispatcher
 import com.adammcneilly.pokedex.utils.ViewVisibilityIdlingResource
@@ -51,6 +52,22 @@ class MainActivityTest {
             .assertPokemonAtPosition(0, "AdamOne")
             .assertPokemonAtPosition(1, "AdamTwo")
             .assertPokemonAtPosition(2, "AdamThree")
+    }
+
+    @Test
+    fun clickItem() {
+        mockWebServer.setDispatcher(SuccessDispatcher())
+        activityTestRule.launchActivity(null)
+        progressBarGoneIdlingResource =
+            ViewVisibilityIdlingResource(activityTestRule.activity.findViewById(R.id.progress_bar), View.GONE)
+
+        MainActivityRobot()
+            .waitForCondition(progressBarGoneIdlingResource)
+            .assertDataDisplayed()
+            .clickItem(0)
+
+        DetailActivityRobot()
+            .assertTitle("AdamOne")
     }
 
     @Test
