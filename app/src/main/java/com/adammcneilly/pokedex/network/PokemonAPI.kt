@@ -24,11 +24,13 @@ interface PokemonAPI {
 
     companion object {
         fun defaultInstance(baseUrl: String): PokemonAPI {
+            val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
             return Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build())
+                .client(client)
                 .build()
                 .create(PokemonAPI::class.java)
         }
