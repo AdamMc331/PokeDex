@@ -55,6 +55,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation 'com.androidessence:materialdesignspecs:2.0.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.1'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.27.0'
     testImplementation 'androidx.arch.core:core-testing:2.0.1'
