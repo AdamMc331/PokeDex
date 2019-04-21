@@ -2,19 +2,20 @@ package com.adammcneilly.pokedex.detail
 
 import androidx.lifecycle.MutableLiveData
 import com.adammcneilly.pokedex.BaseObservableViewModel
+import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.R
-import com.adammcneilly.pokedex.models.Pokemon
-import com.adammcneilly.pokedex.models.Species
 import com.adammcneilly.pokedex.models.Type
-import com.adammcneilly.pokedex.network.NetworkState
 import com.adammcneilly.pokedex.network.PokemonRepository
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailActivityViewModel(
     private val repository: PokemonRepository,
-    private val pokemonName: String
+    private val pokemonName: String,
+    dispatcherProvider: DispatcherProvider
 ) : BaseObservableViewModel() {
-    private val compositeDisposable = CompositeDisposable()
     private val state = MutableLiveData<DetailActivityState>()
 
     private val currentState: DetailActivityState
@@ -53,34 +54,40 @@ class DetailActivityViewModel(
     val showSecondType: Boolean
         get() = secondType != null
 
+    private var job: Job? = null
+
     init {
-        compositeDisposable.add(repository.pokemonState.subscribe(this::processPokemonState))
-        compositeDisposable.add(repository.pokemonSpecies.subscribe(this::processSpecies))
-
-        repository.fetchPokemonByName(pokemonName)
-    }
-
-    private fun processPokemonState(networkState: NetworkState) {
-        val newState: DetailActivityState = when (networkState) {
-            NetworkState.Loading -> currentState.copy(loading = true, pokemon = null, error = null)
-            is NetworkState.Loaded<*> -> {
-                repository.fetchPokemonSpecies(pokemonName)
-                currentState.copy(loading = false, pokemon = networkState.data as? Pokemon, error = null)
+        job = CoroutineScope(dispatcherProvider.IO).launch {
+            withContext(dispatcherProvider.Main) {
+                startLoading()
             }
-            is NetworkState.Error -> currentState.copy(loading = false, pokemon = null, error = networkState.error)
-        }
 
+            @Suppress("TooGenericExceptionCaught")
+            val newState = try {
+                val pokemon = repository.getPokemonDetail(pokemonName)
+                currentState.copy(loading = false, pokemon = pokemon, error = null)
+            } catch (error: Throwable) {
+                currentState.copy(loading = false, pokemon = null, error = error)
+            }
+
+            withContext(dispatcherProvider.Main) {
+                setState(newState)
+            }
+        }
+    }
+
+    private fun startLoading() {
+        val newState = currentState.copy(loading = true, pokemon = null, error = null)
+        setState(newState)
+    }
+
+    private fun setState(newState: DetailActivityState) {
         this.state.value = newState
         notifyChange()
     }
 
-    private fun processSpecies(networkState: NetworkState) {
-        val newState: DetailActivityState = when (networkState) {
-            is NetworkState.Loaded<*> -> currentState.copy(species = networkState.data as? Species)
-            else -> currentState
-        }
-
-        this.state.value = newState
-        notifyChange()
+    override fun onCleared() {
+        super.onCleared()
+        job?.cancel()
     }
 }

@@ -5,13 +5,13 @@ android:
   - tools
   - build-tools-28.0.3
   - android-28
-  - android-22
+  - android-24
   - platform-tools
   - extra-android-support
   - extra-android-m2repositor
   - extra-google-google_play_servicesy
   - extra-google-m2repository
-  - sys-img-armeabi-v7a-android-22
+  - sys-img-armeabi-v7a-android-24
   licenses:
   - android-sdk-license-.+
 
@@ -23,7 +23,7 @@ jdk:
 jobs:
   include:
   - stage: build
-    script: ./gradlew clean build -x test
+    script: ./gradlew clean build -x test -x detekt
 
   - stage: test
     script: ./gradlew test

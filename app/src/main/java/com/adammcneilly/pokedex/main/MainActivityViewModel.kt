@@ -4,45 +4,70 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.adammcneilly.pokedex.BaseObservableViewModel
+import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.models.Pokemon
-import com.adammcneilly.pokedex.models.PokemonResponse
-import com.adammcneilly.pokedex.network.NetworkState
 import com.adammcneilly.pokedex.network.PokemonRepository
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivityViewModel(
-    repository: PokemonRepository
+    repository: PokemonRepository,
+    dispatcherProvider: DispatcherProvider
 ) : BaseObservableViewModel() {
-    private val compositeDisposable = CompositeDisposable()
-    private val state = MutableLiveData<NetworkState>()
+    private val state = MutableLiveData<MainActivityState>()
+
+    private val currentState: MainActivityState
+        get() = state.value ?: MainActivityState()
+
+    private var job: Job? = null
 
     val pokemon: LiveData<List<Pokemon>> = Transformations.map(state) {
-        val data = (it as? NetworkState.Loaded<*>)?.data as? PokemonResponse
-        data?.results
+        it.data?.results
     }
 
     val showLoading: Boolean
-        get() = state.value == null || state.value is NetworkState.Loading
+        get() = currentState.loading
 
     val showError: Boolean
-        get() = state.value is NetworkState.Error
+        get() = currentState.error != null
 
     val showData: Boolean
-        get() = state.value is NetworkState.Loaded<*>
+        get() = currentState.data != null
 
     init {
-        compositeDisposable.add(repository.pokemonResponseState.subscribe(this::publishState))
+        job = CoroutineScope(dispatcherProvider.IO).launch {
+            withContext(dispatcherProvider.Main) {
+                startLoading()
+            }
 
-        repository.fetchPokemon()
+            @Suppress("TooGenericExceptionCaught")
+            val newState = try {
+                val response = repository.getPokemon()
+                currentState.copy(loading = false, data = response, error = null)
+            } catch (error: Throwable) {
+                currentState.copy(loading = false, data = null, error = error)
+            }
+
+            withContext(dispatcherProvider.Main) {
+                setState(newState)
+            }
+        }
+    }
+
+    private fun startLoading() {
+        val newState = currentState.copy(loading = true, data = null, error = null)
+        setState(newState)
+    }
+
+    private fun setState(newState: MainActivityState) {
+        this.state.value = newState
+        notifyChange()
     }
 
     override fun onCleared() {
         super.onCleared()
-        compositeDisposable.dispose()
-    }
-
-    private fun publishState(newState: NetworkState) {
-        this.state.value = newState
-        notifyChange()
+        job?.cancel()
     }
 }
