@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 
 private const val PROGRESS_STROKE_WIDTH = 10F
 private const val PROGRESS_CENTER_RADIUS = 30F
+private const val PILL_RADIUS = 120F
 
 @BindingAdapter("visibilityCondition")
 fun View.visibleIf(condition: Boolean?) {
@@ -57,7 +58,7 @@ fun TextView.bindPokemonType(type: Type?) {
 
     val shape = GradientDrawable().apply {
         shape = GradientDrawable.RECTANGLE
-        cornerRadius = 120F
+        cornerRadius = PILL_RADIUS
         setColor(ContextCompat.getColor(context, type.getColorRes()))
     }
     this.background = shape
