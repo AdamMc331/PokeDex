@@ -13,14 +13,4 @@ class PokemonViewModel : BaseObservable() {
 
     val name: String
         get() = pokemon?.name?.capitalize().orEmpty()
-
-    val types: List<Type>
-        get() = pokemon?.types
-            ?.sortedBy {
-                it.slot
-            }
-            ?.mapNotNull {
-                it.type
-            }
-            .orEmpty()
 }

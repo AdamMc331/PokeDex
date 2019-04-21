@@ -1,12 +1,16 @@
 package com.adammcneilly.pokedex
 
+import android.graphics.Color
 import android.graphics.PorterDuff
+import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.adammcneilly.pokedex.models.Type
 import com.bumptech.glide.Glide
 
 private const val PROGRESS_STROKE_WIDTH = 10F
@@ -43,4 +47,16 @@ fun ImageView.imageUrl(imageUrl: String) {
         .load(imageUrl)
         .placeholder(circularProgressDrawable)
         .into(this)
+}
+
+@BindingAdapter("pokemonType")
+fun TextView.bindPokemonType(type: Type?) {
+    this.text = type?.name?.capitalize().orEmpty()
+
+    val shape = GradientDrawable().apply {
+        shape = GradientDrawable.RECTANGLE
+        cornerRadius = 120F //TODO: DIP
+        setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+    }
+    this.background = shape
 }
