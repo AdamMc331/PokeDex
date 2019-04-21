@@ -12,7 +12,8 @@ class SuccessDispatcher(
     private val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
 ) : Dispatcher() {
     private val responseFilesByPath: Map<String, String> = mapOf(
-        APIPaths.POKEMON_LIST to MockFiles.POKEMON_LIST_SUCCESS
+        APIPaths.POKEMON_LIST to MockFiles.POKEMON_LIST_SUCCESS,
+        APIPaths.POKEMON_DITTO to MockFiles.POKEMON_DETAIL_SUCCESS
     )
 
     override fun dispatch(request: RecordedRequest?): MockResponse {

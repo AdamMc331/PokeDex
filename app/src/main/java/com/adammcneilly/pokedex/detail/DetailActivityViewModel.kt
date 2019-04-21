@@ -5,6 +5,7 @@ import com.adammcneilly.pokedex.BaseObservableViewModel
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.Species
+import com.adammcneilly.pokedex.models.Type
 import com.adammcneilly.pokedex.network.NetworkState
 import com.adammcneilly.pokedex.network.PokemonRepository
 import io.reactivex.disposables.CompositeDisposable
@@ -23,10 +24,13 @@ class DetailActivityViewModel(
         get() = pokemonName.capitalize()
 
     val toolbarColorRes: Int
-        get() = currentState.species?.color?.toColorRes() ?: R.color.colorPrimary
+        get() = currentState.pokemon?.sortedTypes?.firstOrNull()?.getColorRes() ?: R.color.colorPrimary
 
     val toolbarTextColorRes: Int
-        get() = currentState.species?.color?.getComplementaryColorRes() ?: R.color.mds_white
+        get() = currentState.pokemon?.sortedTypes?.firstOrNull()?.getComplementaryColorRes() ?: R.color.mds_white
+
+    val imageUrl: String
+        get() = currentState.pokemon?.sprites?.frontDefault.orEmpty()
 
     val showLoading: Boolean
         get() = currentState.loading
@@ -36,6 +40,18 @@ class DetailActivityViewModel(
 
     val showError: Boolean
         get() = currentState.error != null
+
+    val firstType: Type?
+        get() = currentState.pokemon?.sortedTypes?.firstOrNull()
+
+    val secondType: Type?
+        get() = currentState.pokemon?.sortedTypes?.getOrNull(1)
+
+    val showFirstType: Boolean
+        get() = firstType != null
+
+    val showSecondType: Boolean
+        get() = secondType != null
 
     init {
         compositeDisposable.add(repository.pokemonState.subscribe(this::processPokemonState))

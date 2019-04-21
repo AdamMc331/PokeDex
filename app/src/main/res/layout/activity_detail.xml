@@ -33,17 +33,47 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!--<androidx.constraintlayout.widget.ConstraintLayout-->
-        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--xmlns:tools="http://schemas.android.com/tools"-->
-        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-        <!--tools:showIn="@layout/activity_detail"-->
-        <!--tools:context=".detail.DetailActivity">-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/detail_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+            <ImageView
+                android:id="@+id/pokemon_image"
+                app:imageUrl="@{viewModel.imageUrl}"
+                android:contentDescription="@string/pokemon_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/first_type"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/second_type"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_image"
+                app:pokemonType="@{viewModel.firstType}"
+                app:visibilityCondition="@{viewModel.showFirstType}"
+                android:padding="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/second_type"
+                app:layout_constraintStart_toEndOf="@id/first_type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/first_type"
+                app:pokemonType="@{viewModel.secondType}"
+                app:visibilityCondition="@{viewModel.showSecondType}"
+                android:padding="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ProgressBar
             android:id="@+id/progress_bar"
