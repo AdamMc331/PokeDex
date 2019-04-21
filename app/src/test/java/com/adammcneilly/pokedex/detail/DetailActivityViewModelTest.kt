@@ -2,14 +2,21 @@ package com.adammcneilly.pokedex.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.adammcneilly.pokedex.R
-import com.adammcneilly.pokedex.models.*
+import com.adammcneilly.pokedex.models.Color
+import com.adammcneilly.pokedex.models.Pokemon
+import com.adammcneilly.pokedex.models.Species
+import com.adammcneilly.pokedex.models.Type
+import com.adammcneilly.pokedex.models.TypeSlot
 import com.adammcneilly.pokedex.network.PokemonAPI
 import com.adammcneilly.pokedex.network.PokemonRepository
 import com.adammcneilly.pokedex.whenever
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString

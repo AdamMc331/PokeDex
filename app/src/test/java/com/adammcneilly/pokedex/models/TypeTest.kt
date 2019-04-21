@@ -1,9 +1,8 @@
 package com.adammcneilly.pokedex.models
 
 import com.adammcneilly.pokedex.R
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class TypeTest {
 
