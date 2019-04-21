@@ -24,10 +24,10 @@ class DetailActivityViewModel(
         get() = pokemonName.capitalize()
 
     val toolbarColorRes: Int
-        get() = currentState.species?.color?.toColorRes() ?: R.color.colorPrimary
+        get() = currentState.pokemon?.sortedTypes?.firstOrNull()?.getColorRes() ?: R.color.colorPrimary
 
     val toolbarTextColorRes: Int
-        get() = currentState.species?.color?.getComplementaryColorRes() ?: R.color.mds_white
+        get() = currentState.pokemon?.sortedTypes?.firstOrNull()?.getComplementaryColorRes() ?: R.color.mds_white
 
     val imageUrl: String
         get() = currentState.pokemon?.sprites?.frontDefault.orEmpty()

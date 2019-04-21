@@ -1,6 +1,5 @@
 package com.adammcneilly.pokedex
 
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.view.View
@@ -51,12 +50,15 @@ fun ImageView.imageUrl(imageUrl: String) {
 
 @BindingAdapter("pokemonType")
 fun TextView.bindPokemonType(type: Type?) {
-    this.text = type?.name?.capitalize().orEmpty()
+    if (type?.name == null) return
+
+    this.text = type.name.capitalize()
+    this.setTextColor(ContextCompat.getColor(context, type.getComplementaryColorRes()))
 
     val shape = GradientDrawable().apply {
         shape = GradientDrawable.RECTANGLE
-        cornerRadius = 120F //TODO: DIP
-        setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+        cornerRadius = 120F
+        setColor(ContextCompat.getColor(context, type.getColorRes()))
     }
     this.background = shape
 }

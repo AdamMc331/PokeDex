@@ -59,7 +59,6 @@
                 app:pokemonType="@{viewModel.firstType}"
                 app:visibilityCondition="@{viewModel.showFirstType}"
                 android:padding="8dp"
-                android:background="@drawable/pill_shape"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -71,7 +70,6 @@
                 app:pokemonType="@{viewModel.secondType}"
                 app:visibilityCondition="@{viewModel.showSecondType}"
                 android:padding="8dp"
-                android:background="@drawable/pill_shape"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

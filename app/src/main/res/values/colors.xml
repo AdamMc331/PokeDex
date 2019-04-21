@@ -3,4 +3,23 @@
     <color name="colorPrimary">@color/mds_red_500</color>
     <color name="colorPrimaryDark">@color/mds_black</color>
     <color name="colorAccent">#448AFF</color>
+
+    <color name="type_normal">#A8A77A</color>
+    <color name="type_fire">#EE8130</color>
+    <color name="type_water">#6390F0</color>
+    <color name="type_electric">#F7D02C</color>
+    <color name="type_grass">#7AC74C</color>
+    <color name="type_ice">#96D9D6</color>
+    <color name="type_fighting">#C22E28</color>
+    <color name="type_poison">#A33EA1</color>
+    <color name="type_ground">#E2BF65</color>
+    <color name="type_flying">#A98FF3</color>
+    <color name="type_psychic">#F95587</color>
+    <color name="type_bug">#A6B91A</color>
+    <color name="type_rock">#B6A136</color>
+    <color name="type_ghost">#735797</color>
+    <color name="type_dragon">#6F35FC</color>
+    <color name="type_dark">#705746</color>
+    <color name="type_steel">#B7B7CE</color>
+    <color name="type_fairy">#D685AD</color>
 </resources>
