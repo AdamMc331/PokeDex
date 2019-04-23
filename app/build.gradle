@@ -32,6 +32,9 @@ android {
     dataBinding {
         enabled = true
     }
+    testOptions {
+        animationsDisabled = true
+    }
 }
 
 repositories {
