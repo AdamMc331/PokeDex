@@ -45,7 +45,7 @@ fun ImageView.imageUrl(imageUrl: String) {
 
     Glide.with(this)
         .load(imageUrl)
-        .placeholder(circularProgressDrawable)
+        // .placeholder(circularProgressDrawable)
         .into(this)
 }
 
