@@ -34,7 +34,9 @@ fun Toolbar.textColorRes(colorRes: Int?) {
 }
 
 @BindingAdapter("imageUrl")
-fun ImageView.imageUrl(imageUrl: String) {
+fun ImageView.imageUrl(imageUrl: String?) {
+    if (imageUrl.isNullOrEmpty()) return
+
     val progressColor = ContextCompat.getColor(context, R.color.colorAccent)
 
     val circularProgressDrawable = CircularProgressDrawable(this.context)
