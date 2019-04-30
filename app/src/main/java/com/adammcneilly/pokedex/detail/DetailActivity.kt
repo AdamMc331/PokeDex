@@ -11,18 +11,15 @@ import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.databinding.ActivityDetailBinding
 import com.adammcneilly.pokedex.network.PokemonAPI
 import com.adammcneilly.pokedex.network.PokemonRepository
-import io.reactivex.disposables.CompositeDisposable
 
 class DetailActivity : AppCompatActivity() {
-    private val compositeDisposable = CompositeDisposable()
-
     private lateinit var binding: ActivityDetailBinding
     private lateinit var viewModel: DetailActivityViewModel
 
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             val pokemonAPI = PokemonAPI.defaultInstance((application as? PokeApp)?.baseUrl.orEmpty())
-            val repository = PokemonRepository(pokemonAPI, compositeDisposable)
+            val repository = PokemonRepository(pokemonAPI)
             val pokemonName = this@DetailActivity.intent.getStringExtra(ARG_POKEMON_NAME)
 
             @Suppress("UNCHECKED_CAST")
@@ -36,11 +33,6 @@ class DetailActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         setupViewModel()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.dispose()
     }
 
     private fun setupViewModel() {

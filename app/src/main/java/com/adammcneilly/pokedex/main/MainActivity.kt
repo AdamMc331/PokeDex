@@ -19,11 +19,9 @@ import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.network.PokemonAPI
 import com.adammcneilly.pokedex.network.PokemonRepository
 import com.adammcneilly.pokedex.views.PokemonAdapter
-import io.reactivex.disposables.CompositeDisposable
 
 class MainActivity : AppCompatActivity() {
     private val pokemonAdapter = PokemonAdapter(this::pokemonClicked)
-    private val compositeDisposable = CompositeDisposable()
 
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var binding: ActivityMainBinding
@@ -31,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             val pokemonAPI = PokemonAPI.defaultInstance((application as? PokeApp)?.baseUrl.orEmpty())
-            val repository = PokemonRepository(pokemonAPI, compositeDisposable)
+            val repository = PokemonRepository(pokemonAPI)
 
             @Suppress("UNCHECKED_CAST")
             return MainActivityViewModel(repository) as T
@@ -45,11 +43,6 @@ class MainActivity : AppCompatActivity() {
 
         setupRecyclerView()
         setupViewModel()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.dispose()
     }
 
     private fun setupRecyclerView() {

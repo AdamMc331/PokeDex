@@ -23,7 +23,7 @@ jdk:
 jobs:
   include:
   - stage: build
-    script: ./gradlew clean build -x test
+    script: ./gradlew clean build -x test -x detekt
 
   - stage: test
     script: ./gradlew test

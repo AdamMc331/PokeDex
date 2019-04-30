@@ -2,25 +2,21 @@ package com.adammcneilly.pokedex.network
 
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
-import com.adammcneilly.pokedex.models.Species
-import io.reactivex.Single
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import kotlinx.coroutines.Deferred
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface PokemonAPI {
     @GET("v2/pokemon")
-    fun getPokemon(): Single<PokemonResponse>
+    fun getPokemonAsync(): Deferred<PokemonResponse>
 
     @GET("v2/pokemon/{name}")
-    fun getPokemonByName(@Path("name") name: String): Single<Pokemon>
-
-    @GET("v2/pokemon-species/{name}")
-    fun getPokemonSpecies(@Path("name") name: String): Single<Species>
+    fun getPokemonDetailAsync(@Path("name") name: String): Deferred<Pokemon>
 
     companion object {
         fun defaultInstance(baseUrl: String): PokemonAPI {
@@ -29,7 +25,7 @@ interface PokemonAPI {
             return Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(MoshiConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .client(client)
                 .build()
                 .create(PokemonAPI::class.java)
