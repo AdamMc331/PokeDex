@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 class DetailActivityViewModel(
     private val repository: PokemonRepository,
     private val pokemonName: String,
-    dispatcherProvider: DispatcherProvider
+    dispatcherProvider: DispatcherProvider = DispatcherProvider()
 ) : BaseObservableViewModel() {
     private val state = MutableLiveData<DetailActivityState>()
 

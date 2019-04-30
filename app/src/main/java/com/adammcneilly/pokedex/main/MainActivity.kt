@@ -31,10 +31,9 @@ class MainActivity : AppCompatActivity() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             val pokemonAPI = PokemonAPI.defaultInstance((application as? PokeApp)?.baseUrl.orEmpty())
             val repository = PokemonRepository(pokemonAPI)
-            val dispatcherProvider = (application as? PokeApp)?.dispatcherProvider ?: DispatcherProvider()
 
             @Suppress("UNCHECKED_CAST")
-            return MainActivityViewModel(repository, dispatcherProvider) as T
+            return MainActivityViewModel(repository) as T
         }
     }
 

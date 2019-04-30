@@ -22,10 +22,9 @@ class DetailActivity : AppCompatActivity() {
             val pokemonAPI = PokemonAPI.defaultInstance((application as? PokeApp)?.baseUrl.orEmpty())
             val repository = PokemonRepository(pokemonAPI)
             val pokemonName = this@DetailActivity.intent.getStringExtra(ARG_POKEMON_NAME)
-            val dispatcherProvider = (application as? PokeApp)?.dispatcherProvider ?: DispatcherProvider()
 
             @Suppress("UNCHECKED_CAST")
-            return DetailActivityViewModel(repository, pokemonName, dispatcherProvider) as T
+            return DetailActivityViewModel(repository, pokemonName) as T
         }
     }
 
