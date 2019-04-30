@@ -10,3 +10,12 @@ If you landed here to learn about Espresso testing and MockWebServer, check out 
 * This [pull request](https://github.com/AdamMc331/PokeDex/pull/8/files) to implement MockWebServer.
 * This [blog post](https://dev.to/adammc331/leveraging-the-robot-pattern-for-espresso-tests) on the robot pattern.
 * This [blog post](https://tech.okcupid.com/ui-tests-with-mockwebserver/) on MockWebServer.
+
+## Async Code Unit Testing
+
+If you landed here to learn about unit testing, check out the following resources:
+* This [blog post](https://androidessence.com/unit-testing-async-code) to on overriding Schedulers/Dispatchers. 
+
+## Coroutines
+
+Want to see code examples of coroutines, and compare them to RxJava? You could analyze [this pull request](https://github.com/AdamMc331/PokeDex/pull/18). 
