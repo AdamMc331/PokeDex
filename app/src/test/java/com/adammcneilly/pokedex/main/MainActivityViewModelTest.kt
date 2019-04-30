@@ -26,7 +26,7 @@ class MainActivityViewModelTest {
 
     private val mockAPI = mock(PokemonAPI::class.java)
     private val repository = PokemonRepository(mockAPI)
-    private val testProvider = DispatcherProvider(IO = Dispatchers.Unconfined)
+    private val testProvider = DispatcherProvider(IO = Dispatchers.Unconfined, Main = Dispatchers.Unconfined)
 
     @Test
     fun loadData() {
