@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.databinding.ActivityMainBinding

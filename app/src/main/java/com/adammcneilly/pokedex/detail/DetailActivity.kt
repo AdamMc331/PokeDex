@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.databinding.ActivityDetailBinding
