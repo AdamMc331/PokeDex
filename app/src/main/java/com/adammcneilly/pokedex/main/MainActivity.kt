@@ -17,7 +17,7 @@ import com.adammcneilly.pokedex.databinding.ActivityMainBinding
 import com.adammcneilly.pokedex.detail.DetailActivity
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.network.PokemonAPI
-import com.adammcneilly.pokedex.network.PokemonRepository
+import com.adammcneilly.pokedex.network.PokemonRetrofitService
 import com.adammcneilly.pokedex.views.PokemonAdapter
 
 class MainActivity : AppCompatActivity() {
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             val pokemonAPI = PokemonAPI.defaultInstance((application as? PokeApp)?.baseUrl.orEmpty())
-            val repository = PokemonRepository(pokemonAPI)
+            val repository = PokemonRetrofitService(pokemonAPI)
 
             @Suppress("UNCHECKED_CAST")
             return MainActivityViewModel(repository) as T
