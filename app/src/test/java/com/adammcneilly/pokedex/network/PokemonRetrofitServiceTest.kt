@@ -12,9 +12,9 @@ import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito.mock
 
 @Suppress("UNCHECKED_CAST")
-class PokemonRepositoryTest {
+class PokemonRetrofitServiceTest {
     private val mockAPI = mock(PokemonAPI::class.java)
-    private val repository = PokemonRepository(mockAPI)
+    private val retrofitService = PokemonRetrofitService(mockAPI)
 
     @Test
     fun getPokemon() {
@@ -25,7 +25,7 @@ class PokemonRepositoryTest {
             whenever(mockDeferred.await()).thenReturn(testResult)
             whenever(mockAPI.getPokemonAsync()).thenReturn(mockDeferred)
 
-            val result = repository.getPokemon()
+            val result = retrofitService.getPokemon()
             assertEquals(testResult, result)
         }
     }
@@ -38,7 +38,7 @@ class PokemonRepositoryTest {
             whenever(mockAPI.getPokemonAsync()).thenReturn(mockDeferred)
 
             try {
-                repository.getPokemon()
+                retrofitService.getPokemon()
                 fail("Expected network call to fail.")
             } catch (error: Throwable) {
             }
@@ -54,7 +54,7 @@ class PokemonRepositoryTest {
             whenever(mockDeferred.await()).thenReturn(testPokemon)
             whenever(mockAPI.getPokemonDetailAsync(anyString())).thenReturn(mockDeferred)
 
-            val result = repository.getPokemonDetail("")
+            val result = retrofitService.getPokemonDetail("")
             assertEquals(testPokemon, result)
         }
     }
@@ -67,7 +67,7 @@ class PokemonRepositoryTest {
             whenever(mockAPI.getPokemonDetailAsync(anyString())).thenReturn(mockDeferred)
 
             try {
-                repository.getPokemonDetail("")
+                retrofitService.getPokemonDetail("")
                 fail("Expected network call to fail.")
             } catch (error: Throwable) {
             }

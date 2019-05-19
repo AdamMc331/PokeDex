@@ -10,7 +10,7 @@ import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.databinding.ActivityDetailBinding
 import com.adammcneilly.pokedex.network.PokemonAPI
-import com.adammcneilly.pokedex.network.PokemonRepository
+import com.adammcneilly.pokedex.network.PokemonRetrofitService
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
@@ -19,7 +19,7 @@ class DetailActivity : AppCompatActivity() {
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             val pokemonAPI = PokemonAPI.defaultInstance((application as? PokeApp)?.baseUrl.orEmpty())
-            val repository = PokemonRepository(pokemonAPI)
+            val repository = PokemonRetrofitService(pokemonAPI)
             val pokemonName = this@DetailActivity.intent.getStringExtra(ARG_POKEMON_NAME)
 
             @Suppress("UNCHECKED_CAST")
