@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.databinding.ActivityDetailBinding
-import com.adammcneilly.pokedex.network.PokemonAPI
-import com.adammcneilly.pokedex.network.PokemonRetrofitService
+import com.adammcneilly.pokedex.data.remote.PokemonAPI
+import com.adammcneilly.pokedex.data.remote.PokemonRetrofitService
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding

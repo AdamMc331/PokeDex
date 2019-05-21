@@ -1,11 +1,12 @@
 package com.adammcneilly.pokedex.detail
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.adammcneilly.pokedex.BaseObservableViewModel
 import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.models.Type
-import com.adammcneilly.pokedex.network.PokemonRepository
+import com.adammcneilly.pokedex.data.PokemonRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -22,6 +23,7 @@ class DetailActivityViewModel(
         get() = state.value ?: DetailActivityState()
 
     val title: String
+        @SuppressLint("DefaultLocale")
         get() = pokemonName.capitalize()
 
     val toolbarColorRes: Int

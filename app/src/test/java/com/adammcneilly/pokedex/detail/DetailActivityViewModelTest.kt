@@ -6,7 +6,7 @@ import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.Type
 import com.adammcneilly.pokedex.models.TypeSlot
-import com.adammcneilly.pokedex.network.PokemonRepository
+import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.whenever
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking

@@ -6,7 +6,7 @@ import androidx.lifecycle.Transformations
 import com.adammcneilly.pokedex.BaseObservableViewModel
 import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.models.Pokemon
-import com.adammcneilly.pokedex.network.PokemonRepository
+import com.adammcneilly.pokedex.data.PokemonRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch

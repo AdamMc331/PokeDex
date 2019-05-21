@@ -16,8 +16,8 @@ import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.databinding.ActivityMainBinding
 import com.adammcneilly.pokedex.detail.DetailActivity
 import com.adammcneilly.pokedex.models.Pokemon
-import com.adammcneilly.pokedex.network.PokemonAPI
-import com.adammcneilly.pokedex.network.PokemonRetrofitService
+import com.adammcneilly.pokedex.data.remote.PokemonAPI
+import com.adammcneilly.pokedex.data.remote.PokemonRetrofitService
 import com.adammcneilly.pokedex.views.PokemonAdapter
 
 class MainActivity : AppCompatActivity() {

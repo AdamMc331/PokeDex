@@ -1,4 +1,4 @@
-package com.adammcneilly.pokedex.network
+package com.adammcneilly.pokedex.data
 
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse

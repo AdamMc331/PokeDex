@@ -1,5 +1,6 @@
-package com.adammcneilly.pokedex.network
+package com.adammcneilly.pokedex.data.remote
 
+import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
 
