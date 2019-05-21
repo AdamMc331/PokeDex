@@ -67,6 +67,7 @@ dependencies {
     androidTestImplementation 'androidx.room:room-testing:2.1.0-beta01'
     annotationProcessor 'androidx.room:room-compiler:2.1.0-beta01'
     kapt 'androidx.room:room-compiler:2.1.0-beta01'
+    implementation 'com.google.code.gson:gson:2.8.5'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.27.0'
     testImplementation 'androidx.arch.core:core-testing:2.0.1'
