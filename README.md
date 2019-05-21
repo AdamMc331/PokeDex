@@ -18,4 +18,8 @@ If you landed here to learn about unit testing, check out the following resource
 
 ## Coroutines
 
-Want to see code examples of coroutines, and compare them to RxJava? You could analyze [this pull request](https://github.com/AdamMc331/PokeDex/pull/18). 
+Want to see code examples of coroutines, and compare them to RxJava? You could analyze [this pull request](https://github.com/AdamMc331/PokeDex/pull/18).
+
+## Repository Pattern
+
+Check out [this blog post](https://androidessence.com/repository-pattern) for understanding the Repository Pattern. 
