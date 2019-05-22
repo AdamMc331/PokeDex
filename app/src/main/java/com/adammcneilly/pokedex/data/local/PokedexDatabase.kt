@@ -26,7 +26,6 @@ abstract class PokedexDatabase : RoomDatabase() {
             }
 
             return INSTANCE!!
-
         }
     }
 }
