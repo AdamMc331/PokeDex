@@ -34,12 +34,12 @@ class DetailActivityViewModelTest {
             val testPokemon = Pokemon(name = "Adam", types = listOf(TypeSlot(type = Type("grass"))))
 
             whenever(mockRepository.getPokemonDetail(anyString())).thenReturn(testPokemon)
-            val viewModel = DetailActivityViewModel(mockRepository, testPokemon.name.orEmpty(), testProvider)
+            val viewModel = DetailActivityViewModel(mockRepository, testPokemon.name, testProvider)
 
             assertFalse(viewModel.showLoading)
             assertTrue(viewModel.showData)
             assertFalse(viewModel.showError)
-            assertEquals(testPokemon.name?.capitalize(), viewModel.title)
+            assertEquals(testPokemon.name.capitalize(), viewModel.title)
             assertEquals(R.color.type_grass, viewModel.toolbarColorRes)
             assertEquals(R.color.mds_white, viewModel.toolbarTextColorRes)
         }
@@ -51,7 +51,7 @@ class DetailActivityViewModelTest {
             val testPokemon = Pokemon()
 
             whenever(mockRepository.getPokemonDetail(anyString())).thenReturn(testPokemon)
-            val viewModel = DetailActivityViewModel(mockRepository, testPokemon.name.orEmpty(), testProvider)
+            val viewModel = DetailActivityViewModel(mockRepository, testPokemon.name, testProvider)
 
             assertNull(viewModel.firstType)
             assertNull(viewModel.secondType)
@@ -69,7 +69,7 @@ class DetailActivityViewModelTest {
             )
 
             whenever(mockRepository.getPokemonDetail(anyString())).thenReturn(testPokemon)
-            val viewModel = DetailActivityViewModel(mockRepository, testPokemon.name.orEmpty(), testProvider)
+            val viewModel = DetailActivityViewModel(mockRepository, testPokemon.name, testProvider)
 
             assertEquals(firstType, viewModel.firstType)
             assertNull(viewModel.secondType)
@@ -88,7 +88,7 @@ class DetailActivityViewModelTest {
             )
 
             whenever(mockRepository.getPokemonDetail(anyString())).thenReturn(testPokemon)
-            val viewModel = DetailActivityViewModel(mockRepository, testPokemon.name.orEmpty(), testProvider)
+            val viewModel = DetailActivityViewModel(mockRepository, testPokemon.name, testProvider)
 
             assertEquals(firstType, viewModel.firstType)
             assertEquals(secondType, viewModel.secondType)

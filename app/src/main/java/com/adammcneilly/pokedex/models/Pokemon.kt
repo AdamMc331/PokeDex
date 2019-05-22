@@ -9,11 +9,10 @@ import com.google.gson.reflect.TypeToken
 
 @Entity
 data class Pokemon(
-    val name: String? = null,
+    @PrimaryKey val name: String = "",
     val url: String? = null,
     val types: List<TypeSlot>? = null,
-    @Embedded val sprites: Sprites? = null,
-    @PrimaryKey val _id: Long = 0
+    @Embedded val sprites: Sprites? = null
 ) {
     val sortedTypes: List<Type>
         get() = types?.sortedBy { it.slot }?.mapNotNull { it.type }.orEmpty()

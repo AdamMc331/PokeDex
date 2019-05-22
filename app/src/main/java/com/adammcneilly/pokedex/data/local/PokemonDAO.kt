@@ -14,5 +14,5 @@ interface PokemonDAO {
     suspend fun deleteAllPokemon(): Int
 
     @Query("SELECT * FROM Pokemon WHERE name = :name")
-    suspend fun getPokemonByName(name: String): Pokemon
+    suspend fun getPokemonByName(name: String): Pokemon?
 }
