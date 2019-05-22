@@ -39,13 +39,11 @@ class PokedexDatabaseTest {
         runBlocking {
             val testName = "Adam"
             val testPokemon = Pokemon(name = testName)
+            pokemonDao.insert(testPokemon)
 
-            val newId = pokemonDao.insert(testPokemon)
-
-            val expectedPokemon = testPokemon.copy(_id = newId)
             val result = pokemonDao.getPokemonByName(testName)
 
-            assertEquals(expectedPokemon, result)
+            assertEquals(testPokemon, result)
         }
     }
 }
