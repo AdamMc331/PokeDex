@@ -58,8 +58,12 @@
                 app:layout_constraintTop_toBottomOf="@id/pokemon_image"
                 app:pokemonType="@{viewModel.firstType}"
                 app:visibilityCondition="@{viewModel.showFirstType}"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:textAllCaps="true"
                 android:padding="8dp"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
             <TextView
@@ -67,10 +71,14 @@
                 app:layout_constraintStart_toEndOf="@id/first_type"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/first_type"
+                android:gravity="center"
+                android:textAllCaps="true"
                 app:pokemonType="@{viewModel.secondType}"
                 app:visibilityCondition="@{viewModel.showSecondType}"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:padding="8dp"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

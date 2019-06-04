@@ -1,5 +1,6 @@
 package com.adammcneilly.pokedex
 
+import android.annotation.SuppressLint
 import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
 import android.view.View
@@ -51,6 +52,7 @@ fun ImageView.imageUrl(imageUrl: String?) {
         .into(this)
 }
 
+@SuppressLint("DefaultLocale")
 @BindingAdapter("pokemonType")
 fun TextView.bindPokemonType(type: Type?) {
     if (type?.name == null) return
@@ -62,6 +64,7 @@ fun TextView.bindPokemonType(type: Type?) {
         shape = GradientDrawable.RECTANGLE
         cornerRadius = PILL_RADIUS
         setColor(ContextCompat.getColor(context, type.getColorRes()))
+        setStroke(1, ContextCompat.getColor(context, R.color.mds_white))
     }
     this.background = shape
 }
