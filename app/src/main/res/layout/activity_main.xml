@@ -12,8 +12,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_width="match_parent"
         tools:context=".main.MainActivity">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -23,36 +23,36 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_width="match_parent"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pokemon_list"
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_width="match_parent"
             android:visibility="gone"
-            app:visibilityCondition="@{viewModel.showData}"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:visibilityCondition="@{viewModel.showData}"/>
 
         <ProgressBar
             android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             app:visibilityCondition="@{viewModel.showLoading}"/>
 
         <TextView
             android:id="@+id/error_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/something_went_wrong"
             android:textColor="@android:color/black"
+            android:visibility="gone"
             app:visibilityCondition="@{viewModel.showError}"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
