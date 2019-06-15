@@ -22,51 +22,38 @@ class MainActivityViewModelTest {
     @Rule
     val instantTaskExecutor = InstantTaskExecutorRule()
 
-    private val mockRepository = mock(PokemonRepository::class.java)
-    private val testProvider = DispatcherProvider(IO = Dispatchers.Unconfined, Main = Dispatchers.Unconfined)
+    private val testRobot = MainActivityViewModelRobot()
 
     @Test
     fun loadData() {
-        runBlocking {
-            val testResult = PokemonResponse(count = 10)
+        val testResult = PokemonResponse(count = 10)
 
-            whenever(mockRepository.getPokemon()).thenReturn(testResult)
-
-            val viewModel = MainActivityViewModel(mockRepository, testProvider)
-
-            assertFalse(viewModel.showLoading)
-            assertTrue(viewModel.showData)
-            assertFalse(viewModel.showError)
-        }
+        testRobot.mockPokemonResponse(testResult)
+            .buildViewModel()
+            .assertShowLoading(false)
+            .assertShowError(false)
+            .assertShowData(true)
     }
 
     @Test
     fun loadError() {
-        runBlocking {
-            whenever(mockRepository.getPokemon()).thenThrow(IllegalArgumentException())
-
-            val viewModel = MainActivityViewModel(mockRepository, testProvider)
-
-            assertFalse(viewModel.showLoading)
-            assertFalse(viewModel.showData)
-            assertTrue(viewModel.showError)
-        }
+        testRobot.mockPokemonResponseError()
+            .buildViewModel()
+            .assertShowLoading(false)
+            .assertShowData(false)
+            .assertShowError(true)
     }
 
     @Test
     fun getPokemon() {
-        runBlocking {
-            val testPokemon = listOf(Pokemon(name = "Adam"))
-            val testResult = PokemonResponse(results = testPokemon)
+        val testPokemon = listOf(Pokemon(name = "Adam"))
+        val testResult = PokemonResponse(results = testPokemon)
 
-            whenever(mockRepository.getPokemon()).thenReturn(testResult)
-
-            val viewModel = MainActivityViewModel(mockRepository, testProvider)
-
-            assertFalse(viewModel.showLoading)
-            assertTrue(viewModel.showData)
-            assertFalse(viewModel.showError)
-            assertEquals(testPokemon, viewModel.pokemon.testObserver().observedValue)
-        }
+        testRobot.mockPokemonResponse(testResult)
+            .buildViewModel()
+            .assertShowLoading(false)
+            .assertShowError(false)
+            .assertShowData(true)
+            .assertPokemonList(testPokemon)
     }
 }
