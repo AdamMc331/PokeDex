@@ -10,8 +10,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.adammcneilly.imageloader.ImageLoader
 import com.adammcneilly.pokedex.models.Type
-import com.bumptech.glide.Glide
 
 private const val PROGRESS_STROKE_WIDTH = 10F
 private const val PROGRESS_CENTER_RADIUS = 30F
@@ -46,10 +46,10 @@ fun ImageView.imageUrl(imageUrl: String?) {
     circularProgressDrawable.setColorFilter(progressColor, PorterDuff.Mode.SRC_IN)
     circularProgressDrawable.start()
 
-    Glide.with(this)
-        .load(imageUrl)
-        .placeholder(circularProgressDrawable)
-        .into(this)
+    ImageLoader(this).load(
+        imageUrl = imageUrl,
+        placeholderDrawable = circularProgressDrawable
+    )
 }
 
 @SuppressLint("DefaultLocale")
