@@ -11,7 +11,7 @@ If you landed here to learn about Espresso testing and MockWebServer, check out 
 * This [blog post](https://dev.to/adammc331/leveraging-the-robot-pattern-for-espresso-tests) on the robot pattern.
 * This [blog post](https://tech.okcupid.com/ui-tests-with-mockwebserver/) on MockWebServer.
 
-## Async Code Unit Testing
+## Unit Testing
 
 If you landed here to learn about unit testing, check out the following resources:
 * This [blog post](https://androidessence.com/unit-testing-async-code) to on overriding Schedulers/Dispatchers.
