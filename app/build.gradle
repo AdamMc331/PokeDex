@@ -10,6 +10,8 @@ apply plugin: 'io.gitlab.arturbosch.detekt'
 
 apply from: "../ktlint.gradle"
 
+apply from: "../git-hooks.gradle"
+
 android {
     compileSdkVersion 28
     defaultConfig {
