@@ -8,6 +8,7 @@ ext {
     def okhttpVersion = "3.10.0"
     def coroutinesVersion = "1.2.1"
     def materialDesignSpecsVersion = "2.0.1"
+    def glideVersion = "4.9.0"
 
     androidDependencies = [
             appcompat : "androidx.appcompat:appcompat:${androidxCoreVersion}",
@@ -32,6 +33,12 @@ ext {
 
     thirdPartyLibs = [
             materialDesignSpecs : "com.androidessence:materialdesignspecs:${materialDesignSpecsVersion}"
+    ]
+
+    imageLoaderDependencies = [
+            kotlin : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+            appcompat : "androidx.appcompat:appcompat:${androidxCoreVersion}",
+            glide : "com.github.bumptech.glide:glide:${glideVersion}"
     ]
 
     def junitVersion = "4.12"
