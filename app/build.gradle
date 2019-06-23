@@ -12,6 +12,8 @@ apply from: "../ktlint.gradle"
 
 apply from: "../git-hooks.gradle"
 
+apply from: "../dependencies.gradle"
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -48,74 +50,13 @@ repositories {
     }
 }
 
-final androidxTestVersion = "1.2.0"
-final espressoVersion = "3.2.0"
-final androidxTestJunitVersion = "1.1.1"
-
-final androidTestDependencies = [
-        androidxcore : "androidx.test:core:${androidxTestVersion}",
-        androidxrunner : "androidx.test:runner:${androidxTestVersion}",
-        androidxrules : "androidx.test:rules:${androidxTestVersion}",
-        androidxjunit : "androidx.test.ext:junit:${androidxTestJunitVersion}",
-        espressocore : "androidx.test.espresso:espresso-core:${espressoVersion}",
-        mockWebServer : "com.squareup.okhttp3:mockwebserver:3.12.0"
-]
-
-final androidxCoreVersion = "1.0.2"
-final constraintLayoutVersion = "1.1.1"
-final materialDesignVersion = "1.1.0-alpha07"
-final lifecycleVersion = "2.0.0"
-
-final androidDependencies = [
-        appcompat : "androidx.appcompat:appcompat:${androidxCoreVersion}",
-        core : "androidx.core:core-ktx:${androidxCoreVersion}",
-        constraintLayout : "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}",
-        materialDesign : "com.google.android.material:material:${materialDesignVersion}",
-        lifecycle : "androidx.lifecycle:lifecycle-extensions:${lifecycleVersion}",
-        kotlin : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-]
-
-final retrofitVersion = "2.5.0"
-final coroutineAdapterVersion = "0.9.2"
-final okhttpVersion = "3.10.0"
-
-final networkDependencies = [
-        retrofit : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
-        moshiConverter : "com.squareup.retrofit2:converter-moshi:${retrofitVersion}",
-        coroutineAdapter : "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${coroutineAdapterVersion}",
-        httpLogging : "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
-]
-
-final coroutinesVersion = "1.2.1"
-
-final asyncDependencies = [
-        core : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}",
-        android : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}"
-]
-
-final materialDesignSpecsVersion = "2.0.1"
-
-final thirdPartyLibs = [
-        materialDesignSpecs : "com.androidessence:materialdesignspecs:${materialDesignSpecsVersion}"
-]
-
-final junitVersion = "4.12"
-final mockitoVersion = "2.27.0"
-final archTestingVersion = "2.0.1"
-
-final testDependencies = [
-        junit : "junit:junit:${junitVersion}",
-        mockito : "org.mockito:mockito-core:${mockitoVersion}",
-        archTesting : "androidx.arch.core:core-testing:${archTestingVersion}"
-]
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':image-loader')
     implementation androidDependencies.values()
     implementation networkDependencies.values()
     implementation asyncDependencies.values()
     implementation thirdPartyLibs.values()
-    implementation project(':image-loader')
     testImplementation testDependencies.values()
     androidTestImplementation androidTestDependencies.values()
 }

@@ -1,0 +1,58 @@
+ext {
+    def androidxCoreVersion = "1.0.2"
+    def constraintLayoutVersion = "1.1.1"
+    def materialDesignVersion = "1.1.0-alpha07"
+    def lifecycleVersion = "2.0.0"
+    def retrofitVersion = "2.5.0"
+    def coroutineAdapterVersion = "0.9.2"
+    def okhttpVersion = "3.10.0"
+    def coroutinesVersion = "1.2.1"
+    def materialDesignSpecsVersion = "2.0.1"
+
+    androidDependencies = [
+            appcompat : "androidx.appcompat:appcompat:${androidxCoreVersion}",
+            core : "androidx.core:core-ktx:${androidxCoreVersion}",
+            constraintLayout : "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}",
+            materialDesign : "com.google.android.material:material:${materialDesignVersion}",
+            lifecycle : "androidx.lifecycle:lifecycle-extensions:${lifecycleVersion}",
+            kotlin : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    ]
+
+    networkDependencies = [
+            retrofit : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            moshiConverter : "com.squareup.retrofit2:converter-moshi:${retrofitVersion}",
+            coroutineAdapter : "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${coroutineAdapterVersion}",
+            httpLogging : "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
+    ]
+
+    asyncDependencies = [
+            core : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}",
+            android : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}"
+    ]
+
+    thirdPartyLibs = [
+            materialDesignSpecs : "com.androidessence:materialdesignspecs:${materialDesignSpecsVersion}"
+    ]
+
+    def junitVersion = "4.12"
+    def mockitoVersion = "2.27.0"
+    def archTestingVersion = "2.0.1"
+    def androidxTestVersion = "1.2.0"
+    def espressoVersion = "3.2.0"
+    def androidxTestJunitVersion = "1.1.1"
+
+    testDependencies = [
+            junit : "junit:junit:${junitVersion}",
+            mockito : "org.mockito:mockito-core:${mockitoVersion}",
+            archTesting : "androidx.arch.core:core-testing:${archTestingVersion}"
+    ]
+
+    androidTestDependencies = [
+            androidxcore : "androidx.test:core:${androidxTestVersion}",
+            androidxrunner : "androidx.test:runner:${androidxTestVersion}",
+            androidxrules : "androidx.test:rules:${androidxTestVersion}",
+            androidxjunit : "androidx.test.ext:junit:${androidxTestJunitVersion}",
+            espressocore : "androidx.test.espresso:espresso-core:${espressoVersion}",
+            mockWebServer : "com.squareup.okhttp3:mockwebserver:3.12.0"
+    ]
+}
