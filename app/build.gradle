@@ -93,16 +93,30 @@ final asyncDependencies = [
         android : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}"
 ]
 
+final materialDesignSpecsVersion = "2.0.1"
+
+final thirdPartyLibs = [
+        materialDesignSpecs : "com.androidessence:materialdesignspecs:${materialDesignSpecsVersion}"
+]
+
+final junitVersion = "4.12"
+final mockitoVersion = "2.27.0"
+final archTestingVersion = "2.0.1"
+
+final testDependencies = [
+        junit : "junit:junit:${junitVersion}",
+        mockito : "org.mockito:mockito-core:${mockitoVersion}",
+        archTesting : "androidx.arch.core:core-testing:${archTestingVersion}"
+]
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation androidDependencies.values()
     implementation networkDependencies.values()
-    implementation 'com.androidessence:materialdesignspecs:2.0.1'
     implementation asyncDependencies.values()
+    implementation thirdPartyLibs.values()
     implementation project(':image-loader')
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.27.0'
-    testImplementation 'androidx.arch.core:core-testing:2.0.1'
+    testImplementation testDependencies.values()
     androidTestImplementation androidTestDependencies.values()
 }
 
