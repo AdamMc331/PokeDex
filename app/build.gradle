@@ -86,13 +86,19 @@ final networkDependencies = [
         httpLogging : "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
 ]
 
+final coroutinesVersion = "1.2.1"
+
+final asyncDependencies = [
+        core : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}",
+        android : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}"
+]
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation androidDependencies.values()
     implementation networkDependencies.values()
     implementation 'com.androidessence:materialdesignspecs:2.0.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1'
+    implementation asyncDependencies.values()
     implementation project(':image-loader')
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.27.0'
