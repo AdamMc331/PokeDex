@@ -1,16 +1,23 @@
 package com.adammcneilly.pokedex.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.adammcneilly.pokedex.CoroutinesTestRule
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
 import org.junit.Test
 
+@ExperimentalCoroutinesApi
 @Suppress("UNCHECKED_CAST")
 class MainActivityViewModelTest {
     @JvmField
     @Rule
     val instantTaskExecutor = InstantTaskExecutorRule()
+
+    @JvmField
+    @Rule
+    val coroutinesTestRule = CoroutinesTestRule()
 
     private val testRobot = MainActivityViewModelRobot()
 
