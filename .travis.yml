@@ -18,7 +18,7 @@ android:
 sudo: required
 
 jdk:
-- openjdk8
+- oraclejdk8
 
 jobs:
   include:
