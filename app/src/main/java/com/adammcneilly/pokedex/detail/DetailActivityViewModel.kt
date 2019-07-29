@@ -1,20 +1,20 @@
 package com.adammcneilly.pokedex.detail
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.adammcneilly.pokedex.BaseObservableViewModel
 import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.models.Type
 import com.adammcneilly.pokedex.network.PokemonRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DetailActivityViewModel(
     private val repository: PokemonRepository,
     private val pokemonName: String,
-    private val dispatcherProvider: DispatcherProvider = DispatcherProvider()
+    dispatcherProvider: DispatcherProvider = DispatcherProvider()
 ) : BaseObservableViewModel() {
     private val state = MutableLiveData<DetailActivityState>()
 
@@ -22,7 +22,6 @@ class DetailActivityViewModel(
         get() = state.value ?: DetailActivityState()
 
     val title: String
-        @SuppressLint("DefaultLocale")
         get() = pokemonName.capitalize()
 
     val toolbarColorRes: Int
@@ -55,33 +54,25 @@ class DetailActivityViewModel(
     val showSecondType: Boolean
         get() = secondType != null
 
+    private var job: Job? = null
+
     init {
-        fetchPokemonDetail()
-    }
-
-    @Suppress("TooGenericExceptionCaught")
-    private fun fetchPokemonDetail() {
-        viewModelScope.launch {
-            startLoading()
-
-            val newState = withContext(dispatcherProvider.IO) {
-                try {
-                    val pokemon = repository.getPokemonDetail(pokemonName)
-                    return@withContext currentState.copy(
-                        loading = false,
-                        pokemon = pokemon,
-                        error = null
-                    )
-                } catch (error: Throwable) {
-                    return@withContext currentState.copy(
-                        loading = false,
-                        pokemon = null,
-                        error = error
-                    )
-                }
+        job = CoroutineScope(dispatcherProvider.IO).launch {
+            withContext(dispatcherProvider.Main) {
+                startLoading()
             }
 
-            setState(newState)
+            @Suppress("TooGenericExceptionCaught")
+            val newState = try {
+                val pokemon = repository.getPokemonDetail(pokemonName)
+                currentState.copy(loading = false, pokemon = pokemon, error = null)
+            } catch (error: Throwable) {
+                currentState.copy(loading = false, pokemon = null, error = error)
+            }
+
+            withContext(dispatcherProvider.Main) {
+                setState(newState)
+            }
         }
     }
 
@@ -93,5 +84,10 @@ class DetailActivityViewModel(
     private fun setState(newState: DetailActivityState) {
         this.state.value = newState
         notifyChange()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job?.cancel()
     }
 }

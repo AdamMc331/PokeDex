@@ -1,26 +1,19 @@
 package com.adammcneilly.pokedex.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.adammcneilly.pokedex.CoroutinesTestRule
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.Type
 import com.adammcneilly.pokedex.models.TypeSlot
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
 
-@ExperimentalCoroutinesApi
 @Suppress("UNCHECKED_CAST")
 class DetailActivityViewModelTest {
     @JvmField
     @Rule
     val instantTaskExecutor = InstantTaskExecutorRule()
-
-    @JvmField
-    @Rule
-    val coroutinesTestRule = CoroutinesTestRule()
 
     private val testRobot = DetailActivityViewModelRobot()
 
@@ -73,10 +66,7 @@ class DetailActivityViewModelTest {
             val firstType = Type("grass", "grassurl")
             val secondType = Type("bug", "bugurl")
             val testPokemon = Pokemon(
-                types = listOf(
-                    TypeSlot(slot = 1, type = firstType),
-                    TypeSlot(slot = 2, type = secondType)
-                )
+                types = listOf(TypeSlot(slot = 1, type = firstType), TypeSlot(slot = 2, type = secondType))
             )
 
             testRobot.mockPokemonDetails(testPokemon)

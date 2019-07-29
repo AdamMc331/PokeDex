@@ -3,22 +3,25 @@ package com.adammcneilly.pokedex.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
 import com.adammcneilly.pokedex.BaseObservableViewModel
 import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.network.PokemonRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainActivityViewModel(
-    private val repository: PokemonRepository,
-    private val dispatcherProvider: DispatcherProvider = DispatcherProvider()
+    repository: PokemonRepository,
+    dispatcherProvider: DispatcherProvider = DispatcherProvider()
 ) : BaseObservableViewModel() {
     private val state = MutableLiveData<MainActivityState>()
 
     private val currentState: MainActivityState
         get() = state.value ?: MainActivityState()
+
+    private var job: Job? = null
 
     val pokemon: LiveData<List<Pokemon>> = Transformations.map(state) {
         it.data?.results
@@ -34,32 +37,22 @@ class MainActivityViewModel(
         get() = currentState.data != null
 
     init {
-        fetchPokemonList()
-    }
-
-    @Suppress("TooGenericExceptionCaught")
-    private fun fetchPokemonList() {
-        viewModelScope.launch {
-            startLoading()
-
-            val newState = withContext(dispatcherProvider.IO) {
-                try {
-                    val response = repository.getPokemon()
-                    return@withContext currentState.copy(
-                        loading = false,
-                        data = response,
-                        error = null
-                    )
-                } catch (error: Throwable) {
-                    return@withContext currentState.copy(
-                        loading = false,
-                        data = null,
-                        error = error
-                    )
-                }
+        job = CoroutineScope(dispatcherProvider.IO).launch {
+            withContext(dispatcherProvider.Main) {
+                startLoading()
             }
 
-            setState(newState)
+            @Suppress("TooGenericExceptionCaught")
+            val newState = try {
+                val response = repository.getPokemon()
+                currentState.copy(loading = false, data = response, error = null)
+            } catch (error: Throwable) {
+                currentState.copy(loading = false, data = null, error = error)
+            }
+
+            withContext(dispatcherProvider.Main) {
+                setState(newState)
+            }
         }
     }
 
@@ -71,5 +64,10 @@ class MainActivityViewModel(
     private fun setState(newState: MainActivityState) {
         this.state.value = newState
         notifyChange()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job?.cancel()
     }
 }
