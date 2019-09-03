@@ -1,16 +1,26 @@
 #!/bin/sh
 
-echo "Running static analysis..."
+######## KTLINT-GRADLE HOOK START ########
 
-# Format code using KtLint, then run Detekt and KtLint static analysis
-./gradlew app:ktlintFormat app:detekt app:ktlint --daemon
+CHANGED_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $2 ~ /\.kts|\.kt/ { print $2}')"
 
-status=$?
-
-if [ "$status" = 0 ] ; then
-    echo "Static analysis found no problems."
+if [ -z "$CHANGED_FILES" ]; then
+    echo "No Kotlin staged files."
     exit 0
-else
-    echo 1>&2 "Static analysis found violations it could not fix."
-    exit 1
-fi
+fi;
+
+echo "Running ktlint over these files:"
+echo "$CHANGED_FILES"
+
+./gradlew --quiet ktlintFormat -PinternalKtlintGitFilter="$CHANGED_FILES"
+
+echo "Completed ktlint run."
+
+echo "$CHANGED_FILES" | while read -r file; do
+    if [ -f $file ]; then
+        git add $file
+    fi
+done
+
+echo "Completed ktlint hook."
+######## KTLINT-GRADLE HOOK END ########
