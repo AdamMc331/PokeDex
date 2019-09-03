@@ -2,6 +2,9 @@
 
 buildscript {
     ext.kotlin_version = '1.3.50'
+    ext.ktlint_version = '8.2.0'
+    ext.detekt_version = '1.0.1'
+
     repositories {
         google()
         jcenter()
@@ -12,7 +15,8 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0-RC12'
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlint_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -26,6 +30,36 @@ allprojects {
     }
 }
 
+subprojects {
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
+    apply plugin: "io.gitlab.arturbosch.detekt"
+
+    ktlint {
+        android = true
+        enableExperimentalRules = true
+    }
+
+    detekt {
+        config = rootProject.files('detekt-config.yml')
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+/**
+ * This is a special task that allows us to pass a flag to avoid any tasks with Lint in the name.
+ *
+ * To use, you can call `./gradlew build -PnoLint` from the command line.
+ *
+ * https://kousenit.org/2016/04/20/excluding-gradle-tasks-with-a-name-pattern/
+ */
+gradle.taskGraph.whenReady { graph ->
+    if (project.hasProperty('noLint')) {
+        graph.allTasks.findAll { it.name ==~ /.*lint.*/ }*.enabled = false
+    }
+}
+
+apply plugin: "org.jlleitschuh.gradle.ktlint"
+apply plugin: "org.jlleitschuh.gradle.ktlint-idea"

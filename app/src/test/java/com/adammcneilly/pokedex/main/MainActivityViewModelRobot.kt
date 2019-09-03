@@ -13,7 +13,10 @@ import org.mockito.Mockito.mock
 
 class MainActivityViewModelRobot(
     private val mockRepository: PokemonRepository = mock(PokemonRepository::class.java),
-    private val testDispatcherProvider: DispatcherProvider = DispatcherProvider(IO = Dispatchers.Unconfined, Main = Dispatchers.Unconfined)
+    private val testDispatcherProvider: DispatcherProvider = DispatcherProvider(
+        IO = Dispatchers.Unconfined,
+        Main = Dispatchers.Unconfined
+    )
 ) {
     private lateinit var viewModel: MainActivityViewModel
 

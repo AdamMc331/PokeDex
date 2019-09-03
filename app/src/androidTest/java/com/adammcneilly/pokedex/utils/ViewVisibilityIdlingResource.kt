@@ -11,7 +11,8 @@ class ViewVisibilityIdlingResource(
     private var isIdle: Boolean = false
 
     override fun getName(): String {
-        return ViewVisibilityIdlingResource::class.java.name + ":" + view.id + ":" + expectedVisibility
+        return ViewVisibilityIdlingResource::class.java.name +
+            ":" + view.id + ":" + expectedVisibility
     }
 
     override fun isIdleNow(): Boolean {

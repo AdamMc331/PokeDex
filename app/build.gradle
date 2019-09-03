@@ -6,10 +6,6 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
-apply plugin: 'io.gitlab.arturbosch.detekt'
-
-apply from: "../ktlint.gradle"
-
 apply from: "../git-hooks.gradle"
 
 android {
@@ -76,8 +72,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //noinspection GradleDependency
     androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.12.0'
-}
-
-detekt {
-    config = rootProject.files('detekt-config.yml')
 }
