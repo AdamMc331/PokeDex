@@ -28,7 +28,8 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val pokemonAPI = PokemonAPI.defaultInstance((application as? PokeApp)?.baseUrl.orEmpty())
+            val pokemonAPI =
+                PokemonAPI.defaultInstance((application as? PokeApp)?.baseUrl.orEmpty())
             val repository = PokemonRetrofitService(pokemonAPI)
 
             @Suppress("UNCHECKED_CAST")
@@ -54,12 +55,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
+        viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
         binding.viewModel = viewModel
 
-        viewModel.pokemon.observe(this, Observer {
-            it?.let(pokemonAdapter::items::set)
-        })
+        viewModel.pokemon.observe(
+            this,
+            Observer {
+                it?.let(pokemonAdapter::items::set)
+            }
+        )
     }
 
     private fun pokemonClicked(pokemon: Pokemon) {

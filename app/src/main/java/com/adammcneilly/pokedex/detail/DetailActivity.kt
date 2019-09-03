@@ -18,7 +18,8 @@ class DetailActivity : AppCompatActivity() {
 
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val pokemonAPI = PokemonAPI.defaultInstance((application as? PokeApp)?.baseUrl.orEmpty())
+            val pokemonAPI =
+                PokemonAPI.defaultInstance((application as? PokeApp)?.baseUrl.orEmpty())
             val repository = PokemonRetrofitService(pokemonAPI)
             val pokemonName = this@DetailActivity.intent.getStringExtra(ARG_POKEMON_NAME)
 
@@ -36,7 +37,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailActivityViewModel::class.java)
+        viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(DetailActivityViewModel::class.java)
         binding.viewModel = viewModel
     }
 

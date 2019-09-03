@@ -44,7 +44,10 @@ class MainActivityTest {
         mockWebServer.setDispatcher(SuccessDispatcher())
         activityTestRule.launchActivity(null)
         progressBarGoneIdlingResource =
-            ViewVisibilityIdlingResource(activityTestRule.activity.findViewById(R.id.progress_bar), View.GONE)
+            ViewVisibilityIdlingResource(
+                activityTestRule.activity.findViewById(R.id.progress_bar),
+                View.GONE
+            )
 
         MainActivityRobot()
             .waitForCondition(progressBarGoneIdlingResource)
@@ -59,7 +62,10 @@ class MainActivityTest {
         mockWebServer.setDispatcher(SuccessDispatcher())
         activityTestRule.launchActivity(null)
         progressBarGoneIdlingResource =
-            ViewVisibilityIdlingResource(activityTestRule.activity.findViewById(R.id.progress_bar), View.GONE)
+            ViewVisibilityIdlingResource(
+                activityTestRule.activity.findViewById(R.id.progress_bar),
+                View.GONE
+            )
 
         MainActivityRobot()
             .waitForCondition(progressBarGoneIdlingResource)
@@ -75,7 +81,10 @@ class MainActivityTest {
         mockWebServer.setDispatcher(ErrorDispatcher())
         activityTestRule.launchActivity(null)
         progressBarGoneIdlingResource =
-            ViewVisibilityIdlingResource(activityTestRule.activity.findViewById(R.id.progress_bar), View.GONE)
+            ViewVisibilityIdlingResource(
+                activityTestRule.activity.findViewById(R.id.progress_bar),
+                View.GONE
+            )
 
         MainActivityRobot()
             .waitForCondition(progressBarGoneIdlingResource)

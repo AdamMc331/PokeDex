@@ -23,13 +23,13 @@ jdk:
 jobs:
   include:
   - stage: build
-    script: ./gradlew clean build -x test -x detekt
+    script: ./gradlew clean build -PnoLint -x test -x detekt
 
   - stage: test
     script: ./gradlew test
 
   - stage: lint checks
-    script: ./gradlew ktlint detekt
+    script: ./gradlew evaluateViolations
 
   - stage: ui test
     if: branch == master
