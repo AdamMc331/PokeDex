@@ -1,6 +1,5 @@
 package com.adammcneilly.pokedex.detail
 
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource

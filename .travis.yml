@@ -29,7 +29,7 @@ jobs:
     script: ./gradlew test
 
   - stage: lint checks
-    script: ./gradlew ktlint detekt
+    script: ./gradlew evaluateViolations
 
   - stage: ui test
     if: branch == master
