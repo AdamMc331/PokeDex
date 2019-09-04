@@ -34,6 +34,13 @@ jobs:
   - stage: lint checks
     script: ./gradlew evaluateViolations --continue
     after_script:
+    # The python script should create these two files, but for some reason in trial and error
+    # it did not, so I just use the touch command to create them.
+    - cd scripts
+    - touch ktlint-report-orig.xml
+    - touch ktlint-report.xml
+    - python combine_ktlint_reports.py
+    - cd ..
     - gem install bundler
     - bundle install
     - bundle exec danger

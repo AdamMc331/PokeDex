@@ -5,4 +5,4 @@ message "Thanks @#{github.pr_author}!"
 
 # Report inline ktlint issues
 checkstyle_format.base_path = Dir.pwd
-checkstyle_format.report 'app/build/reports/ktlint/ktlintMainSourceSetCheck.xml'
+checkstyle_format.report 'scripts/ktlint-report.xml'
