@@ -1,17 +1,20 @@
 language: android
 
+# Commented out everything necessary for automated testing, but it was working when implemented.addons:
+# I just didn't find it important enough to keep since it really slows down PRs.
+
 android:
   components:
   - tools
   - build-tools-28.0.3
   - android-28
-  - android-22
+#  - android-22
   - platform-tools
-  - extra-android-support
-  - extra-android-m2repositor
-  - extra-google-google_play_servicesy
-  - extra-google-m2repository
-  - sys-img-armeabi-v7a-android-22
+#  - extra-android-support
+#  - extra-android-m2repositor
+#  - extra-google-google_play_servicesy
+#  - extra-google-m2repository
+#  - sys-img-armeabi-v7a-android-22
   licenses:
   - android-sdk-license-.+
 
@@ -37,12 +40,12 @@ jobs:
   - stage: lint checks
     script: ./gradlew evaluateViolations
 
-  - stage: ui test
-    if: branch == master
-    script:
-    # Emulator Management: Create, Start and Wait
-    - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 100M
-    - emulator -avd test -no-audio -no-window &
-    - android-wait-for-emulator
-    - adb shell input keyevent 82 &
-    - ./gradlew cAT
+#  - stage: ui test
+#    if: branch == master
+#    script:
+#    # Emulator Management: Create, Start and Wait
+#    - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 100M
+#    - emulator -avd test -no-audio -no-window &
+#    - android-wait-for-emulator
+#    - adb shell input keyevent 82 &
+#    - ./gradlew cAT
