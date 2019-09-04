@@ -22,6 +22,9 @@ jdk:
 
 jobs:
   include:
+  - stage: danger setup
+    script: bundle exec danger
+
   - stage: build
     script: ./gradlew clean build -PnoLint -x test -x detekt
 
