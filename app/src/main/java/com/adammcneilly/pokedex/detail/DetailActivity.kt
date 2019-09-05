@@ -34,11 +34,6 @@ class DetailActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         setupViewModel()
-        val a = 5 * 3
-        val b = "b"
-        val c = "c"
-        val d = "d"
-        val e = "e"
     }
 
     private fun setupViewModel() {
