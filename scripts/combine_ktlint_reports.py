@@ -11,7 +11,9 @@ file_list = [
 "../app/build/reports/ktlint/ktlintMainSourceSetCheck.xml",
 "../app/build/reports/ktlint/ktlintTestSourceSetCheck.xml",
 "../app/build/reports/ktlint/ktlintAndroidTestSourceSetCheck.xml",
-"../image-loader/build/reports/ktlint/ktlintMainSourceSetCheck.xml"
+"../app/build/reports/detekt/detekt.xml",
+"../image-loader/build/reports/ktlint/ktlintMainSourceSetCheck.xml",
+"../image-loader/build/reports/detekt/detekt.xml"
 ]
 
 ktlintFile = 'ktlint-report-orig.xml'
