@@ -15,23 +15,25 @@ class MainActivityViewModel(
     private val repository: PokemonRepository,
     private val dispatcherProvider: DispatcherProvider = DispatcherProvider()
 ) : BaseObservableViewModel() {
-    private val state = MutableLiveData<MainActivityState>()
-
-    private val currentState: MainActivityState
-        get() = state.value ?: MainActivityState.Loading
-
-    val pokemon: LiveData<List<Pokemon>> = Transformations.map(state) {
-        (it as? MainActivityState.Loaded)?.data?.results
+    private val state = MutableLiveData<MainActivityState>().apply {
+        value = MainActivityState.Loading
     }
 
-    val showLoading: Boolean
-        get() = currentState is MainActivityState.Loading
+    val pokemon: LiveData<List<Pokemon>> = Transformations.map(state) { state ->
+        (state as? MainActivityState.Loaded)?.data?.results
+    }
 
-    val showError: Boolean
-        get() = currentState is MainActivityState.Error
+    val showLoading: LiveData<Boolean> = Transformations.map(state) { state ->
+        state is MainActivityState.Loading
+    }
 
-    val showData: Boolean
-        get() = currentState is MainActivityState.Loaded
+    val showError: LiveData<Boolean> = Transformations.map(state) { state ->
+        state is MainActivityState.Error
+    }
+
+    val showData: LiveData<Boolean> = Transformations.map(state) { state ->
+        state is MainActivityState.Loaded
+    }
 
     init {
         fetchPokemonList()
