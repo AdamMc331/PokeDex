@@ -26,15 +26,23 @@ class DetailActivityViewModel(
         get() = pokemonName.capitalize()
 
     val toolbarColorRes: Int
-        get() = (currentState as? DetailActivityState.Loaded)?.pokemon?.sortedTypes?.firstOrNull()?.getColorRes()
-            ?: R.color.colorPrimary
+        get() {
+            val state = (currentState as? DetailActivityState.Loaded)
+            return state?.pokemon?.sortedTypes?.firstOrNull()?.getColorRes() ?: R.color.colorPrimary
+        }
 
     val toolbarTextColorRes: Int
-        get() = (currentState as? DetailActivityState.Loaded)?.pokemon?.sortedTypes?.firstOrNull()?.getComplementaryColorRes()
-            ?: R.color.mds_white
+        get() {
+            val state = (currentState as? DetailActivityState.Loaded)
+            return state?.pokemon?.sortedTypes?.firstOrNull()?.getComplementaryColorRes()
+                ?: R.color.mds_white
+        }
 
     val imageUrl: String
-        get() = (currentState as? DetailActivityState.Loaded)?.pokemon?.sprites?.frontDefault.orEmpty()
+        get() {
+            val state = (currentState as? DetailActivityState.Loaded)
+            return state?.pokemon?.sprites?.frontDefault.orEmpty()
+        }
 
     val showLoading: Boolean
         get() = currentState is DetailActivityState.Loading
