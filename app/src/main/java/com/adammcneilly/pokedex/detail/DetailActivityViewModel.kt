@@ -19,37 +19,45 @@ class DetailActivityViewModel(
     private val state = MutableLiveData<DetailActivityState>()
 
     private val currentState: DetailActivityState
-        get() = state.value ?: DetailActivityState()
+        get() = state.value ?: DetailActivityState.Loading
 
     val title: String
         @SuppressLint("DefaultLocale")
         get() = pokemonName.capitalize()
 
     val toolbarColorRes: Int
-        get() = currentState.pokemon?.sortedTypes?.firstOrNull()?.getColorRes()
-            ?: R.color.colorPrimary
+        get() {
+            val state = (currentState as? DetailActivityState.Loaded)
+            return state?.pokemon?.sortedTypes?.firstOrNull()?.getColorRes() ?: R.color.colorPrimary
+        }
 
     val toolbarTextColorRes: Int
-        get() = currentState.pokemon?.sortedTypes?.firstOrNull()?.getComplementaryColorRes()
-            ?: R.color.mds_white
+        get() {
+            val state = (currentState as? DetailActivityState.Loaded)
+            return state?.pokemon?.sortedTypes?.firstOrNull()?.getComplementaryColorRes()
+                ?: R.color.mds_white
+        }
 
     val imageUrl: String
-        get() = currentState.pokemon?.sprites?.frontDefault.orEmpty()
+        get() {
+            val state = (currentState as? DetailActivityState.Loaded)
+            return state?.pokemon?.sprites?.frontDefault.orEmpty()
+        }
 
     val showLoading: Boolean
-        get() = currentState.loading
+        get() = currentState is DetailActivityState.Loading
 
     val showData: Boolean
-        get() = currentState.pokemon != null
+        get() = (currentState as? DetailActivityState.Loaded)?.pokemon != null
 
     val showError: Boolean
-        get() = currentState.error != null
+        get() = currentState is DetailActivityState.Error
 
     val firstType: Type?
-        get() = currentState.pokemon?.sortedTypes?.firstOrNull()
+        get() = (currentState as? DetailActivityState.Loaded)?.pokemon?.sortedTypes?.firstOrNull()
 
     val secondType: Type?
-        get() = currentState.pokemon?.sortedTypes?.getOrNull(1)
+        get() = (currentState as? DetailActivityState.Loaded)?.pokemon?.sortedTypes?.getOrNull(1)
 
     val showFirstType: Boolean
         get() = firstType != null
@@ -67,19 +75,11 @@ class DetailActivityViewModel(
             startLoading()
 
             val newState = withContext(dispatcherProvider.IO) {
-                try {
+                return@withContext try {
                     val pokemon = repository.getPokemonDetail(pokemonName)
-                    return@withContext currentState.copy(
-                        loading = false,
-                        pokemon = pokemon,
-                        error = null
-                    )
+                    DetailActivityState.Loaded(pokemon)
                 } catch (error: Throwable) {
-                    return@withContext currentState.copy(
-                        loading = false,
-                        pokemon = null,
-                        error = error
-                    )
+                    DetailActivityState.Error(error)
                 }
             }
 
@@ -88,8 +88,7 @@ class DetailActivityViewModel(
     }
 
     private fun startLoading() {
-        val newState = currentState.copy(loading = true, pokemon = null, error = null)
-        setState(newState)
+        setState(DetailActivityState.Loading)
     }
 
     private fun setState(newState: DetailActivityState) {

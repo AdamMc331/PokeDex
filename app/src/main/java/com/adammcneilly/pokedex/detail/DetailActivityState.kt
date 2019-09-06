@@ -2,8 +2,8 @@ package com.adammcneilly.pokedex.detail
 
 import com.adammcneilly.pokedex.models.Pokemon
 
-data class DetailActivityState(
-    val loading: Boolean = true,
-    val pokemon: Pokemon? = null,
-    val error: Throwable? = null
-)
+sealed class DetailActivityState {
+    object Loading : DetailActivityState()
+    class Loaded(val pokemon: Pokemon) : DetailActivityState()
+    class Error(val error: Throwable?) : DetailActivityState()
+}
