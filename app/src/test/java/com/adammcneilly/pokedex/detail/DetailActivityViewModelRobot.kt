@@ -4,6 +4,7 @@ import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.Type
 import com.adammcneilly.pokedex.network.PokemonRepository
+import com.adammcneilly.pokedex.testObserver
 import com.adammcneilly.pokedex.whenever
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -46,15 +47,15 @@ class DetailActivityViewModelRobot(
     }
 
     fun assertShowLoading(showLoading: Boolean) = apply {
-        assertEquals(showLoading, viewModel.showLoading)
+        assertEquals(showLoading, viewModel.showLoading.testObserver().observedValue)
     }
 
     fun assertShowData(showData: Boolean) = apply {
-        assertEquals(showData, viewModel.showData)
+        assertEquals(showData, viewModel.showData.testObserver().observedValue)
     }
 
     fun assertShowError(showError: Boolean) = apply {
-        assertEquals(showError, viewModel.showError)
+        assertEquals(showError, viewModel.showError.testObserver().observedValue)
     }
 
     fun assertTitle(title: String) = apply {
@@ -62,26 +63,26 @@ class DetailActivityViewModelRobot(
     }
 
     fun assertToolbarColorRes(colorRes: Int) = apply {
-        assertEquals(colorRes, viewModel.toolbarColorRes)
+        assertEquals(colorRes, viewModel.toolbarColorRes.testObserver().observedValue)
     }
 
     fun assertToolbarTextColorRes(textColorRes: Int) = apply {
-        assertEquals(textColorRes, viewModel.toolbarTextColorRes)
+        assertEquals(textColorRes, viewModel.toolbarTextColorRes.testObserver().observedValue)
     }
 
     fun assertFirstType(type: Type?) = apply {
-        assertEquals(type, viewModel.firstType)
+        assertEquals(type, viewModel.firstType.testObserver().observedValue)
     }
 
     fun assertSecondType(type: Type?) = apply {
-        assertEquals(type, viewModel.secondType)
+        assertEquals(type, viewModel.secondType.testObserver().observedValue)
     }
 
     fun assertShowFirstType(showFirstType: Boolean) = apply {
-        assertEquals(showFirstType, viewModel.showFirstType)
+        assertEquals(showFirstType, viewModel.showFirstType.testObserver().observedValue)
     }
 
     fun assertShowSecondType(showSecondType: Boolean) = apply {
-        assertEquals(showSecondType, viewModel.showSecondType)
+        assertEquals(showSecondType, viewModel.showSecondType.testObserver().observedValue)
     }
 }

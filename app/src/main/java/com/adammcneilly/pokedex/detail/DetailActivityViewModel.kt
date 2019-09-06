@@ -1,7 +1,9 @@
 package com.adammcneilly.pokedex.detail
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.adammcneilly.pokedex.BaseObservableViewModel
 import com.adammcneilly.pokedex.DispatcherProvider
@@ -16,54 +18,53 @@ class DetailActivityViewModel(
     private val pokemonName: String,
     private val dispatcherProvider: DispatcherProvider = DispatcherProvider()
 ) : BaseObservableViewModel() {
-    private val state = MutableLiveData<DetailActivityState>()
-
-    private val currentState: DetailActivityState
-        get() = state.value ?: DetailActivityState.Loading
+    private val state = MutableLiveData<DetailActivityState>().apply {
+        value = DetailActivityState.Loading
+    }
 
     val title: String
         @SuppressLint("DefaultLocale")
         get() = pokemonName.capitalize()
 
-    val toolbarColorRes: Int
-        get() {
-            val state = (currentState as? DetailActivityState.Loaded)
-            return state?.pokemon?.sortedTypes?.firstOrNull()?.getColorRes() ?: R.color.colorPrimary
-        }
+    val firstType: LiveData<Type> = Transformations.map(state) { state ->
+        (state as? DetailActivityState.Loaded)?.pokemon?.sortedTypes?.firstOrNull()
+    }
 
-    val toolbarTextColorRes: Int
-        get() {
-            val state = (currentState as? DetailActivityState.Loaded)
-            return state?.pokemon?.sortedTypes?.firstOrNull()?.getComplementaryColorRes()
-                ?: R.color.mds_white
-        }
+    val secondType: LiveData<Type> = Transformations.map(state) { state ->
+        (state as? DetailActivityState.Loaded)?.pokemon?.sortedTypes?.getOrNull(1)
+    }
 
-    val imageUrl: String
-        get() {
-            val state = (currentState as? DetailActivityState.Loaded)
-            return state?.pokemon?.sprites?.frontDefault.orEmpty()
-        }
+    val toolbarColorRes: LiveData<Int> = Transformations.map(firstType) { firstType ->
+        firstType?.getColorRes() ?: R.color.colorPrimary
+    }
 
-    val showLoading: Boolean
-        get() = currentState is DetailActivityState.Loading
+    val toolbarTextColorRes: LiveData<Int> = Transformations.map(firstType) { firstType ->
+        firstType?.getComplementaryColorRes() ?: R.color.mds_white
+    }
 
-    val showData: Boolean
-        get() = (currentState as? DetailActivityState.Loaded)?.pokemon != null
+    val imageUrl: LiveData<String> = Transformations.map(state) { state ->
+        (state as? DetailActivityState.Loaded)?.pokemon?.sprites?.frontDefault.orEmpty()
+    }
 
-    val showError: Boolean
-        get() = currentState is DetailActivityState.Error
+    val showLoading: LiveData<Boolean> = Transformations.map(state) { state ->
+        state is DetailActivityState.Loading
+    }
 
-    val firstType: Type?
-        get() = (currentState as? DetailActivityState.Loaded)?.pokemon?.sortedTypes?.firstOrNull()
+    val showData: LiveData<Boolean> = Transformations.map(state) { state ->
+        state is DetailActivityState.Loaded
+    }
 
-    val secondType: Type?
-        get() = (currentState as? DetailActivityState.Loaded)?.pokemon?.sortedTypes?.getOrNull(1)
+    val showError: LiveData<Boolean> = Transformations.map(state) { state ->
+        state is DetailActivityState.Error
+    }
 
-    val showFirstType: Boolean
-        get() = firstType != null
+    val showFirstType: LiveData<Boolean> = Transformations.map(firstType) { type ->
+        type != null
+    }
 
-    val showSecondType: Boolean
-        get() = secondType != null
+    val showSecondType: LiveData<Boolean> = Transformations.map(secondType) { type ->
+        type != null
+    }
 
     init {
         fetchPokemonDetail()
