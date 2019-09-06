@@ -37,15 +37,15 @@ class MainActivityViewModelRobot(
     }
 
     fun assertShowLoading(showLoading: Boolean) = apply {
-        assertEquals(showLoading, viewModel.showLoading)
+        assertEquals(showLoading, viewModel.showLoading.testObserver().observedValue)
     }
 
     fun assertShowData(showData: Boolean) = apply {
-        assertEquals(showData, viewModel.showData)
+        assertEquals(showData, viewModel.showData.testObserver().observedValue)
     }
 
     fun assertShowError(showError: Boolean) = apply {
-        assertEquals(showError, viewModel.showError)
+        assertEquals(showError, viewModel.showError.testObserver().observedValue)
     }
 
     fun assertPokemonList(pokemonList: List<Pokemon>) = apply {
