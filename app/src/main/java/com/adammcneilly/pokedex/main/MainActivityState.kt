@@ -2,8 +2,8 @@ package com.adammcneilly.pokedex.main
 
 import com.adammcneilly.pokedex.models.PokemonResponse
 
-data class MainActivityState(
-    val loading: Boolean = true,
-    val data: PokemonResponse? = null,
-    val error: Throwable? = null
-)
+sealed class MainActivityState {
+    object Loading : MainActivityState()
+    class Loaded(val data: PokemonResponse) : MainActivityState()
+    class Error(val error: Throwable?) : MainActivityState()
+}

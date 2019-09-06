@@ -18,20 +18,20 @@ class MainActivityViewModel(
     private val state = MutableLiveData<MainActivityState>()
 
     private val currentState: MainActivityState
-        get() = state.value ?: MainActivityState()
+        get() = state.value ?: MainActivityState.Loading
 
     val pokemon: LiveData<List<Pokemon>> = Transformations.map(state) {
-        it.data?.results
+        (it as? MainActivityState.Loaded)?.data?.results
     }
 
     val showLoading: Boolean
-        get() = currentState.loading
+        get() = currentState is MainActivityState.Loading
 
     val showError: Boolean
-        get() = currentState.error != null
+        get() = currentState is MainActivityState.Error
 
     val showData: Boolean
-        get() = currentState.data != null
+        get() = currentState is MainActivityState.Loaded
 
     init {
         fetchPokemonList()
@@ -45,17 +45,9 @@ class MainActivityViewModel(
             val newState = withContext(dispatcherProvider.IO) {
                 try {
                     val response = repository.getPokemon()
-                    return@withContext currentState.copy(
-                        loading = false,
-                        data = response,
-                        error = null
-                    )
+                    return@withContext MainActivityState.Loaded(response)
                 } catch (error: Throwable) {
-                    return@withContext currentState.copy(
-                        loading = false,
-                        data = null,
-                        error = error
-                    )
+                    return@withContext MainActivityState.Error(error)
                 }
             }
 
@@ -64,8 +56,7 @@ class MainActivityViewModel(
     }
 
     private fun startLoading() {
-        val newState = currentState.copy(loading = true, data = null, error = null)
-        setState(newState)
+        setState(MainActivityState.Loading)
     }
 
     private fun setState(newState: MainActivityState) {
