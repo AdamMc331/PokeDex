@@ -6,6 +6,7 @@ apply plugin: "com.novoda.static-analysis"
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply from: '../dependencies.gradle'
 
 android {
     compileSdkVersion 28
@@ -57,10 +58,7 @@ staticAnalysis {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
-    implementation 'io.coil-kt:coil:0.6.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.core:core-ktx:$ktxVersion"
+    implementation "io.coil-kt:coil:0.6.1"
 }

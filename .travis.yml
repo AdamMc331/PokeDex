@@ -31,8 +31,10 @@ jobs:
   - stage: test
     script: ./gradlew test
 
-  - stage: lint checks
-    script: ./gradlew evaluateViolations --continue
+  - stage: danger checks
+    script:
+      - ./gradlew evaluateViolations
+      - ./gradlew dependencyUpdates
     after_script:
     # The python script should create these two files, but for some reason in trial and error
     # it did not, so I just use the touch command to create them.

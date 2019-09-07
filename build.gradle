@@ -5,6 +5,7 @@ buildscript {
     ext.ktlint_version = '8.2.0'
     ext.detekt_version = '1.0.1'
     ext.static_analysis_version = '1.0'
+    ext.versions_plugin_version = '0.24.0'
 
     repositories {
         google()
@@ -19,6 +20,7 @@ buildscript {
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlint_version"
         classpath "com.novoda:gradle-static-analysis-plugin:$static_analysis_version"
+        classpath "com.github.ben-manes:gradle-versions-plugin:$versions_plugin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -56,3 +58,20 @@ gradle.taskGraph.whenReady { graph ->
 
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: "org.jlleitschuh.gradle.ktlint-idea"
+apply plugin: "com.github.ben-manes.versions"
+
+dependencyUpdates {
+    checkForGradleUpdate = true
+    resolutionStrategy {
+        componentSelection { rules ->
+            rules.all { ComponentSelection selection ->
+                boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm', 'preview', 'b', 'ea'].any { qualifier ->
+                    selection.candidate.version ==~ /(?i).*[.-]$qualifier[.\d-+]*/
+                }
+                if (rejected) {
+                    selection.reject('Release candidate')
+                }
+            }
+        }
+    }
+}

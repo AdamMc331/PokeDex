@@ -7,6 +7,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply from: '../dependencies.gradle'
 
 android {
     compileSdkVersion 28
@@ -78,29 +79,30 @@ staticAnalysis {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.1.0-alpha07'
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-moshi:2.5.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-rc01'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
-    implementation 'com.androidessence:materialdesignspecs:2.0.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1'
-    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
-    implementation project(':image-loader')
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.27.0'
-    testImplementation 'androidx.arch.core:core-testing:2.0.1'
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.0-M2'
-    androidTestImplementation 'androidx.test:core:1.2.0'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.core:core-ktx:$ktxVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleKtxVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$loggingInterceptorVersion"
+    implementation "com.androidessence:materialdesignspecs:$materialSpecsVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$coroutinesAdapterVersion"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshLayoutVersion"
+    implementation project(":image-loader")
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion"
+    androidTestImplementation "androidx.test:core:$androidXTestVersion"
+    androidTestImplementation "androidx.test:runner:$androidXTestVersion"
+    androidTestImplementation "androidx.test:rules:$androidXTestVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidXJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
     //noinspection GradleDependency
-    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.12.0'
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
 }
