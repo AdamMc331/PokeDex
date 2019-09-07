@@ -17,14 +17,3 @@ elsif update_count > 0
   heading = "The following app module dependencies have later milestone versions:"
   warn file.slice(file.index(heading)..-1)
 end
-
-# Notify of outdated dependencies in image-loader
-update_count = File.readlines("image-loader/build/dependencyUpdates/report.txt").select { |line| line =~ /->/ }.count
-if update_count > 10
-  # More than 10 libraries to update is cumbersome in a comment, so summarize
-  warn "There are #{update_count} dependencies with new milestone versions in image-loader module."
-elsif update_count > 0
-  file = File.open("image-loader/build/dependencyUpdates/report.txt", "rb").read
-  heading = "The following image-loader module dependencies have later milestone versions:"
-  warn file.slice(file.index(heading)..-1)
-end
