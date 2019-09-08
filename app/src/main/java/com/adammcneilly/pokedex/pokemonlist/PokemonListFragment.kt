@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.databinding.FragmentPokemonListBinding
-import com.adammcneilly.pokedex.detail.DetailActivity
+import com.adammcneilly.pokedex.detail.PokemonDetailFragment
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.network.PokemonAPI
 import com.adammcneilly.pokedex.network.PokemonRetrofitService
@@ -84,8 +84,8 @@ class PokemonListFragment : Fragment() {
     }
 
     private fun pokemonClicked(pokemon: Pokemon) {
-        val intent = Intent(requireContext(), DetailActivity::class.java)
-        intent.putExtra(DetailActivity.ARG_POKEMON_NAME, pokemon.name)
+        val intent = Intent(requireContext(), PokemonDetailFragment::class.java)
+        intent.putExtra(PokemonDetailFragment.ARG_POKEMON_NAME, pokemon.name)
         startActivity(intent)
     }
 

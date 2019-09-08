@@ -18,7 +18,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="m">
         <activity
-            android:name=".detail.DetailActivity"
+            android:name=".detail.PokemonDetailFragment"
             android:label="@string/title_activity_detail"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

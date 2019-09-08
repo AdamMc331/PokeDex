@@ -18,10 +18,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class DetailActivityTest {
+class PokemonDetailFragmentTest {
     @JvmField
     @Rule
-    val activityTestRule = ActivityTestRule(DetailActivity::class.java, true, false)
+    val activityTestRule = ActivityTestRule(PokemonDetailFragment::class.java, true, false)
 
     private val mockWebServer = MockWebServer()
 
@@ -43,7 +43,7 @@ class DetailActivityTest {
     fun displayData() {
         val testName = "ditto"
         val intent = Intent().apply {
-            putExtra(DetailActivity.ARG_POKEMON_NAME, testName)
+            putExtra(PokemonDetailFragment.ARG_POKEMON_NAME, testName)
         }
 
         mockWebServer.setDispatcher(SuccessDispatcher())
@@ -65,7 +65,7 @@ class DetailActivityTest {
     fun displayError() {
         val testName = "ditto"
         val intent = Intent().apply {
-            putExtra(DetailActivity.ARG_POKEMON_NAME, testName)
+            putExtra(PokemonDetailFragment.ARG_POKEMON_NAME, testName)
         }
 
         mockWebServer.setDispatcher(ErrorDispatcher())

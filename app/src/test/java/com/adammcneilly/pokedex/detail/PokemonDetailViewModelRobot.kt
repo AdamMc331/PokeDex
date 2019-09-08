@@ -12,7 +12,7 @@ import org.junit.Assert.assertEquals
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito.mock
 
-class DetailActivityViewModelRobot(
+class PokemonDetailViewModelRobot(
     private val mockRepository: PokemonRepository = mock(PokemonRepository::class.java),
     private val dispatcherProvider: DispatcherProvider = DispatcherProvider(
         IO = Dispatchers.Unconfined,
@@ -20,7 +20,7 @@ class DetailActivityViewModelRobot(
     ),
     private var pokemonName: String = ""
 ) {
-    private lateinit var viewModel: DetailActivityViewModel
+    private lateinit var viewModel: PokemonDetailViewModel
 
     fun setInitialPokemonName(pokemonName: String) = apply {
         this.pokemonName = pokemonName
@@ -39,7 +39,7 @@ class DetailActivityViewModelRobot(
     }
 
     fun buildViewModel() = apply {
-        this.viewModel = DetailActivityViewModel(
+        this.viewModel = PokemonDetailViewModel(
             repository = this.mockRepository,
             dispatcherProvider = this.dispatcherProvider,
             pokemonName = this.pokemonName
