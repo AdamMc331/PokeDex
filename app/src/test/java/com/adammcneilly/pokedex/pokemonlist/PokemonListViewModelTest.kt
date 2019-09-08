@@ -1,4 +1,4 @@
-package com.adammcneilly.pokedex.main
+package com.adammcneilly.pokedex.pokemonlist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.adammcneilly.pokedex.CoroutinesTestRule
@@ -10,7 +10,7 @@ import org.junit.Test
 
 @ExperimentalCoroutinesApi
 @Suppress("UNCHECKED_CAST")
-class MainActivityViewModelTest {
+class PokemonListViewModelTest {
     @JvmField
     @Rule
     val instantTaskExecutor = InstantTaskExecutorRule()
@@ -19,7 +19,7 @@ class MainActivityViewModelTest {
     @Rule
     val coroutinesTestRule = CoroutinesTestRule()
 
-    private val testRobot = MainActivityViewModelRobot()
+    private val testRobot = PokemonListViewModelRobot()
 
     @Test
     fun loadData() {
