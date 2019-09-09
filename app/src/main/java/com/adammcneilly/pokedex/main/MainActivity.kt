@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.databinding.ActivityMainBinding
+import com.adammcneilly.pokedex.detail.PokemonDetailFragment
+import com.adammcneilly.pokedex.listeners.PokemonClickedListener
+import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.pokemonlist.PokemonListFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PokemonClickedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,10 +23,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showPokemonListFragment() {
-        val fragment = PokemonListFragment.newInstance()
+        val listFragment = PokemonListFragment.newInstance()
+        listFragment.pokemonClickListener = this
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, fragment)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, listFragment)
+            .commit()
+    }
+
+    override fun pokemonClicked(pokemon: Pokemon) {
+        val detailFragment = PokemonDetailFragment.newInstance(pokemon.name.orEmpty())
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, detailFragment)
+            .addToBackStack("DETAIL_FRAGMENT_${pokemon.name}")
             .commit()
     }
 }
