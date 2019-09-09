@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.adammcneilly.pokedex.PokeApp
-import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.databinding.ActivityDetailBinding
 import com.adammcneilly.pokedex.network.PokemonAPI
 import com.adammcneilly.pokedex.network.PokemonRetrofitService
@@ -47,6 +46,11 @@ class PokemonDetailFragment : Fragment() {
         binding.lifecycleOwner = this
         setupViewModel()
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? AppCompatActivity)?.supportActionBar?.title = viewModel.title
     }
 
     private fun setupViewModel() {

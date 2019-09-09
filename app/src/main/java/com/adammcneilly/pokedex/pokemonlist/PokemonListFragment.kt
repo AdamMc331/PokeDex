@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adammcneilly.pokedex.PokeApp
+import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.databinding.FragmentPokemonListBinding
 import com.adammcneilly.pokedex.listeners.PokemonClickedListener
 import com.adammcneilly.pokedex.network.PokemonAPI
@@ -60,6 +62,11 @@ class PokemonListFragment : Fragment() {
         setupViewModel()
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.app_name)
     }
 
     private fun setupRecyclerView() {
