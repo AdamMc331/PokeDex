@@ -103,6 +103,9 @@ dependencies {
     androidTestImplementation "androidx.test:rules:$androidXTestVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidXJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    debugImplementation ("androidx.fragment:fragment-testing:1.1.0") {
+        exclude group: 'androidx.test', module: 'core'
+    }
     //noinspection GradleDependency
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
 }
