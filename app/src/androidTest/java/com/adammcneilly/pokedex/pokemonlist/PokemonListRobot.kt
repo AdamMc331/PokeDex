@@ -27,7 +27,8 @@ class PokemonListRobot {
 
     fun assertPokemonAtPosition(position: Int, pokemonName: String) = apply {
         val itemMatcher = RecyclerViewMatcher(recyclerViewId)
-            .atPositionOnView(position,
+            .atPositionOnView(
+                position,
                 pokemonNameId
             )
         onView(itemMatcher).check(matches(withText(pokemonName)))
