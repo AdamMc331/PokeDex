@@ -1,4 +1,4 @@
-package com.adammcneilly.pokedex.main
+package com.adammcneilly.pokedex.pokemonlist
 
 import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.models.Pokemon
@@ -11,14 +11,14 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.mockito.Mockito.mock
 
-class MainActivityViewModelRobot(
+class PokemonListViewModelRobot(
     private val mockRepository: PokemonRepository = mock(PokemonRepository::class.java),
     private val testDispatcherProvider: DispatcherProvider = DispatcherProvider(
         IO = Dispatchers.Unconfined,
         Main = Dispatchers.Unconfined
     )
 ) {
-    private lateinit var viewModel: MainActivityViewModel
+    private lateinit var viewModel: PokemonListViewModel
 
     fun mockPokemonResponse(response: PokemonResponse) = apply {
         runBlocking {
@@ -33,7 +33,10 @@ class MainActivityViewModelRobot(
     }
 
     fun buildViewModel() = apply {
-        viewModel = MainActivityViewModel(mockRepository, testDispatcherProvider)
+        viewModel = PokemonListViewModel(
+            mockRepository,
+            testDispatcherProvider
+        )
     }
 
     fun assertShowLoading(showLoading: Boolean) = apply {

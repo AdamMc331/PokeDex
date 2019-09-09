@@ -1,4 +1,4 @@
-package com.adammcneilly.pokedex.main
+package com.adammcneilly.pokedex.pokemonlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,28 +11,28 @@ import com.adammcneilly.pokedex.network.PokemonRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainActivityViewModel(
+class PokemonListViewModel(
     private val repository: PokemonRepository,
     private val dispatcherProvider: DispatcherProvider = DispatcherProvider()
 ) : BaseObservableViewModel() {
-    private val state = MutableLiveData<MainActivityState>().apply {
-        value = MainActivityState.Loading
+    private val state = MutableLiveData<PokemonListState>().apply {
+        value = PokemonListState.Loading
     }
 
     val pokemon: LiveData<List<Pokemon>> = Transformations.map(state) { state ->
-        (state as? MainActivityState.Loaded)?.data?.results
+        (state as? PokemonListState.Loaded)?.data?.results
     }
 
     val showLoading: LiveData<Boolean> = Transformations.map(state) { state ->
-        state is MainActivityState.Loading
+        state is PokemonListState.Loading
     }
 
     val showError: LiveData<Boolean> = Transformations.map(state) { state ->
-        state is MainActivityState.Error
+        state is PokemonListState.Error
     }
 
     val showData: LiveData<Boolean> = Transformations.map(state) { state ->
-        state is MainActivityState.Loaded
+        state is PokemonListState.Loaded
     }
 
     init {
@@ -47,9 +47,13 @@ class MainActivityViewModel(
             val newState = withContext(dispatcherProvider.IO) {
                 try {
                     val response = repository.getPokemon()
-                    return@withContext MainActivityState.Loaded(response)
+                    return@withContext PokemonListState.Loaded(
+                        response
+                    )
                 } catch (error: Throwable) {
-                    return@withContext MainActivityState.Error(error)
+                    return@withContext PokemonListState.Error(
+                        error
+                    )
                 }
             }
 
@@ -58,10 +62,10 @@ class MainActivityViewModel(
     }
 
     private fun startLoading() {
-        setState(MainActivityState.Loading)
+        setState(PokemonListState.Loading)
     }
 
-    private fun setState(newState: MainActivityState) {
+    private fun setState(newState: PokemonListState) {
         this.state.value = newState
         notifyChange()
     }

@@ -1,4 +1,4 @@
-package com.adammcneilly.pokedex.main
+package com.adammcneilly.pokedex.pokemonlist
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
@@ -11,7 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.utils.RecyclerViewMatcher
 
-class MainActivityRobot {
+class PokemonListRobot {
 
     fun assertDataDisplayed() = apply {
         onView(recyclerViewMatcher).check(matches(isDisplayed()))
@@ -27,7 +27,10 @@ class MainActivityRobot {
 
     fun assertPokemonAtPosition(position: Int, pokemonName: String) = apply {
         val itemMatcher = RecyclerViewMatcher(recyclerViewId)
-            .atPositionOnView(position, pokemonNameId)
+            .atPositionOnView(
+                position,
+                pokemonNameId
+            )
         onView(itemMatcher).check(matches(withText(pokemonName)))
     }
 

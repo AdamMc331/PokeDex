@@ -1,4 +1,4 @@
-package com.adammcneilly.pokedex.main
+package com.adammcneilly.pokedex.pokemonlist
 
 import android.view.View
 import androidx.test.espresso.IdlingRegistry
@@ -7,6 +7,7 @@ import androidx.test.rule.ActivityTestRule
 import com.adammcneilly.pokedex.BuildConfig
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.detail.DetailActivityRobot
+import com.adammcneilly.pokedex.main.MainActivity
 import com.adammcneilly.pokedex.utils.ErrorDispatcher
 import com.adammcneilly.pokedex.utils.SuccessDispatcher
 import com.adammcneilly.pokedex.utils.ViewVisibilityIdlingResource
@@ -18,7 +19,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class MainActivityTest {
+class PokemonListFragmentTest {
     @JvmField
     @Rule
     val activityTestRule = ActivityTestRule(MainActivity::class.java, true, false)
@@ -49,7 +50,7 @@ class MainActivityTest {
                 View.GONE
             )
 
-        MainActivityRobot()
+        PokemonListRobot()
             .waitForCondition(progressBarGoneIdlingResource)
             .assertDataDisplayed()
             .assertPokemonAtPosition(0, "AdamOne")
@@ -67,7 +68,7 @@ class MainActivityTest {
                 View.GONE
             )
 
-        MainActivityRobot()
+        PokemonListRobot()
             .waitForCondition(progressBarGoneIdlingResource)
             .assertDataDisplayed()
             .clickItem(0)
@@ -86,7 +87,7 @@ class MainActivityTest {
                 View.GONE
             )
 
-        MainActivityRobot()
+        PokemonListRobot()
             .waitForCondition(progressBarGoneIdlingResource)
             .assertErrorDisplayed()
     }
