@@ -66,6 +66,7 @@ staticAnalysis {
     }
 
     ktlint {
+        version = "0.34.2"
         android = true
         enableExperimentalRules = true
         reporters = [ReporterType.PLAIN, ReporterType.CHECKSTYLE]
