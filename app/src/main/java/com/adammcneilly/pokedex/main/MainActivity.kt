@@ -2,9 +2,7 @@ package com.adammcneilly.pokedex.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.adammcneilly.pokedex.R
-import com.adammcneilly.pokedex.databinding.ActivityMainBinding
 import com.adammcneilly.pokedex.detail.PokemonDetailFragment
 import com.adammcneilly.pokedex.listeners.PokemonClickedListener
 import com.adammcneilly.pokedex.models.Pokemon
@@ -14,10 +12,8 @@ class MainActivity : AppCompatActivity(), PokemonClickedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.lifecycleOwner = this
-        setSupportActionBar(binding.toolbar)
+        setContentView(R.layout.activity_main)
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         showPokemonListFragment()
     }
