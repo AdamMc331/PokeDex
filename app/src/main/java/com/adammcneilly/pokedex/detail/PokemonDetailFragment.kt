@@ -10,12 +10,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.adammcneilly.pokedex.PokeApp
-import com.adammcneilly.pokedex.databinding.ActivityDetailBinding
+import com.adammcneilly.pokedex.databinding.FragmentPokemonDetailBinding
 import com.adammcneilly.pokedex.network.PokemonAPI
 import com.adammcneilly.pokedex.network.PokemonRetrofitService
 
 class PokemonDetailFragment : Fragment() {
-    private lateinit var binding: ActivityDetailBinding
+    private lateinit var binding: FragmentPokemonDetailBinding
     private lateinit var viewModel: PokemonDetailViewModel
 
     private val viewModelFactory = object : ViewModelProvider.Factory {
@@ -42,7 +42,7 @@ class PokemonDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = ActivityDetailBinding.inflate(inflater, container, false)
+        binding = FragmentPokemonDetailBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         setupViewModel()
         return binding.root
