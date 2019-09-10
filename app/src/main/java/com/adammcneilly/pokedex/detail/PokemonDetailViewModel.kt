@@ -13,13 +13,13 @@ import com.adammcneilly.pokedex.network.PokemonRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class DetailActivityViewModel(
+class PokemonDetailViewModel(
     private val repository: PokemonRepository,
     private val pokemonName: String,
     private val dispatcherProvider: DispatcherProvider = DispatcherProvider()
 ) : BaseObservableViewModel() {
-    private val state = MutableLiveData<DetailActivityState>().apply {
-        value = DetailActivityState.Loading
+    private val state = MutableLiveData<PokemonDetailState>().apply {
+        value = PokemonDetailState.Loading
     }
 
     val title: String
@@ -27,11 +27,11 @@ class DetailActivityViewModel(
         get() = pokemonName.capitalize()
 
     val firstType: LiveData<Type> = Transformations.map(state) { state ->
-        (state as? DetailActivityState.Loaded)?.pokemon?.sortedTypes?.firstOrNull()
+        (state as? PokemonDetailState.Loaded)?.pokemon?.sortedTypes?.firstOrNull()
     }
 
     val secondType: LiveData<Type> = Transformations.map(state) { state ->
-        (state as? DetailActivityState.Loaded)?.pokemon?.sortedTypes?.getOrNull(1)
+        (state as? PokemonDetailState.Loaded)?.pokemon?.sortedTypes?.getOrNull(1)
     }
 
     val toolbarColorRes: LiveData<Int> = Transformations.map(firstType) { firstType ->
@@ -43,19 +43,19 @@ class DetailActivityViewModel(
     }
 
     val imageUrl: LiveData<String> = Transformations.map(state) { state ->
-        (state as? DetailActivityState.Loaded)?.pokemon?.sprites?.frontDefault.orEmpty()
+        (state as? PokemonDetailState.Loaded)?.pokemon?.sprites?.frontDefault.orEmpty()
     }
 
     val showLoading: LiveData<Boolean> = Transformations.map(state) { state ->
-        state is DetailActivityState.Loading
+        state is PokemonDetailState.Loading
     }
 
     val showData: LiveData<Boolean> = Transformations.map(state) { state ->
-        state is DetailActivityState.Loaded
+        state is PokemonDetailState.Loaded
     }
 
     val showError: LiveData<Boolean> = Transformations.map(state) { state ->
-        state is DetailActivityState.Error
+        state is PokemonDetailState.Error
     }
 
     val showFirstType: LiveData<Boolean> = Transformations.map(firstType) { type ->
@@ -78,9 +78,9 @@ class DetailActivityViewModel(
             val newState = withContext(dispatcherProvider.IO) {
                 return@withContext try {
                     val pokemon = repository.getPokemonDetail(pokemonName)
-                    DetailActivityState.Loaded(pokemon)
+                    PokemonDetailState.Loaded(pokemon)
                 } catch (error: Throwable) {
-                    DetailActivityState.Error(error)
+                    PokemonDetailState.Error(error)
                 }
             }
 
@@ -89,10 +89,10 @@ class DetailActivityViewModel(
     }
 
     private fun startLoading() {
-        setState(DetailActivityState.Loading)
+        setState(PokemonDetailState.Loading)
     }
 
-    private fun setState(newState: DetailActivityState) {
+    private fun setState(newState: PokemonDetailState) {
         this.state.value = newState
         notifyChange()
     }

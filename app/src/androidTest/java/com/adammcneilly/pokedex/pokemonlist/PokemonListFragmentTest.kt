@@ -6,7 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.adammcneilly.pokedex.BuildConfig
 import com.adammcneilly.pokedex.R
-import com.adammcneilly.pokedex.detail.DetailActivityRobot
+import com.adammcneilly.pokedex.detail.PokemonDetailFragmentRobot
 import com.adammcneilly.pokedex.main.MainActivity
 import com.adammcneilly.pokedex.utils.ErrorDispatcher
 import com.adammcneilly.pokedex.utils.SuccessDispatcher
@@ -73,7 +73,7 @@ class PokemonListFragmentTest {
             .assertDataDisplayed()
             .clickItem(0)
 
-        DetailActivityRobot()
+        PokemonDetailFragmentRobot()
             .assertTitle("AdamOne")
     }
 

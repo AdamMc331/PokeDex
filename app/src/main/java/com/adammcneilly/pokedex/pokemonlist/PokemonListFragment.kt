@@ -1,10 +1,10 @@
 package com.adammcneilly.pokedex.pokemonlist
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -13,16 +13,21 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adammcneilly.pokedex.PokeApp
+import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.databinding.FragmentPokemonListBinding
-import com.adammcneilly.pokedex.detail.DetailActivity
-import com.adammcneilly.pokedex.models.Pokemon
+import com.adammcneilly.pokedex.listeners.PokemonClickedListener
 import com.adammcneilly.pokedex.network.PokemonAPI
 import com.adammcneilly.pokedex.network.PokemonRetrofitService
 import com.adammcneilly.pokedex.views.PokemonAdapter
 
 class PokemonListFragment : Fragment() {
+    private val pokemonAdapter = PokemonAdapter(
+        pokemonClickListener = { pokemon ->
+            pokemonClickListener?.pokemonClicked(pokemon)
+        }
+    )
 
-    private val pokemonAdapter = PokemonAdapter(this::pokemonClicked)
+    var pokemonClickListener: PokemonClickedListener? = null
 
     private lateinit var viewModel: PokemonListViewModel
     private lateinit var binding: FragmentPokemonListBinding
@@ -59,6 +64,11 @@ class PokemonListFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.app_name)
+    }
+
     private fun setupRecyclerView() {
         val recyclerView = binding.pokemonList
 
@@ -83,10 +93,9 @@ class PokemonListFragment : Fragment() {
         )
     }
 
-    private fun pokemonClicked(pokemon: Pokemon) {
-        val intent = Intent(requireContext(), DetailActivity::class.java)
-        intent.putExtra(DetailActivity.ARG_POKEMON_NAME, pokemon.name)
-        startActivity(intent)
+    override fun onDestroy() {
+        super.onDestroy()
+        pokemonClickListener = null
     }
 
     companion object {

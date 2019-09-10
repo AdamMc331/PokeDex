@@ -13,7 +13,7 @@ import org.junit.Test
 
 @ExperimentalCoroutinesApi
 @Suppress("UNCHECKED_CAST")
-class DetailActivityViewModelTest {
+class PokemonDetailViewModelTest {
     @JvmField
     @Rule
     val instantTaskExecutor = InstantTaskExecutorRule()
@@ -22,7 +22,7 @@ class DetailActivityViewModelTest {
     @Rule
     val coroutinesTestRule = CoroutinesTestRule()
 
-    private val testRobot = DetailActivityViewModelRobot()
+    private val testRobot = PokemonDetailViewModelRobot()
 
     @Test
     fun loadData() {

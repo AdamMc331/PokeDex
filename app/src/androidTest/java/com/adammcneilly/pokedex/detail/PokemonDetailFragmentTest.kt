@@ -1,27 +1,31 @@
 package com.adammcneilly.pokedex.detail
 
-import android.content.Intent
+import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.adammcneilly.pokedex.BuildConfig
 import com.adammcneilly.pokedex.R
+import com.adammcneilly.pokedex.main.MainActivity
 import com.adammcneilly.pokedex.utils.ErrorDispatcher
 import com.adammcneilly.pokedex.utils.SuccessDispatcher
 import com.adammcneilly.pokedex.utils.ViewVisibilityIdlingResource
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@Ignore
 @RunWith(AndroidJUnit4::class)
-class DetailActivityTest {
+class PokemonDetailFragmentTest {
     @JvmField
     @Rule
-    val activityTestRule = ActivityTestRule(DetailActivity::class.java, true, false)
+    val activityTestRule = ActivityTestRule(MainActivity::class.java, true, false)
 
     private val mockWebServer = MockWebServer()
 
@@ -42,19 +46,20 @@ class DetailActivityTest {
     @Test
     fun displayData() {
         val testName = "ditto"
-        val intent = Intent().apply {
-            putExtra(DetailActivity.ARG_POKEMON_NAME, testName)
+        val fragmentArgs = Bundle().apply {
+            putString(PokemonDetailFragment.ARG_POKEMON_NAME, testName)
         }
 
+        launchFragmentInContainer<PokemonDetailFragment>(fragmentArgs)
+
         mockWebServer.setDispatcher(SuccessDispatcher())
-        activityTestRule.launchActivity(intent)
         progressBarGoneIdlingResource =
             ViewVisibilityIdlingResource(
                 activityTestRule.activity.findViewById(R.id.progress_bar),
                 View.GONE
             )
 
-        DetailActivityRobot()
+        PokemonDetailFragmentRobot()
             .waitForCondition(progressBarGoneIdlingResource)
             .assertTitle(testName.capitalize())
             .assertFirstTypeVisible()
@@ -64,21 +69,15 @@ class DetailActivityTest {
     @Test
     fun displayError() {
         val testName = "ditto"
-        val intent = Intent().apply {
-            putExtra(DetailActivity.ARG_POKEMON_NAME, testName)
+        val fragmentArgs = Bundle().apply {
+            putString(PokemonDetailFragment.ARG_POKEMON_NAME, testName)
         }
 
-        mockWebServer.setDispatcher(ErrorDispatcher())
-        activityTestRule.launchActivity(intent)
-        progressBarGoneIdlingResource =
-            ViewVisibilityIdlingResource(
-                activityTestRule.activity.findViewById(R.id.progress_bar),
-                View.GONE
-            )
+        launchFragmentInContainer<PokemonDetailFragment>(fragmentArgs)
 
-        DetailActivityRobot()
-            .waitForCondition(progressBarGoneIdlingResource)
+        mockWebServer.setDispatcher(ErrorDispatcher())
+
+        PokemonDetailFragmentRobot()
             .assertErrorDisplayed()
-            .assertTitle(testName.capitalize())
     }
 }

@@ -10,7 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.adammcneilly.pokedex.R
 
-class DetailActivityRobot {
+class PokemonDetailFragmentRobot {
 
     fun waitForCondition(idlingResource: IdlingResource?) = apply {
         IdlingRegistry.getInstance().register(idlingResource)

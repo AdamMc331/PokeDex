@@ -60,5 +60,5 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.core:core-ktx:$ktxVersion"
-    implementation "io.coil-kt:coil:0.6.1"
+    implementation "io.coil-kt:coil:0.7.0"
 }

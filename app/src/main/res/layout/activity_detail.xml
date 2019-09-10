@@ -5,100 +5,90 @@
 
         <variable
             name="viewModel"
-            type="com.adammcneilly.pokedex.detail.DetailActivityViewModel"/>
+            type="com.adammcneilly.pokedex.detail.PokemonDetailViewModel" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        tools:context=".detail.DetailActivity">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:background="?attr/colorPrimary"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_width="match_parent"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:textColorRes="@{viewModel.toolbarTextColorRes}"
-                app:title="@{viewModel.title}"
-                app:toolbarColorRes="@{viewModel.toolbarColorRes}"/>
-
-        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/detail_content"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:padding="16dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <ImageView
                 android:id="@+id/pokemon_image"
-                android:contentDescription="@string/pokemon_image"
-                android:layout_height="100dp"
                 android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:contentDescription="@string/pokemon_image"
                 app:imageUrl="@{viewModel.imageUrl}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/first_type"
-                android:gravity="center"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_width="0dp"
+                android:gravity="center"
                 android:padding="8dp"
                 android:textAllCaps="true"
                 app:layout_constraintEnd_toStartOf="@+id/second_type"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/pokemon_image"
                 app:pokemonType="@{viewModel.firstType}"
-                app:visibilityCondition="@{viewModel.showFirstType}"/>
+                app:visibilityCondition="@{viewModel.showFirstType}" />
 
             <TextView
                 android:id="@+id/second_type"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
                 android:padding="8dp"
                 android:textAllCaps="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/first_type"
                 app:layout_constraintTop_toTopOf="@id/first_type"
                 app:pokemonType="@{viewModel.secondType}"
-                app:visibilityCondition="@{viewModel.showSecondType}"/>
+                app:visibilityCondition="@{viewModel.showSecondType}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ProgressBar
             android:id="@+id/progress_bar"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            app:visibilityCondition="@{viewModel.showLoading}"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibilityCondition="@{viewModel.showLoading}" />
 
         <TextView
             android:id="@+id/error_view"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/something_went_wrong"
             android:textColor="@android:color/black"
             android:visibility="gone"
-            app:visibilityCondition="@{viewModel.showError}"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibilityCondition="@{viewModel.showError}" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
