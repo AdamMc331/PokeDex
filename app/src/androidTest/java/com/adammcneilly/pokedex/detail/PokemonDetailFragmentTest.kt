@@ -47,7 +47,7 @@ class PokemonDetailFragmentTest {
     fun displayData() {
         val testName = "ditto"
         val fragmentArgs = Bundle().apply {
-            putString(PokemonDetailFragment.ARG_POKEMON_NAME, testName)
+            // putString(PokemonDetailFragment.ARG_POKEMON_NAME, testName)
         }
 
         launchFragmentInContainer<PokemonDetailFragment>(fragmentArgs)
@@ -70,7 +70,7 @@ class PokemonDetailFragmentTest {
     fun displayError() {
         val testName = "ditto"
         val fragmentArgs = Bundle().apply {
-            putString(PokemonDetailFragment.ARG_POKEMON_NAME, testName)
+            // putString(PokemonDetailFragment.ARG_POKEMON_NAME, testName)
         }
 
         launchFragmentInContainer<PokemonDetailFragment>(fragmentArgs)
