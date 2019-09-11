@@ -10,24 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.databinding.FragmentPokemonListBinding
-import com.adammcneilly.pokedex.listeners.PokemonClickedListener
+import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.network.PokemonAPI
 import com.adammcneilly.pokedex.network.PokemonRetrofitService
+import com.adammcneilly.pokedex.pokemonlist.PokemonListFragmentDirections.Companion.toPokemonDetail
 import com.adammcneilly.pokedex.views.PokemonAdapter
 
 class PokemonListFragment : Fragment() {
-    private val pokemonAdapter = PokemonAdapter(
-        pokemonClickListener = { pokemon ->
-            pokemonClickListener?.pokemonClicked(pokemon)
-        }
-    )
-
-    var pokemonClickListener: PokemonClickedListener? = null
+    private val pokemonAdapter = PokemonAdapter(this::onPokemonClicked)
 
     private lateinit var viewModel: PokemonListViewModel
     private lateinit var binding: FragmentPokemonListBinding
@@ -93,9 +89,10 @@ class PokemonListFragment : Fragment() {
         )
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        pokemonClickListener = null
+    private fun onPokemonClicked(pokemon: Pokemon) {
+        findNavController().navigate(
+            toPokemonDetail(pokemonName = pokemon.name.orEmpty())
+        )
     }
 
     companion object {

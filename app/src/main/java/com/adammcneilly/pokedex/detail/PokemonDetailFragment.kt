@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.databinding.FragmentPokemonDetailBinding
 import com.adammcneilly.pokedex.network.PokemonAPI
@@ -23,7 +24,8 @@ class PokemonDetailFragment : Fragment() {
             val pokemonAPI =
                 PokemonAPI.defaultInstance((activity?.application as? PokeApp)?.baseUrl.orEmpty())
             val repository = PokemonRetrofitService(pokemonAPI)
-            val pokemonName = arguments?.getString(ARG_POKEMON_NAME).orEmpty()
+            val arguments: PokemonDetailFragmentArgs by navArgs()
+            val pokemonName = arguments.pokemonName
 
             @Suppress("UNCHECKED_CAST")
             return PokemonDetailViewModel(repository, pokemonName) as T
@@ -55,17 +57,5 @@ class PokemonDetailFragment : Fragment() {
 
     private fun setupViewModel() {
         binding.viewModel = viewModel
-    }
-
-    companion object {
-        const val ARG_POKEMON_NAME = "pokemonName"
-
-        fun newInstance(pokemonName: String): PokemonDetailFragment {
-            return PokemonDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_POKEMON_NAME, pokemonName)
-                }
-            }
-        }
     }
 }
