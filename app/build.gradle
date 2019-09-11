@@ -15,7 +15,7 @@ android {
     
     defaultConfig {
         applicationId "com.adammcneilly.pokedex"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -88,7 +88,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleKtxVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$loggingInterceptorVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
     implementation "com.androidessence:materialdesignspecs:$materialSpecsVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
@@ -110,5 +110,5 @@ dependencies {
         exclude group: 'androidx.test', module: 'core'
     }
     //noinspection GradleDependency
-    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttpVersion"
 }

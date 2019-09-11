@@ -5,7 +5,7 @@ buildscript {
     ext.ktlint_version = '8.2.0'
     ext.detekt_version = '1.0.1'
     ext.static_analysis_version = '1.0'
-    ext.versions_plugin_version = '0.24.0'
+    ext.versions_plugin_version = '0.25.0'
     ext.navigation_version = '2.1.0'
 
     repositories {
