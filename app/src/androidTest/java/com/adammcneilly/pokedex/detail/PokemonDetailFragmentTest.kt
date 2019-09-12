@@ -52,7 +52,7 @@ class PokemonDetailFragmentTest {
 
         launchFragmentInContainer<PokemonDetailFragment>(fragmentArgs)
 
-        mockWebServer.setDispatcher(SuccessDispatcher())
+        mockWebServer.dispatcher = SuccessDispatcher()
         progressBarGoneIdlingResource =
             ViewVisibilityIdlingResource(
                 activityTestRule.activity.findViewById(R.id.progress_bar),
@@ -75,7 +75,7 @@ class PokemonDetailFragmentTest {
 
         launchFragmentInContainer<PokemonDetailFragment>(fragmentArgs)
 
-        mockWebServer.setDispatcher(ErrorDispatcher())
+        mockWebServer.dispatcher = ErrorDispatcher()
 
         PokemonDetailFragmentRobot()
             .assertErrorDisplayed()

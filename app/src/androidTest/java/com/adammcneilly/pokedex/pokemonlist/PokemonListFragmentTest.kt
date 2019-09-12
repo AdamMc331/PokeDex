@@ -42,7 +42,7 @@ class PokemonListFragmentTest {
 
     @Test
     fun displayPokemon() {
-        mockWebServer.setDispatcher(SuccessDispatcher())
+        mockWebServer.dispatcher = SuccessDispatcher()
         activityTestRule.launchActivity(null)
         progressBarGoneIdlingResource =
             ViewVisibilityIdlingResource(
@@ -60,7 +60,7 @@ class PokemonListFragmentTest {
 
     @Test
     fun clickItem() {
-        mockWebServer.setDispatcher(SuccessDispatcher())
+        mockWebServer.dispatcher = SuccessDispatcher()
         activityTestRule.launchActivity(null)
         progressBarGoneIdlingResource =
             ViewVisibilityIdlingResource(
@@ -79,7 +79,7 @@ class PokemonListFragmentTest {
 
     @Test
     fun displayError() {
-        mockWebServer.setDispatcher(ErrorDispatcher())
+        mockWebServer.dispatcher = ErrorDispatcher()
         activityTestRule.launchActivity(null)
         progressBarGoneIdlingResource =
             ViewVisibilityIdlingResource(

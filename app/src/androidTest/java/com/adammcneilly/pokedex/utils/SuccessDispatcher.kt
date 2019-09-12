@@ -16,10 +16,10 @@ class SuccessDispatcher(
         APIPaths.POKEMON_DITTO to MockFiles.POKEMON_DETAIL_SUCCESS
     )
 
-    override fun dispatch(request: RecordedRequest?): MockResponse {
+    override fun dispatch(request: RecordedRequest): MockResponse {
         val errorResponse = MockResponse().setResponseCode(404)
 
-        val pathWithoutQueryParams = Uri.parse(request?.path).path ?: return errorResponse
+        val pathWithoutQueryParams = Uri.parse(request.path).path ?: return errorResponse
         val responseFile = responseFilesByPath[pathWithoutQueryParams]
 
         return if (responseFile != null) {
