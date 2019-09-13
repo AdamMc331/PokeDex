@@ -11,9 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.adammcneilly.pokedex.PokeApp
+import com.adammcneilly.pokedex.data.remote.PokemonAPI
+import com.adammcneilly.pokedex.data.remote.PokemonRetrofitService
 import com.adammcneilly.pokedex.databinding.FragmentPokemonDetailBinding
-import com.adammcneilly.pokedex.network.PokemonAPI
-import com.adammcneilly.pokedex.network.PokemonRetrofitService
 
 class PokemonDetailFragment : Fragment() {
     private lateinit var binding: FragmentPokemonDetailBinding

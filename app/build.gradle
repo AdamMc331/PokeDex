@@ -100,6 +100,12 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshLayoutVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    androidTestImplementation "androidx.room:room-testing:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation 'com.google.code.gson:gson:2.8.5'
     implementation project(":image-loader")
     testImplementation "junit:junit:$junitVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
@@ -110,7 +116,7 @@ dependencies {
     androidTestImplementation "androidx.test:rules:$androidXTestVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidXJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
-    debugImplementation ("androidx.fragment:fragment-testing:1.1.0") {
+    debugImplementation ("androidx.fragment:fragment-testing:$fragmentVersion") {
         exclude group: 'androidx.test', module: 'core'
     }
     //noinspection GradleDependency
