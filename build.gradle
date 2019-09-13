@@ -5,7 +5,7 @@ buildscript {
     ext.ktlint_version = '8.2.0'
     ext.detekt_version = '1.0.1'
     ext.static_analysis_version = '1.0'
-    ext.versions_plugin_version = '0.24.0'
+    ext.versions_plugin_version = '0.25.0'
     ext.navigation_version = '2.1.0'
 
     repositories {
@@ -70,8 +70,13 @@ dependencyUpdates {
                 boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm', 'preview', 'b', 'ea'].any { qualifier ->
                     selection.candidate.version ==~ /(?i).*[.-]$qualifier[.\d-+]*/
                 }
+
                 if (rejected) {
                     selection.reject('Release candidate')
+                }
+
+                if (selection.candidate.group == 'com.pinterest' && selection.candidate.module == 'ktlint') {
+                    selection.reject('Pinterest KtLint')
                 }
             }
         }
