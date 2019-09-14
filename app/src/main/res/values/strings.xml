@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Pokedex</string>
-    <string name="action_settings">Settings</string>
     <string name="something_went_wrong">Something went wrong.</string>
-    <string name="title_activity_detail">DetailActivity</string>
     <string name="pokemon_image">Pokemon Image</string>
 </resources>

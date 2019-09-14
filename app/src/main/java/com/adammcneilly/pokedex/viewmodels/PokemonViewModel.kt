@@ -1,5 +1,6 @@
 package com.adammcneilly.pokedex.viewmodels
 
+import android.annotation.SuppressLint
 import androidx.databinding.BaseObservable
 import com.adammcneilly.pokedex.models.Pokemon
 
@@ -11,5 +12,6 @@ class PokemonViewModel : BaseObservable() {
         }
 
     val name: String
+        @SuppressLint("DefaultLocale")
         get() = pokemon?.name?.capitalize().orEmpty()
 }

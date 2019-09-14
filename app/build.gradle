@@ -11,12 +11,12 @@ apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply from: '../dependencies.gradle'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     
     defaultConfig {
         applicationId "com.adammcneilly.pokedex"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "com.adammcneilly.pokedex.MockTestRunner"
@@ -74,6 +74,10 @@ staticAnalysis {
 
     detekt {
         config = rootProject.files('detekt-config.yml')
+    }
+
+    lintOptions {
+
     }
 }
 

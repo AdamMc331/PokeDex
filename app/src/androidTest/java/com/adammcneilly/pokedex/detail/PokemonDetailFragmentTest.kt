@@ -20,7 +20,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@Ignore
+@Ignore("Need to deep link into detail frag, tried starting it from scratch but no luck.")
 @RunWith(AndroidJUnit4::class)
 class PokemonDetailFragmentTest {
     @JvmField
