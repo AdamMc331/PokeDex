@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Pokemon(
-    @PrimaryKey val name: String? = null,
-    val url: String? = null,
+    @PrimaryKey val name: String = "",
     @Embedded val sprites: Sprites? = null,
+    val url: String? = null,
     val types: List<TypeSlot>? = null
 ) {
     val sortedTypes: List<Type>
