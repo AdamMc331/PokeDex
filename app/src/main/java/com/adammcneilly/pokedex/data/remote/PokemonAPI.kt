@@ -16,7 +16,10 @@ interface PokemonAPI {
     fun getPokemonAsync(): Deferred<PokemonResponse>
 
     @GET("v2/pokemon/{name}")
-    fun getPokemonDetailAsync(@Path("name") name: String): Deferred<Pokemon>
+    fun getPokemonDetailAsync(
+        @Path("name")
+        name: String
+    ): Deferred<Pokemon>
 
     companion object {
         fun defaultInstance(baseUrl: String): PokemonAPI {

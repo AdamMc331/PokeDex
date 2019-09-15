@@ -91,13 +91,7 @@ class PokemonListFragment : Fragment() {
 
     private fun onPokemonClicked(pokemon: Pokemon) {
         findNavController().navigate(
-            toPokemonDetail(pokemonName = pokemon.name.orEmpty())
+            toPokemonDetail(pokemonName = pokemon.name)
         )
-    }
-
-    companion object {
-        fun newInstance(): PokemonListFragment {
-            return PokemonListFragment()
-        }
     }
 }

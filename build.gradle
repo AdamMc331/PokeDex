@@ -80,10 +80,6 @@ dependencyUpdates {
                 if (rejected) {
                     selection.reject('Release candidate')
                 }
-
-                if (selection.candidate.group == 'com.pinterest' && selection.candidate.module == 'ktlint') {
-                    selection.reject('Pinterest KtLint')
-                }
             }
         }
     }

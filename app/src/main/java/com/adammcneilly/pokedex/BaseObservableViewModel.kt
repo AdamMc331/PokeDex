@@ -43,7 +43,7 @@ open class BaseObservableViewModel : ViewModel(), Observable {
 
     /**
      * Notifies listeners that a specific property has changed. The getter for the property
-     * that changes should be marked with [Bindable] to generate a field in
+     * that changes should be marked with [androidx.databinding.Bindable] to generate a field in
      * `BR` to be used as `fieldId`.
      *
      * @param fieldId The generated BR id for the Bindable field.
