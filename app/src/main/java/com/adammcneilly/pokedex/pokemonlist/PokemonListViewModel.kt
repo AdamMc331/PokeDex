@@ -6,8 +6,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.adammcneilly.pokedex.BaseObservableViewModel
 import com.adammcneilly.pokedex.DispatcherProvider
+import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.models.Pokemon
-import com.adammcneilly.pokedex.network.PokemonRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 

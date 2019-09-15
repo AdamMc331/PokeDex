@@ -1,5 +1,7 @@
 package com.adammcneilly.pokedex.network
 
+import com.adammcneilly.pokedex.data.remote.PokemonAPI
+import com.adammcneilly.pokedex.data.remote.PokemonRetrofitService
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
 import com.adammcneilly.pokedex.whenever
@@ -14,7 +16,8 @@ import org.mockito.Mockito.mock
 @Suppress("UNCHECKED_CAST")
 class PokemonRetrofitServiceTest {
     private val mockAPI = mock(PokemonAPI::class.java)
-    private val retrofitService = PokemonRetrofitService(mockAPI)
+    private val retrofitService =
+        PokemonRetrofitService(mockAPI)
 
     @Test
     fun getPokemon() {

@@ -1,9 +1,9 @@
 package com.adammcneilly.pokedex.pokemonlist
 
 import com.adammcneilly.pokedex.DispatcherProvider
+import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
-import com.adammcneilly.pokedex.network.PokemonRepository
 import com.adammcneilly.pokedex.testObserver
 import com.adammcneilly.pokedex.whenever
 import kotlinx.coroutines.Dispatchers
