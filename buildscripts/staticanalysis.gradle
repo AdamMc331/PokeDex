@@ -16,7 +16,7 @@ staticAnalysis {
     }
 
     detekt {
-        config = rootProject.files('detekt-config.yml')
+        config = rootProject.files('buildscripts/detekt-config.yml')
     }
 
     lintOptions {

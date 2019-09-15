@@ -39,7 +39,7 @@ allprojects {
 ext.ReporterType = org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 subprojects {
-    apply from: "$rootProject.projectDir/staticanalysis.gradle"
+    apply from: "$rootProject.projectDir/buildscripts/staticanalysis.gradle"
 }
 
 task clean(type: Delete) {

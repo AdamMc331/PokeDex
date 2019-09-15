@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply from: '../dependencies.gradle'
+apply from: "$rootProject.projectDir/buildscripts/dependencies.gradle"
 
 android {
     compileSdkVersion 29
