@@ -22,7 +22,8 @@ class PokedexDatabaseTest {
     @Before
     fun setUp() {
         val context = mainActivity.activity
-        database = Room.inMemoryDatabaseBuilder(context, PokedexDatabase::class.java).allowMainThreadQueries().build()
+        database = Room.inMemoryDatabaseBuilder(context, PokedexDatabase::class.java)
+            .allowMainThreadQueries().build()
         pokemonDao = database.pokemonDao()
     }
 
