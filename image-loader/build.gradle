@@ -1,6 +1,11 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.jlleitschuh.gradle.ktlint'
+apply plugin: 'io.gitlab.arturbosch.detekt'
+apply plugin: 'com.novoda.static-analysis'
 apply from: '../dependencies.gradle'
 
 android {
@@ -30,6 +35,27 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+}
+
+staticAnalysis {
+    penalty {
+        maxErrors = 0
+        maxWarnings = 0
+    }
+
+    ktlint {
+        android = true
+        enableExperimentalRules = true
+        reporters = [ReporterType.PLAIN, ReporterType.CHECKSTYLE]
+    }
+
+    detekt {
+        config = rootProject.files('detekt-config.yml')
+    }
+
+    lintOptions {
+
     }
 }
 
