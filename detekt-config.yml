@@ -72,7 +72,7 @@ complexity:
   ComplexMethod:
     active: true
     threshold: 10
-    ignoreSingleWhenExpression: true
+    ignoreSingleWhenExpression: false
     ignoreSimpleWhenEntries: false
   LabeledExpression:
     active: false

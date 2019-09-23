@@ -6,6 +6,7 @@ data class Type(
     val name: String? = null,
     val url: String? = null
 ) {
+    @Suppress("ComplexMethod")
     fun getColorRes(): Int {
         return when (name) {
             "water" -> R.color.type_water

@@ -6,6 +6,7 @@ data class Color(
     val name: String? = null,
     val url: String? = null
 ) {
+    @Suppress("ComplexMethod")
     fun toColorRes(): Int {
         return when (name) {
             "black" -> R.color.mds_black
