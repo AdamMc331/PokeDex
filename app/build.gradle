@@ -105,7 +105,7 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:$roomVersion"
     annotationProcessor "androidx.room:room-compiler:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation "com.google.code.gson:gson:$gsonVersion"
     implementation project(":image-loader")
     testImplementation "junit:junit:$junitVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
@@ -119,6 +119,5 @@ dependencies {
     debugImplementation ("androidx.fragment:fragment-testing:$fragmentVersion") {
         exclude group: 'androidx.test', module: 'core'
     }
-    //noinspection GradleDependency
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttpVersion"
 }
