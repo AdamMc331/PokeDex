@@ -45,9 +45,11 @@ staticAnalysis {
     }
 
     ktlint {
+        version = "0.35.0"
         android = true
         enableExperimentalRules = true
         reporters = [ReporterType.PLAIN, ReporterType.CHECKSTYLE]
+        additionalEditorconfigFile = file("../.editorConfig")
     }
 
     detekt {

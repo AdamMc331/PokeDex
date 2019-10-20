@@ -14,7 +14,6 @@ class RecyclerViewMatcher(private val recyclerViewId: Int) {
     }
 
     fun atPositionOnView(position: Int, targetViewId: Int): Matcher<View> {
-
         return object : TypeSafeMatcher<View>() {
             var resources: Resources? = null
             var childView: View? = null
@@ -36,7 +35,6 @@ class RecyclerViewMatcher(private val recyclerViewId: Int) {
             }
 
             public override fun matchesSafely(view: View): Boolean {
-
                 this.resources = view.resources
 
                 if (childView == null) {
