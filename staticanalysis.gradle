@@ -17,7 +17,7 @@ staticAnalysis {
     }
 
     detekt {
-        config = files("${project.projectDir}/detekt-config.yml")
+        config = file("${project.projectDir}/detekt-config.yml")
     }
 
     lintOptions {
