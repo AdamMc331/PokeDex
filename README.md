@@ -23,4 +23,8 @@ Want to see code examples of coroutines, and compare them to RxJava? You could a
 
 ## Repository Pattern
 
-Check out [this blog post](https://androidessence.com/repository-pattern) for understanding the Repository Pattern. 
+Check out [this blog post](https://androidessence.com/repository-pattern) for understanding the Repository Pattern.
+
+## Static Analysis
+
+In October 2019 I spoke at the NY Android Developers meetup and presented on static analysis tools. I used this repo as a sample project. You can find the slides [here](nyandroid_staticanalysis_pres/static_analysis.pdf). 
