@@ -1,0 +1,26 @@
+apply plugin: 'org.jlleitschuh.gradle.ktlint'
+apply plugin: 'io.gitlab.arturbosch.detekt'
+apply plugin: 'com.novoda.static-analysis'
+
+staticAnalysis {
+    penalty {
+        maxErrors = 0
+        maxWarnings = 0
+    }
+
+    ktlint {
+        version = "0.35.0"
+        android = true
+        enableExperimentalRules = true
+        reporters = [ReporterType.PLAIN, ReporterType.CHECKSTYLE]
+        additionalEditorconfigFile = file("${project.projectDir}/.editorConfig")
+    }
+
+    detekt {
+       config = file("${project.projectDir}/config/detekt/detekt.yml")
+    }
+
+    lintOptions {
+
+    }
+}
