@@ -1,7 +1,9 @@
 package com.adammcneilly.pokedex.data
 
+import com.adammcneilly.pokedex.database.models.PersistablePokemon
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
+import com.adammcneilly.pokedex.models.toPokemon
 import org.junit.Before
 import org.junit.Test
 
@@ -37,11 +39,11 @@ class PokemonServiceTest {
     fun `get pokemon detail from Database Before API`() {
         val testName = "Adam"
         val networkDetail = Pokemon(name = "From Network")
-        val databaseDetail = Pokemon(name = "From Database")
+        val databaseDetail = PersistablePokemon(name = "From Database")
 
         testRobot
             .mockNetworkPokemonDetailForPokemon(testName, networkDetail)
             .mockLocalPokemonDetailForPokemon(testName, databaseDetail)
-            .assertPokemonDetail(testName, databaseDetail)
+            .assertPokemonDetail(testName, databaseDetail.toPokemon())
     }
 }

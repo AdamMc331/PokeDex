@@ -1,6 +1,7 @@
 package com.adammcneilly.pokedex.models
 
 import com.adammcneilly.pokedex.R
+import com.adammcneilly.pokedex.database.models.PersistableType
 
 data class Type(
     val name: String? = null,
@@ -36,5 +37,21 @@ data class Type(
             "steel" -> R.color.mds_black
             else -> R.color.mds_white
         }
+    }
+
+    fun toPersistableType(): PersistableType {
+        return PersistableType(
+            name = this.name,
+            url = this.url
+        )
+    }
+}
+
+fun PersistableType?.toType(): Type? {
+    return this?.let {
+        Type(
+            name = it.name,
+            url = it.url
+        )
     }
 }

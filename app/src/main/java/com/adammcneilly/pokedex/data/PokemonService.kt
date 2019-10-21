@@ -1,9 +1,10 @@
 package com.adammcneilly.pokedex.data
 
-import com.adammcneilly.pokedex.data.local.PokedexDatabase
 import com.adammcneilly.pokedex.data.remote.PokemonAPI
+import com.adammcneilly.pokedex.database.PokedexDatabase
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
+import com.adammcneilly.pokedex.models.toPokemon
 
 /**
  * Implementation of a [PokemonRepository] that fetch from both local and remote sources.
@@ -21,12 +22,12 @@ open class PokemonService(
     }
 
     private suspend fun getPokemonDetailFromDatabase(pokemonName: String): Pokemon? {
-        return database.pokemonDao().getPokemonByName(pokemonName)
+        return database.getPokemonByName(pokemonName).toPokemon()
     }
 
     private suspend fun getPokemonDetailFromNetwork(pokemonName: String): Pokemon {
         return api.getPokemonDetailAsync(pokemonName).await().also {
-            database.pokemonDao().insert(it)
+            database.insertPokemon(it.toPersistablePokemon())
         }
     }
 }
