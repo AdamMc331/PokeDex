@@ -267,5 +267,7 @@ I just added these tools, my build failed, what do I do?
 
 # Thank You!
 
+Join us: https://okcupid.com/careers
+
 Sample app: https://github.com/adammc331/pokedex
 Slides: http://bit.ly/NYAndroid-StaticAnalysis
