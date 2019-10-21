@@ -20,7 +20,9 @@ build-lists: true
 
 # Formatting Code With KtLint
 
-> An anti-bikeshedding Kotlin linter with built-in formatter.[^1]
+An anti-bikeshedding Kotlin linter with built-in formatter.[^1]
+
+"Bikeshedding" is a term used to describe wasting time on trivial details.
 
 [^1]: https://ktlint.github.io/
 
@@ -37,10 +39,13 @@ build-lists: true
 ---
 
 # Why Should We Care?
-
-- Avoid "bikeshedding" - a term used to describe wasting time on trivial details
+- Consistency is important
 - Create a source of truth that everyone agrees on and no one can argue with
 - Allows us to focus on the substance of code reviews instead of styling
+
+---
+
+# Adding KtLint To Our Projects
 
 ---
 
@@ -48,8 +53,6 @@ build-lists: true
 
 ```groovy
 // App module build.gradle
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
-apply plugin: 'org.jlleitschuh.gradle.ktlint'
 
 ktlint {
 	version = "0.35.0"
@@ -73,9 +76,17 @@ ktlint {
 
 # KtLint Example
 
+[.code-highlight: 1-2]
+[.code-highlight: 4-7]
+[.code-highlight: 9-16]
 ```kotlin
 // Long line, no spacing
 data class Test(val name:String,val age:Int,val location:String,val isRegistered:Boolean,val test:String)
+
+// Error output:
+Test.kt:3:1: Exceeded max line length (100) (cannot be auto-corrected)
+Test.kt:3:17: Parameter should be on a separate line (unless all parameters can fit a single line)
+Test.kt:3:26: Missing spacing after ":"
 
 // Gets formatted into
 data class Test(
@@ -85,19 +96,15 @@ data class Test(
     val isRegistered: Boolean,
     val test: String
 )
-
-
-// Error output:
-Test.kt:3:1: Exceeded max line length (100) (cannot be auto-corrected)
-Test.kt:3:17: Parameter should be on a separate line (unless all parameters can fit a single line)
-Test.kt:3:26: Missing spacing after ":"
 ```
 
 ---
 
-# Auto Format With Git Hook[^3]
+# Remembering To Format Code Is Hard
 
-Remembering to reformat our code can be difficult. Leveraging git hooks allows us to automate it and not think about it.
+---
+
+# Auto Format With Git Hook[^3]
 
 ```bash
 // .git/hooks/pre-commit
@@ -207,19 +214,6 @@ complexity:
 - `./gradlew detektGenerateConfig`
 - `./gradlew detektBaseline`
 - `./gradlew detekt`
-
----
-
-# Console Output Example
-
-```diff
-Type.kt - 20min debt
-   ComplexMethod - 20/10 - [getColorRes] at Type.kt:9:5
-
-PokemonListViewModel.kt - 20min debt
-   TooGenericExceptionCaught - [error] at PokemonListViewModel.kt:52:26
-
-```
 
 ---
 
