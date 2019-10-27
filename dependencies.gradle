@@ -3,7 +3,7 @@ ext {
     appCompatVersion = '1.1.0'
     ktxVersion = '1.1.0'
     constraintLayoutVersion = '1.1.3'
-    materialVersion = '1.1.0-beta01'
+    materialVersion = '1.2.0-alpha01'
     retrofitVersion = '2.6.2'
     lifecycleVersion = '2.1.0'
     lifecycleKtxVersion = '2.1.0'
@@ -13,7 +13,7 @@ ext {
     swipeRefreshLayoutVersion = '1.0.0'
     okhttpVersion = '4.2.2'
     fragmentVersion = '1.1.0'
-    roomVersion = '2.2.0'
+    roomVersion = '2.2.1'
     gsonVersion = '2.8.6'
 
     // Test dependencies
