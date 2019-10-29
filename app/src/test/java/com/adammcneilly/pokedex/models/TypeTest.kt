@@ -1,6 +1,7 @@
 package com.adammcneilly.pokedex.models
 
 import com.adammcneilly.pokedex.R
+import com.adammcneilly.pokedex.database.models.PersistableType
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -73,5 +74,27 @@ class TypeTest {
 
         val defaultType = Type("blahblahblah")
         assertEquals(R.color.mds_white, defaultType.getComplementaryColorRes())
+    }
+
+    @Test
+    fun mapToPersistableType() {
+        val testName = "Test Name"
+        val testURL = "Test URL"
+        val type = Type(name = testName, url = testURL)
+
+        val persistableType = type.toPersistableType()
+        assertEquals(testName, persistableType.name)
+        assertEquals(testURL, persistableType.url)
+    }
+
+    @Test
+    fun mapFromPersistableType() {
+        val testName = "Test Name"
+        val testURL = "Test URL"
+        val persistableType = PersistableType(name = testName, url = testURL)
+
+        val type = persistableType.toType()
+        assertEquals(testName, type?.name)
+        assertEquals(testURL, type?.url)
     }
 }

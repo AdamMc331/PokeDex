@@ -1,28 +1,22 @@
-package com.adammcneilly.pokedex.data.local
+package com.adammcneilly.pokedex.database.room
 
 import androidx.room.Room
-import androidx.test.rule.ActivityTestRule
-import com.adammcneilly.pokedex.main.MainActivity
-import com.adammcneilly.pokedex.models.Pokemon
+import androidx.test.platform.app.InstrumentationRegistry
+import com.adammcneilly.pokedex.database.models.PersistablePokemon
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 
-class PokedexDatabaseTest {
-    private lateinit var database: PokedexDatabase
-    private lateinit var pokemonDao: PokemonDAO
-
-    @JvmField
-    @Rule
-    val mainActivity = ActivityTestRule<MainActivity>(MainActivity::class.java)
+class RoomPokedexDatabaseTest {
+    private lateinit var database: RoomPokedexDatabase
+    private lateinit var pokemonDao: RoomPokemonDAO
 
     @Before
     fun setUp() {
-        val context = mainActivity.activity
-        database = Room.inMemoryDatabaseBuilder(context, PokedexDatabase::class.java)
+        val context = InstrumentationRegistry.getInstrumentation().context
+        database = Room.inMemoryDatabaseBuilder(context, RoomPokedexDatabase::class.java)
             .allowMainThreadQueries().build()
         pokemonDao = database.pokemonDao()
     }
@@ -39,7 +33,7 @@ class PokedexDatabaseTest {
     fun insertReadPokemon() {
         runBlocking {
             val testName = "Adam"
-            val testPokemon = Pokemon(name = testName)
+            val testPokemon = PersistablePokemon(name = testName)
             pokemonDao.insert(testPokemon)
 
             val result = pokemonDao.getPokemonByName(testName)

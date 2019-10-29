@@ -1,1 +1,1 @@
-include ':app', ':image-loader'
+include ':app', ':image-loader', ':database'
