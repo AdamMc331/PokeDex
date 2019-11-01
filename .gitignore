@@ -1,5 +1,6 @@
 *.iml
 .gradle
+buildsrc/build/
 /local.properties
 /.idea/inspectionProfiles
 /.idea/caches
