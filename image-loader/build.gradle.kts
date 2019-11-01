@@ -40,7 +40,7 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(kotlin("stdlib-jdk7", KotlinCompilerVersion.VERSION))
-    implementation("androidx.appcompat:appcompat:${Versions.appCompat}")
-    implementation("androidx.core:core-ktx:${Versions.ktxCore}")
-    implementation("io.coil-kt:coil:${Versions.coil}")
+    implementation(Dependencies.appCompat)
+    implementation(Dependencies.ktxCore)
+    implementation(Dependencies.coil)
 }
