@@ -36,6 +36,7 @@ dependencies {
     implementation(Dependencies.ktxCore)
     implementation(Dependencies.roomRuntime)
     implementation(Dependencies.roomKtx)
+    implementation(Dependencies.gson)
     annotationProcessor(Dependencies.roomCompiler)
     kapt(Dependencies.roomCompiler)
     testImplementation(Dependencies.junit)
