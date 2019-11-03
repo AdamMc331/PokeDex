@@ -9,7 +9,7 @@ import com.adammcneilly.pokedex.database.models.PersistablePokemon
 
 @Database(entities = [(PersistablePokemon::class)], version = 1)
 @TypeConverters((TypeSlotListConverter::class))
-abstract class RoomPokedexDatabase : RoomDatabase() {
+internal abstract class RoomPokedexDatabase : RoomDatabase() {
     abstract fun pokemonDao(): RoomPokemonDAO
 
     companion object {

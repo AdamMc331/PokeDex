@@ -104,23 +104,17 @@ tasks.withType<DependencyUpdatesTask> {
     resolutionStrategy {
         componentSelection {
             all {
-                val rejected = listOf(
-                    "alpha",
-                    "beta",
-                    "rc",
-                    "cr",
-                    "m",
-                    "preview",
-                    "b",
-                    "ea"
-                ).any { qualifier ->
-                    this.candidate.version.matches(Regex("/(?i).*[.-]$qualifier[.\\d-+]*/"))
-                }
-
-                if (rejected) {
-                    reject("Release Candidate")
+                if (isNonStable(this.candidate.version) && !isNonStable(this.currentVersion)) {
+                    reject("Release candidate")
                 }
             }
         }
     }
+}
+
+fun isNonStable(version: String): Boolean {
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+    val isStable = stableKeyword || regex.matches(version)
+    return isStable.not()
 }
