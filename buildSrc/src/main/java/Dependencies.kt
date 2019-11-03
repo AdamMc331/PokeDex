@@ -1,3 +1,10 @@
+sealed class DependencyConfig(val name: String) {
+    class Implementation(name: String) : DependencyConfig(name)
+    class TestImplementation(name: String) : DependencyConfig(name)
+    class AndroidTestImplementation(name: String) : DependencyConfig(name)
+    class Kapt(name: String) : DependencyConfig(name)
+}
+
 object Dependencies {
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     const val ktxCore = "androidx.core:core-ktx:${Versions.ktxCore}"
@@ -40,4 +47,22 @@ object Dependencies {
     const val androidXJunitExtension = "androidx.test.ext:junit:${Versions.androidXJunit}"
     const val fragmentTesting = "androidx.fragment:fragment-testing:${Versions.fragments}"
     const val mockwebserver = "com.squareup.okhttp3:mockwebserver:${Versions.okhttp}"
+
+    val imageLoaderDependencies = listOf(
+        DependencyConfig.Implementation(appCompat),
+        DependencyConfig.Implementation(coil)
+    )
+
+    val databaseDependencies = listOf(
+        DependencyConfig.Implementation(appCompat),
+        DependencyConfig.Implementation(ktxCore),
+        DependencyConfig.Implementation(roomRuntime),
+        DependencyConfig.Implementation(roomKtx),
+        DependencyConfig.Implementation(gson),
+        DependencyConfig.Kapt(roomCompiler),
+        DependencyConfig.TestImplementation(junit),
+        DependencyConfig.AndroidTestImplementation(roomTesting),
+        DependencyConfig.AndroidTestImplementation(androixTestRunner),
+        DependencyConfig.AndroidTestImplementation(espressoCore)
+    )
 }
