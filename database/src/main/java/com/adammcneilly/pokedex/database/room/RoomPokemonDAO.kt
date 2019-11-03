@@ -6,7 +6,7 @@ import androidx.room.Query
 import com.adammcneilly.pokedex.database.models.PersistablePokemon
 
 @Dao
-interface RoomPokemonDAO {
+internal interface RoomPokemonDAO {
     @Insert
     suspend fun insert(pokemon: PersistablePokemon): Long
 

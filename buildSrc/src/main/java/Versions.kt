@@ -1,6 +1,6 @@
 object Versions {
-    const val kotlin = "1.3.0"
-    const val ktlint = "9.0.0"
+    const val kotlin = "1.3.50"
+    const val ktlint = "9.1.0"
     const val detekt = "1.1.1"
     const val staticAnalysis = "1.1"
     const val versionsPlugin = "0.27.0"

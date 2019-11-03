@@ -5,7 +5,7 @@ import com.adammcneilly.pokedex.database.models.PersistableTypeSlot
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class TypeSlotListConverter {
+internal class TypeSlotListConverter {
 
     @TypeConverter
     fun fromTypeSlotList(value: List<PersistableTypeSlot>?): String {
