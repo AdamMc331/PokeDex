@@ -1,7 +1,7 @@
-package com.adammcneilly.pokedex.data.remote
+package com.adammcneilly.pokedex.network.retrofit
 
-import com.adammcneilly.pokedex.models.Pokemon
-import com.adammcneilly.pokedex.models.PokemonResponse
+import com.adammcneilly.pokedex.network.models.PokemonDTO
+import com.adammcneilly.pokedex.network.models.PokemonResponseDTO
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.OkHttpClient
@@ -11,18 +11,18 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface PokemonAPI {
+internal interface RetrofitPokemonAPI {
     @GET("v2/pokemon")
-    fun getPokemonAsync(): Deferred<PokemonResponse>
+    fun getPokemonAsync(): Deferred<PokemonResponseDTO>
 
     @GET("v2/pokemon/{name}")
     fun getPokemonDetailAsync(
         @Path("name")
         name: String
-    ): Deferred<Pokemon>
+    ): Deferred<PokemonDTO>
 
     companion object {
-        fun defaultInstance(baseUrl: String): PokemonAPI {
+        fun defaultInstance(baseUrl: String): RetrofitPokemonAPI {
             val interceptor = HttpLoggingInterceptor().apply {
                 this.level = HttpLoggingInterceptor.Level.BODY
             }
@@ -35,7 +35,7 @@ interface PokemonAPI {
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .client(client)
                 .build()
-                .create(PokemonAPI::class.java)
+                .create(RetrofitPokemonAPI::class.java)
         }
     }
 }

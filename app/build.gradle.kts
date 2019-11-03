@@ -67,6 +67,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(":image-loader"))
     implementation(project(":database"))
+    implementation(project(":network"))
     implementation(kotlin("stdlib", KotlinCompilerVersion.VERSION))
     debugImplementation(Dependencies.fragmentTesting) {
         exclude("androidx.test", "core")

@@ -78,7 +78,13 @@ class PokemonDetailViewModel(
             val newState = withContext(dispatcherProvider.IO) {
                 return@withContext try {
                     val pokemon = repository.getPokemonDetail(pokemonName)
-                    PokemonDetailState.Loaded(pokemon)
+                    if (pokemon != null) {
+                        PokemonDetailState.Loaded(pokemon)
+                    } else {
+                        PokemonDetailState.Error(
+                            Throwable("Unable to fetch Pokemon details.")
+                        )
+                    }
                 } catch (error: Throwable) {
                     PokemonDetailState.Error(error)
                 }

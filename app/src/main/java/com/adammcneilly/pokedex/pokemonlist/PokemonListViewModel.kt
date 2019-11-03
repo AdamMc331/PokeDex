@@ -47,9 +47,13 @@ class PokemonListViewModel(
             val newState = withContext(dispatcherProvider.IO) {
                 try {
                     val response = repository.getPokemon()
-                    return@withContext PokemonListState.Loaded(
-                        response
-                    )
+                    return@withContext if (response != null) {
+                        PokemonListState.Loaded(response)
+                    } else {
+                        PokemonListState.Error(
+                            Throwable("Unable to fetch Pokemon.")
+                        )
+                    }
                 } catch (error: Throwable) {
                     return@withContext PokemonListState.Error(
                         error
