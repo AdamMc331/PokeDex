@@ -26,6 +26,5 @@ object Versions {
     const val fragments = "1.1.0"
     const val mockito = "3.1.0"
     const val archTesting = "2.1.0"
-    const val androidXText = "1.2.0"
     const val androidXJunit = "1.1.1"
 }
