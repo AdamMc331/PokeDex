@@ -32,15 +32,6 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(kotlin("stdlib", KotlinCompilerVersion.VERSION))
-    implementation(Dependencies.appCompat)
-    implementation(Dependencies.ktxCore)
-    implementation(Dependencies.roomRuntime)
-    implementation(Dependencies.roomKtx)
-    implementation(Dependencies.gson)
-    annotationProcessor(Dependencies.roomCompiler)
-    kapt(Dependencies.roomCompiler)
-    testImplementation(Dependencies.junit)
-    androidTestImplementation(Dependencies.roomTesting)
-    androidTestImplementation(Dependencies.androixTestRunner)
-    androidTestImplementation(Dependencies.espressoCore)
+
+    addDependencies(Dependencies.databaseDependencies)
 }
