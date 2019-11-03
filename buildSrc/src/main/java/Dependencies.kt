@@ -17,7 +17,7 @@ object Dependencies {
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     const val junit = "junit:junit:${Versions.junit}"
     const val roomTesting = "androidx.room:room-testing:${Versions.room}"
-    const val androixTestRunner = "androidx.test:runner:${Versions.androidXTest}"
+    const val androidXTestRunner = "androidx.test:runner:${Versions.androidXTest}"
     const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espresso}"
     const val constraintLayout =
         "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
@@ -63,10 +63,40 @@ object Dependencies {
         DependencyConfig.Implementation(roomKtx),
         DependencyConfig.Implementation(gson),
         DependencyConfig.Kapt(roomCompiler),
+        DependencyConfig.AnnotationProcessor(roomCompiler),
         DependencyConfig.TestImplementation(junit),
         DependencyConfig.AndroidTestImplementation(roomTesting),
-        DependencyConfig.AndroidTestImplementation(androixTestRunner),
+        DependencyConfig.AndroidTestImplementation(androidXTestRunner),
         DependencyConfig.AndroidTestImplementation(espressoCore)
+    )
+
+    val appDependencies = listOf(
+        DependencyConfig.Implementation(appCompat),
+        DependencyConfig.Implementation(ktxCore),
+        DependencyConfig.Implementation(constraintLayout),
+        DependencyConfig.Implementation(materialDesign),
+        DependencyConfig.Implementation(retrofit),
+        DependencyConfig.Implementation(moshiConverter),
+        DependencyConfig.Implementation(lifecycleExtensions),
+        DependencyConfig.Implementation(viewModelKtx),
+        DependencyConfig.Implementation(okhttpLogging),
+        DependencyConfig.Implementation(materialDesignSpecs),
+        DependencyConfig.Implementation(coroutinesCore),
+        DependencyConfig.Implementation(coroutinesAndroid),
+        DependencyConfig.Implementation(coroutinesAdapter),
+        DependencyConfig.Implementation(swipeRefreshLayout),
+        DependencyConfig.Implementation(navigationFragmentKtx),
+        DependencyConfig.Implementation(navigationUiKtx),
+        DependencyConfig.TestImplementation(junit),
+        DependencyConfig.TestImplementation(mockito),
+        DependencyConfig.TestImplementation(archTesting),
+        DependencyConfig.TestImplementation(coroutinesTest),
+        DependencyConfig.AndroidTestImplementation(androidXTestCore),
+        DependencyConfig.AndroidTestImplementation(androidXTestRunner),
+        DependencyConfig.AndroidTestImplementation(androidXTestRules),
+        DependencyConfig.AndroidTestImplementation(androidXJunitExtension),
+        DependencyConfig.AndroidTestImplementation(espressoCore),
+        DependencyConfig.AndroidTestImplementation(mockwebserver)
     )
 }
 

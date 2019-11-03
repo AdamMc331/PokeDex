@@ -32,7 +32,6 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(kotlin("stdlib", KotlinCompilerVersion.VERSION))
-    annotationProcessor(Dependencies.roomCompiler)
 
     addDependencies(Dependencies.databaseDependencies)
 }
