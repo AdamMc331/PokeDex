@@ -13,7 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.data.PokemonService
 import com.adammcneilly.pokedex.data.remote.PokemonAPI
-import com.adammcneilly.pokedex.database.PokedexDatabase
+import com.adammcneilly.pokedex.database.DefaultPokedexDatabase
 import com.adammcneilly.pokedex.databinding.FragmentPokemonDetailBinding
 
 class PokemonDetailFragment : Fragment() {
@@ -24,7 +24,7 @@ class PokemonDetailFragment : Fragment() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             val api =
                 PokemonAPI.defaultInstance((activity?.application as? PokeApp)?.baseUrl.orEmpty())
-            val database = PokedexDatabase(requireContext())
+            val database = DefaultPokedexDatabase(requireContext())
             val repository = PokemonService(database, api)
             val arguments: PokemonDetailFragmentArgs by navArgs()
             val pokemonName = arguments.pokemonName
