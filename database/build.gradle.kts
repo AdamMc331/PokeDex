@@ -34,12 +34,5 @@ dependencies {
     implementation(kotlin("stdlib", KotlinCompilerVersion.VERSION))
     annotationProcessor(Dependencies.roomCompiler)
 
-    Dependencies.databaseDependencies.forEach {
-        when (it) {
-            is DependencyConfig.Implementation -> implementation(it.name)
-            is DependencyConfig.TestImplementation -> testImplementation(it.name)
-            is DependencyConfig.AndroidTestImplementation -> androidTestImplementation(it.name)
-            is DependencyConfig.Kapt -> kapt(it.name)
-        }
-    }
+    addDependencies(Dependencies.databaseDependencies)
 }

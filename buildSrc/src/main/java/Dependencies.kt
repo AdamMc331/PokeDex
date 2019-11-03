@@ -1,8 +1,11 @@
+import org.gradle.api.artifacts.dsl.DependencyHandler
+
 sealed class DependencyConfig(val name: String) {
     class Implementation(name: String) : DependencyConfig(name)
     class TestImplementation(name: String) : DependencyConfig(name)
     class AndroidTestImplementation(name: String) : DependencyConfig(name)
     class Kapt(name: String) : DependencyConfig(name)
+    class AnnotationProcessor(name: String) : DependencyConfig(name)
 }
 
 object Dependencies {
@@ -65,4 +68,31 @@ object Dependencies {
         DependencyConfig.AndroidTestImplementation(androixTestRunner),
         DependencyConfig.AndroidTestImplementation(espressoCore)
     )
+}
+
+fun DependencyHandler.addDependencies(dependencies: List<DependencyConfig>) {
+    dependencies.forEach {
+        when (it) {
+            is DependencyConfig.Implementation -> add(
+                "implementation",
+                it.name
+            )
+            is DependencyConfig.TestImplementation -> add(
+                "testImplementation",
+                it.name
+            )
+            is DependencyConfig.AndroidTestImplementation -> add(
+                "androidTestImplementation",
+                it.name
+            )
+            is DependencyConfig.Kapt -> add(
+                "kapt",
+                it.name
+            )
+            is DependencyConfig.AnnotationProcessor -> add(
+                "annotationProcessor",
+                it.name
+            )
+        }
+    }
 }
