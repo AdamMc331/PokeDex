@@ -2,10 +2,8 @@ package com.adammcneilly.pokedex.models
 
 import com.adammcneilly.pokedex.database.models.PersistableSprites
 import com.adammcneilly.pokedex.network.models.SpritesDTO
-import com.squareup.moshi.Json
 
 data class Sprites(
-    @field:Json(name = "front_default")
     val frontDefault: String? = null
 ) {
     fun toPersistableSprites(): PersistableSprites {
