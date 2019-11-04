@@ -4,6 +4,10 @@ import com.adammcneilly.pokedex.database.models.PersistablePokemon
 import com.adammcneilly.pokedex.database.models.PersistableSprites
 import com.adammcneilly.pokedex.database.models.PersistableType
 import com.adammcneilly.pokedex.database.models.PersistableTypeSlot
+import com.adammcneilly.pokedex.network.models.PokemonDTO
+import com.adammcneilly.pokedex.network.models.SpritesDTO
+import com.adammcneilly.pokedex.network.models.TypeDTO
+import com.adammcneilly.pokedex.network.models.TypeSlotDTO
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -58,5 +62,45 @@ class PokemonTest {
         val sortedTypes = pokemon.sortedTypes
         val expectedTypes = listOf(firstTypeSlot.type, secondTypeSlot.type)
         assertEquals(expectedTypes, sortedTypes)
+    }
+
+    @Test
+    fun mapToPokemonDTO() {
+        val testName = "Test Name"
+        val testSprites = Sprites("Test")
+        val testUrl = "Test URL"
+        val testTypes = listOf(TypeSlot(1, Type("Test")))
+        val pokemon = Pokemon(
+            name = testName,
+            sprites = testSprites,
+            url = testUrl,
+            types = testTypes
+        )
+
+        val pokemonDTO = pokemon.toPokemonDTO()
+        assertEquals(testName, pokemonDTO.name)
+        assertEquals(testSprites.toSpritesDTO(), pokemonDTO.sprites)
+        assertEquals(testUrl, pokemonDTO.url)
+        assertEquals(testTypes.map(TypeSlot::toTypeSlotDTO), pokemonDTO.types)
+    }
+
+    @Test
+    fun mapFromPokemonDTO() {
+        val testName = "Test Name"
+        val testSprites = SpritesDTO("Test")
+        val testUrl = "Test URL"
+        val testTypes = listOf(TypeSlotDTO(1, TypeDTO("Test")))
+        val pokemonDTO = PokemonDTO(
+            name = testName,
+            sprites = testSprites,
+            url = testUrl,
+            types = testTypes
+        )
+
+        val pokemon = pokemonDTO.toPokemon()
+        assertEquals(testName, pokemon?.name)
+        assertEquals(testSprites.toSprites(), pokemon?.sprites)
+        assertEquals(testUrl, pokemon?.url)
+        assertEquals(testTypes.map(TypeSlotDTO::toTypeSlot), pokemon?.types)
     }
 }

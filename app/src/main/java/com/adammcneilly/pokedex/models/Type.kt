@@ -2,6 +2,7 @@ package com.adammcneilly.pokedex.models
 
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.database.models.PersistableType
+import com.adammcneilly.pokedex.network.models.TypeDTO
 
 data class Type(
     val name: String? = null,
@@ -45,9 +46,25 @@ data class Type(
             url = this.url
         )
     }
+
+    fun toTypeDTO(): TypeDTO {
+        return TypeDTO(
+            name = this.name,
+            url = this.url
+        )
+    }
 }
 
 fun PersistableType?.toType(): Type? {
+    return this?.let {
+        Type(
+            name = it.name,
+            url = it.url
+        )
+    }
+}
+
+fun TypeDTO?.toType(): Type? {
     return this?.let {
         Type(
             name = it.name,
