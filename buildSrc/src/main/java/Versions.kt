@@ -5,7 +5,7 @@ object Versions {
     const val staticAnalysis = "1.1"
     const val versionsPlugin = "0.27.0"
     const val navigation = "2.1.0"
-    const val buildTools = "3.5.1"
+    const val buildTools = "3.5.2"
     const val appCompat = "1.1.0"
     const val ktxCore = "1.1.0"
     const val coil = "0.8.0"
