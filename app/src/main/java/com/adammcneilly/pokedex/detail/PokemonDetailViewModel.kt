@@ -9,6 +9,7 @@ import com.adammcneilly.pokedex.BaseObservableViewModel
 import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.data.PokemonRepository
+import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.Type
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,12 +27,16 @@ class PokemonDetailViewModel(
         @SuppressLint("DefaultLocale")
         get() = pokemonName.capitalize()
 
-    val firstType: LiveData<Type> = Transformations.map(state) { state ->
-        (state as? PokemonDetailState.Loaded)?.pokemon?.sortedTypes?.firstOrNull()
+    private val pokemonDetail: LiveData<Pokemon> = Transformations.map(state) { state ->
+        (state as? PokemonDetailState.Loaded)?.pokemon
     }
 
-    val secondType: LiveData<Type> = Transformations.map(state) { state ->
-        (state as? PokemonDetailState.Loaded)?.pokemon?.sortedTypes?.getOrNull(1)
+    val firstType: LiveData<Type> = Transformations.map(pokemonDetail) { pokemon ->
+        pokemon?.sortedTypes?.firstOrNull()
+    }
+
+    val secondType: LiveData<Type> = Transformations.map(pokemonDetail) { pokemon ->
+        pokemon?.sortedTypes?.getOrNull(1)
     }
 
     val toolbarColorRes: LiveData<Int> = Transformations.map(firstType) { firstType ->
@@ -42,8 +47,8 @@ class PokemonDetailViewModel(
         firstType?.getComplementaryColorRes() ?: R.color.mds_white
     }
 
-    val imageUrl: LiveData<String> = Transformations.map(state) { state ->
-        (state as? PokemonDetailState.Loaded)?.pokemon?.sprites?.frontDefault.orEmpty()
+    val imageUrl: LiveData<String> = Transformations.map(pokemonDetail) { pokemon ->
+        pokemon?.sprites?.frontDefault.orEmpty()
     }
 
     val showLoading: LiveData<Boolean> = Transformations.map(state) { state ->
