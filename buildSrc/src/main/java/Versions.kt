@@ -24,7 +24,7 @@ object Versions {
     const val swipeRefreshLayout = "1.0.0"
     const val okhttp = "4.2.2"
     const val fragments = "1.1.0"
-    const val mockito = "3.2.0"
     const val archTesting = "2.1.0"
     const val androidXJunit = "1.1.1"
+    const val mockK = "1.9.3.kotlin12"
 }

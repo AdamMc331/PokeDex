@@ -5,14 +5,13 @@ import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
 import com.adammcneilly.pokedex.testObserver
-import com.adammcneilly.pokedex.whenever
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
-import org.mockito.Mockito.mock
 
 class PokemonListViewModelRobot(
-    private val mockRepository: PokemonRepository = mock(PokemonRepository::class.java),
+    private val mockRepository: PokemonRepository = mockk(),
     private val testDispatcherProvider: DispatcherProvider = DispatcherProvider(
         IO = Dispatchers.Unconfined,
         Main = Dispatchers.Unconfined
@@ -21,15 +20,11 @@ class PokemonListViewModelRobot(
     private lateinit var viewModel: PokemonListViewModel
 
     fun mockPokemonResponse(response: PokemonResponse) = apply {
-        runBlocking {
-            whenever(mockRepository.getPokemon()).thenReturn(response)
-        }
+        coEvery { mockRepository.getPokemon() } returns response
     }
 
     fun mockPokemonResponseError(error: Throwable = IllegalArgumentException()) = apply {
-        runBlocking {
-            whenever(mockRepository.getPokemon()).thenThrow(error)
-        }
+        coEvery { mockRepository.getPokemon() } throws error
     }
 
     fun buildViewModel() = apply {

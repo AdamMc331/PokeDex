@@ -5,15 +5,13 @@ import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.Type
 import com.adammcneilly.pokedex.testObserver
-import com.adammcneilly.pokedex.whenever
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
-import org.mockito.ArgumentMatchers.anyString
-import org.mockito.Mockito.mock
 
 class PokemonDetailViewModelRobot(
-    private val mockRepository: PokemonRepository = mock(PokemonRepository::class.java),
+    private val mockRepository: PokemonRepository = mockk(),
     private val dispatcherProvider: DispatcherProvider = DispatcherProvider(
         IO = Dispatchers.Unconfined,
         Main = Dispatchers.Unconfined
@@ -27,15 +25,11 @@ class PokemonDetailViewModelRobot(
     }
 
     fun mockPokemonDetails(pokemonDetails: Pokemon) = apply {
-        runBlocking {
-            whenever(mockRepository.getPokemonDetail(anyString())).thenReturn(pokemonDetails)
-        }
+        coEvery { mockRepository.getPokemonDetail(any()) } returns pokemonDetails
     }
 
     fun mockPokemonDetailsError(error: Throwable = IllegalArgumentException()) = apply {
-        runBlocking {
-            whenever(mockRepository.getPokemonDetail(anyString())).thenThrow(error)
-        }
+        coEvery { mockRepository.getPokemonDetail(any()) } throws error
     }
 
     fun buildViewModel() = apply {
