@@ -36,3 +36,7 @@ dependencies {
 
     addDependencies(Dependencies.networkDependencies)
 }
+
+configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
+    config = files("${rootProject.projectDir}/config/detekt/detekt.yml")
+}

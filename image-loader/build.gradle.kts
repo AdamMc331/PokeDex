@@ -43,3 +43,7 @@ dependencies {
 
     addDependencies(Dependencies.imageLoaderDependencies)
 }
+
+configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
+    config = files("${rootProject.projectDir}/config/detekt/detekt.yml")
+}
