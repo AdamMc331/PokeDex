@@ -32,6 +32,7 @@ jobs:
     script:
       - ./gradlew detekt
       - ./gradlew ktlintCheck
+      - ./gradlew lint
       - ./gradlew dependencyUpdates
     after_script:
     # The python script should create these two files, but for some reason in trial and error
