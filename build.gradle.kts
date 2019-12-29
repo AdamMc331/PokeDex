@@ -1,7 +1,4 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import com.novoda.staticanalysis.StaticAnalysisExtension
-import io.gitlab.arturbosch.detekt.detekt
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
@@ -38,31 +35,15 @@ subprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
     apply(plugin = "com.novoda.static-analysis")
 
-    configure<StaticAnalysisExtension> {
-        penalty {
-            maxErrors = 0
-            maxWarnings = 0
+    ktlint {
+        version.set("0.35.0")
+        android.set(true)
+        enableExperimentalRules.set(true)
+        reporters {
+            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
         }
-
-        ktlint {
-            version.set("0.35.0")
-            android.set(true)
-            enableExperimentalRules.set(true)
-            reporters {
-                reporter(ReporterType.PLAIN)
-                reporter(ReporterType.CHECKSTYLE)
-            }
-            additionalEditorconfigFile.set(file("${project.projectDir}/.editorConfig"))
-        }
-
-        detekt {
-            config = files("${project.projectDir}/config/detekt/detekt.yml")
-        }
-
-        // TODO: Figure out why this doesn't build
-        // lintOptions {
-        //
-        // }
+        additionalEditorconfigFile.set(file("${project.projectDir}/.editorConfig"))
     }
 }
 

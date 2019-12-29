@@ -30,7 +30,8 @@ class PokemonListFragment : Fragment() {
 
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val pokemonAPI = DefaultPokemonAPI((activity?.application as? PokeApp)?.baseUrl.orEmpty())
+            val pokemonAPI =
+                DefaultPokemonAPI((activity?.application as? PokeApp)?.baseUrl.orEmpty())
             val repository = PokemonService(
                 database = null,
                 api = pokemonAPI
