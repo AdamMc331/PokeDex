@@ -10,9 +10,15 @@ internal interface RoomPokemonDAO {
     @Insert
     suspend fun insert(pokemon: PersistablePokemon): Long
 
+    @Insert
+    suspend fun insertAll(pokemon: List<PersistablePokemon>): List<Long>
+
     @Query("DELETE FROM PersistablePokemon")
     suspend fun deleteAllPokemon(): Int
 
     @Query("SELECT * FROM PersistablePokemon WHERE name = :name")
     suspend fun getPokemonByName(name: String): PersistablePokemon?
+
+    @Query("SELECT * FROM PersistablePokemon")
+    suspend fun getAllPokemon(): List<PersistablePokemon>
 }
