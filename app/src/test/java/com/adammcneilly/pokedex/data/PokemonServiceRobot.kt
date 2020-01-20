@@ -17,6 +17,12 @@ class PokemonServiceRobot {
     private val mockAPI = mock(PokemonAPI::class.java)
     private val service = PokemonService(mockDatabase, mockAPI)
 
+    fun mockDatabasePokemon(response: List<PersistablePokemon>?) = apply {
+        runBlocking {
+            whenever(mockDatabase.getAllPokemon()).thenReturn(response)
+        }
+    }
+
     fun mockNetworkPokemon(response: PokemonResponseDTO) = apply {
         runBlocking {
             whenever(mockAPI.getPokemon()).thenReturn(response)

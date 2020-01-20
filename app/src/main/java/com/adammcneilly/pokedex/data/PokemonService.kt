@@ -1,6 +1,7 @@
 package com.adammcneilly.pokedex.data
 
 import com.adammcneilly.pokedex.database.PokedexDatabase
+import com.adammcneilly.pokedex.database.models.PersistablePokemon
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.PokemonResponse
 import com.adammcneilly.pokedex.models.toPokemon
@@ -15,7 +16,19 @@ open class PokemonService(
     private val api: PokemonAPI?
 ) : PokemonRepository {
     override suspend fun getPokemon(): PokemonResponse? {
-        return api?.getPokemon()?.toPokemonResponse()
+        val dbPokemon = database?.getAllPokemon()
+
+        return if (dbPokemon?.isNotEmpty() == true) {
+            PokemonResponse(results = dbPokemon.mapNotNull(PersistablePokemon::toPokemon))
+        } else {
+            api?.getPokemon()?.toPokemonResponse()?.also { pokemonResponse ->
+                val pokemonList = pokemonResponse.results
+                    ?.map(Pokemon::toPersistablePokemon)
+                    .orEmpty()
+
+                database?.insertAllPokemon(pokemonList)
+            }
+        }
     }
 
     override suspend fun getPokemonDetail(pokemonName: String): Pokemon? {
@@ -26,7 +39,6 @@ open class PokemonService(
         return database?.getPokemonByName(pokemonName)?.toPokemon()
     }
 
-    // TODO: Determine how best to handle nullability here.
     private suspend fun getPokemonDetailFromNetwork(pokemonName: String): Pokemon {
         return api?.getPokemonDetail(pokemonName).toPokemon()?.also {
             database?.insertPokemon(it.toPersistablePokemon())
