@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.data.PokemonService
@@ -37,7 +36,7 @@ class PokemonDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         viewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(PokemonDetailViewModel::class.java)
+            ViewModelProvider(this, viewModelFactory).get(PokemonDetailViewModel::class.java)
     }
 
     override fun onCreateView(

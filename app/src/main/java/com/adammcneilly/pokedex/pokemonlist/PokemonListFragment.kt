@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +31,7 @@ class PokemonListFragment : Fragment() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             val pokemonAPI =
                 DefaultPokemonAPI((activity?.application as? PokeApp)?.baseUrl.orEmpty())
+
             val repository = PokemonService(
                 database = null,
                 api = pokemonAPI
@@ -46,7 +46,7 @@ class PokemonListFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         viewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(PokemonListViewModel::class.java)
+            ViewModelProvider(this, viewModelFactory).get(PokemonListViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -85,7 +85,7 @@ class PokemonListFragment : Fragment() {
         binding.viewModel = viewModel
 
         viewModel.pokemon.observe(
-            this,
+            viewLifecycleOwner,
             Observer {
                 it?.let(pokemonAdapter::items::set)
             }
@@ -96,11 +96,5 @@ class PokemonListFragment : Fragment() {
         findNavController().navigate(
             toPokemonDetail(pokemonName = pokemon.name.orEmpty())
         )
-    }
-
-    companion object {
-        fun newInstance(): PokemonListFragment {
-            return PokemonListFragment()
-        }
     }
 }
