@@ -6,7 +6,6 @@ import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -20,18 +19,6 @@ private const val PILL_RADIUS = 120F
 @BindingAdapter("visibilityCondition")
 fun View.visibleIf(condition: Boolean?) {
     this.visibility = if (condition == true) View.VISIBLE else View.GONE
-}
-
-@BindingAdapter("toolbarColorRes")
-fun Toolbar.colorRes(colorRes: Int?) {
-    colorRes?.let(this::setBackgroundResource)
-}
-
-@BindingAdapter("textColorRes")
-fun Toolbar.textColorRes(colorRes: Int?) {
-    colorRes?.let {
-        setTitleTextColor(ContextCompat.getColor(context, colorRes))
-    }
 }
 
 @BindingAdapter("imageUrl")
