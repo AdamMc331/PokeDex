@@ -32,11 +32,11 @@ class PokemonDetailViewModel(
     }
 
     val firstType: LiveData<Type> = Transformations.map(pokemonDetail) { pokemon ->
-        pokemon?.sortedTypes?.firstOrNull()
+        pokemon?.firstType
     }
 
     val secondType: LiveData<Type> = Transformations.map(pokemonDetail) { pokemon ->
-        pokemon?.sortedTypes?.getOrNull(1)
+        pokemon?.secondType
     }
 
     val toolbarColorRes: LiveData<Int> = Transformations.map(firstType) { firstType ->

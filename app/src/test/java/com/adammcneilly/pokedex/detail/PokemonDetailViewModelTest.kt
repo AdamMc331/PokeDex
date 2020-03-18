@@ -5,7 +5,6 @@ import com.adammcneilly.pokedex.CoroutinesTestRule
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.models.Type
-import com.adammcneilly.pokedex.models.TypeSlot
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
@@ -27,7 +26,7 @@ class PokemonDetailViewModelTest {
     @Test
     fun loadData() {
         val testName = "Adam"
-        val testPokemon = Pokemon(name = testName, types = listOf(TypeSlot(type = Type("grass"))))
+        val testPokemon = Pokemon(name = testName, firstType = Type("grass"))
 
         testRobot.mockPokemonDetails(testPokemon)
             .setInitialPokemonName(testName)
@@ -56,7 +55,7 @@ class PokemonDetailViewModelTest {
     fun getTypesWithOneType() {
         val firstType = Type("grass")
         val testPokemon = Pokemon(
-            types = listOf(TypeSlot(slot = 1, type = firstType))
+            firstType = firstType
         )
 
         testRobot.mockPokemonDetails(testPokemon)
@@ -73,10 +72,8 @@ class PokemonDetailViewModelTest {
             val firstType = Type("grass")
             val secondType = Type("bug")
             val testPokemon = Pokemon(
-                types = listOf(
-                    TypeSlot(slot = 1, type = firstType),
-                    TypeSlot(slot = 2, type = secondType)
-                )
+                firstType = firstType,
+                secondType = secondType
             )
 
             testRobot.mockPokemonDetails(testPokemon)
