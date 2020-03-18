@@ -8,7 +8,6 @@ import com.adammcneilly.pokedex.network.models.TypeSlotDTO
 data class Pokemon(
     val name: String? = null,
     val frontSpriteUrl: String? = null,
-    val url: String? = null,
     val types: List<TypeSlot>? = null
 ) {
     val sortedTypes: List<Type>
@@ -18,7 +17,6 @@ data class Pokemon(
         return PersistablePokemon(
             name = this.name.orEmpty(),
             frontSpriteUrl = this.frontSpriteUrl,
-            url = this.url,
             types = this.types?.map(TypeSlot::toPersistableTypeSlot)
         )
     }
@@ -29,7 +27,6 @@ fun PersistablePokemon?.toPokemon(): Pokemon? {
         Pokemon(
             name = dto.name,
             frontSpriteUrl = dto.frontSpriteUrl,
-            url = dto.url,
             types = dto.types?.mapNotNull(PersistableTypeSlot::toTypeSlot)
         )
     }
@@ -40,7 +37,6 @@ fun PokemonDTO?.toPokemon(): Pokemon? {
         Pokemon(
             name = dto.name,
             frontSpriteUrl = dto.sprites?.frontDefault,
-            url = dto.url,
             types = dto.types?.mapNotNull(TypeSlotDTO::toTypeSlot)
         )
     }

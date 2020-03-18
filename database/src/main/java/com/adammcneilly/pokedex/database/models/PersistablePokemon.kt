@@ -7,6 +7,5 @@ import androidx.room.PrimaryKey
 data class PersistablePokemon(
     @PrimaryKey val name: String = "",
     val frontSpriteUrl: String? = null,
-    val url: String? = null,
     val types: List<PersistableTypeSlot>? = null
 )

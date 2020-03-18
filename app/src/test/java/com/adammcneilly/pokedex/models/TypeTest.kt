@@ -97,15 +97,4 @@ class TypeTest {
         assertEquals(testName, type?.name)
         assertEquals(testURL, type?.url)
     }
-
-    @Test
-    fun mapToTypeDTO() {
-        val testName = "Test Name"
-        val testURL = "Test URL"
-        val type = Type(name = testName, url = testURL)
-
-        val typeDTO = type.toTypeDTO()
-        assertEquals(testName, typeDTO.name)
-        assertEquals(testURL, typeDTO.url)
-    }
 }

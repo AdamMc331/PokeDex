@@ -13,13 +13,6 @@ data class TypeSlot(
             type = this.type?.toPersistableType()
         )
     }
-
-    fun toTypeSlotDTO(): TypeSlotDTO {
-        return TypeSlotDTO(
-            slot = this.slot,
-            type = this.type?.toTypeDTO()
-        )
-    }
 }
 
 fun PersistableTypeSlot?.toTypeSlot(): TypeSlot? {
