@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import com.adammcneilly.pokedex.database.models.PersistablePokemon
 
 @Database(entities = [(PersistablePokemon::class)], version = 1)
