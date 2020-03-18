@@ -17,7 +17,7 @@ import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.data.PokemonService
 import com.adammcneilly.pokedex.databinding.FragmentPokemonListBinding
-import com.adammcneilly.pokedex.network.DefaultPokemonAPI
+import com.adammcneilly.pokedex.network.RetrofitAPI
 import com.adammcneilly.pokedex.pokemonlist.PokemonListFragmentDirections.Companion.toPokemonDetail
 import com.adammcneilly.pokedex.views.PokemonAdapter
 
@@ -30,7 +30,7 @@ class PokemonListFragment : Fragment() {
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             val pokemonAPI =
-                DefaultPokemonAPI((activity?.application as? PokeApp)?.baseUrl.orEmpty())
+                RetrofitAPI((activity?.application as? PokeApp)?.baseUrl.orEmpty())
 
             val repository = PokemonService(
                 database = null,

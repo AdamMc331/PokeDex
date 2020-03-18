@@ -5,15 +5,14 @@ import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.database.models.PersistablePokemon
 import com.adammcneilly.pokedex.database.room.RoomPokedexDatabase
 
-@Suppress("UNUSED_PARAMETER")
-abstract class PokedexDatabase(context: Context) {
-    abstract suspend fun insertPokemon(pokemon: Pokemon): Long
-    abstract suspend fun insertAllPokemon(pokemon: List<Pokemon>): List<Long>
-    abstract suspend fun getPokemonByName(name: String): Pokemon?
-    abstract suspend fun getAllPokemon(): List<Pokemon>?
+interface PokedexDatabase {
+    suspend fun insertPokemon(pokemon: Pokemon): Long
+    suspend fun insertAllPokemon(pokemon: List<Pokemon>): List<Long>
+    suspend fun getPokemonByName(name: String): Pokemon?
+    suspend fun getAllPokemon(): List<Pokemon>?
 }
 
-class DefaultPokedexDatabase(context: Context) : PokedexDatabase(context) {
+class RoomDatabase(context: Context) : PokedexDatabase {
     private val roomDatabase = RoomPokedexDatabase.getInMemoryDatabase(context)
 
     override suspend fun insertPokemon(pokemon: Pokemon): Long {
