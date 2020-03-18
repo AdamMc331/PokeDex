@@ -54,7 +54,7 @@ class PokemonDetailViewModelTest {
 
     @Test
     fun getTypesWithOneType() {
-        val firstType = Type("grass", "grassurl")
+        val firstType = Type("grass")
         val testPokemon = Pokemon(
             types = listOf(TypeSlot(slot = 1, type = firstType))
         )
@@ -70,8 +70,8 @@ class PokemonDetailViewModelTest {
     @Test
     fun getTypesWithTwoTypes() {
         runBlocking {
-            val firstType = Type("grass", "grassurl")
-            val secondType = Type("bug", "bugurl")
+            val firstType = Type("grass")
+            val secondType = Type("bug")
             val testPokemon = Pokemon(
                 types = listOf(
                     TypeSlot(slot = 1, type = firstType),

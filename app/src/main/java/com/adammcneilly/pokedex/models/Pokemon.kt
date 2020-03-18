@@ -1,7 +1,6 @@
 package com.adammcneilly.pokedex.models
 
 import com.adammcneilly.pokedex.database.models.PersistablePokemon
-import com.adammcneilly.pokedex.database.models.PersistableTypeSlot
 import com.adammcneilly.pokedex.network.models.PokemonDTO
 import com.adammcneilly.pokedex.network.models.TypeSlotDTO
 
@@ -14,20 +13,39 @@ data class Pokemon(
         get() = types?.sortedBy { it.slot }?.mapNotNull { it.type }.orEmpty()
 
     fun toPersistablePokemon(): PersistablePokemon {
+        val orderedTypes = this.types
+            ?.sortedBy { typeSlot ->
+                typeSlot.slot
+            }
+            ?.map { typeSlot ->
+                typeSlot.type?.toPersistableType()
+            }
+
         return PersistablePokemon(
             name = this.name.orEmpty(),
             frontSpriteUrl = this.frontSpriteUrl,
-            types = this.types?.map(TypeSlot::toPersistableTypeSlot)
+            firstType = orderedTypes?.getOrNull(0),
+            secondType = orderedTypes?.getOrNull(1)
         )
     }
 }
 
 fun PersistablePokemon?.toPokemon(): Pokemon? {
     return this?.let { dto ->
+        val firstTypeSlot = TypeSlot(
+            slot = 1,
+            type = dto.firstType?.toType()
+        )
+
+        val secondTypeSlot = TypeSlot(
+            slot = 2,
+            type = dto.secondType?.toType()
+        )
+
         Pokemon(
             name = dto.name,
             frontSpriteUrl = dto.frontSpriteUrl,
-            types = dto.types?.mapNotNull(PersistableTypeSlot::toTypeSlot)
+            types = listOf(firstTypeSlot, secondTypeSlot)
         )
     }
 }

@@ -8,7 +8,6 @@ import androidx.room.TypeConverters
 import com.adammcneilly.pokedex.database.models.PersistablePokemon
 
 @Database(entities = [(PersistablePokemon::class)], version = 1)
-@TypeConverters((TypeSlotListConverter::class))
 internal abstract class RoomPokedexDatabase : RoomDatabase() {
     abstract fun pokemonDao(): RoomPokemonDAO
 
