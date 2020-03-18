@@ -7,8 +7,7 @@ import com.adammcneilly.pokedex.network.models.TypeSlotDTO
 
 data class Pokemon(
     val name: String? = null,
-    val sprites: Sprites? = null,
-    val url: String? = null,
+    val frontSpriteUrl: String? = null,
     val types: List<TypeSlot>? = null
 ) {
     val sortedTypes: List<Type>
@@ -17,18 +16,8 @@ data class Pokemon(
     fun toPersistablePokemon(): PersistablePokemon {
         return PersistablePokemon(
             name = this.name.orEmpty(),
-            sprites = this.sprites?.toPersistableSprites(),
-            url = this.url,
+            frontSpriteUrl = this.frontSpriteUrl,
             types = this.types?.map(TypeSlot::toPersistableTypeSlot)
-        )
-    }
-
-    fun toPokemonDTO(): PokemonDTO {
-        return PokemonDTO(
-            name = this.name,
-            sprites = this.sprites?.toSpritesDTO(),
-            url = this.url,
-            types = this.types?.map(TypeSlot::toTypeSlotDTO)
         )
     }
 }
@@ -37,8 +26,7 @@ fun PersistablePokemon?.toPokemon(): Pokemon? {
     return this?.let { dto ->
         Pokemon(
             name = dto.name,
-            sprites = dto.sprites?.toSprites(),
-            url = dto.url,
+            frontSpriteUrl = dto.frontSpriteUrl,
             types = dto.types?.mapNotNull(PersistableTypeSlot::toTypeSlot)
         )
     }
@@ -48,8 +36,7 @@ fun PokemonDTO?.toPokemon(): Pokemon? {
     return this?.let { dto ->
         Pokemon(
             name = dto.name,
-            sprites = dto.sprites?.toSprites(),
-            url = dto.url,
+            frontSpriteUrl = dto.sprites?.frontDefault,
             types = dto.types?.mapNotNull(TypeSlotDTO::toTypeSlot)
         )
     }

@@ -46,13 +46,6 @@ data class Type(
             url = this.url
         )
     }
-
-    fun toTypeDTO(): TypeDTO {
-        return TypeDTO(
-            name = this.name,
-            url = this.url
-        )
-    }
 }
 
 fun PersistableType?.toType(): Type? {

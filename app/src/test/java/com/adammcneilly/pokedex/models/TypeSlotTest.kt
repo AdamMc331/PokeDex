@@ -31,17 +31,6 @@ class TypeSlotTest {
     }
 
     @Test
-    fun mapToTypeSlotDTO() {
-        val testSlot = 1
-        val testType = Type()
-        val typeSlot = TypeSlot(slot = testSlot, type = testType)
-
-        val typeSlotDTO = typeSlot.toTypeSlotDTO()
-        assertEquals(testSlot, typeSlotDTO.slot)
-        assertEquals(testType.toTypeDTO(), typeSlotDTO.type)
-    }
-
-    @Test
     fun mapFromTypeSlotDTO() {
         val testSlot = 1
         val testType = TypeDTO()
