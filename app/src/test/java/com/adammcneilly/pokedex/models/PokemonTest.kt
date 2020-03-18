@@ -14,19 +14,19 @@ class PokemonTest {
     @Test
     fun mapToPersistablePokemon() {
         val testName = "Test Name"
-        val testSprites = Sprites("Test")
+        val testSprites = "Test"
         val testUrl = "Test URL"
         val testTypes = listOf(TypeSlot(1, Type("Test")))
         val pokemon = Pokemon(
             name = testName,
-            sprites = testSprites,
+            frontSpriteUrl = testSprites,
             url = testUrl,
             types = testTypes
         )
 
         val persistablePokemon = pokemon.toPersistablePokemon()
         assertEquals(testName, persistablePokemon.name)
-        assertEquals(testSprites.frontDefault, persistablePokemon.frontSpriteUrl)
+        assertEquals(testSprites, persistablePokemon.frontSpriteUrl)
         assertEquals(testUrl, persistablePokemon.url)
         assertEquals(testTypes.map(TypeSlot::toPersistableTypeSlot), persistablePokemon.types)
     }
@@ -46,7 +46,7 @@ class PokemonTest {
 
         val pokemon = persistablePokemon.toPokemon()
         assertEquals(testName, pokemon?.name)
-        assertEquals(testSprites, pokemon?.sprites?.frontDefault)
+        assertEquals(testSprites, pokemon?.frontSpriteUrl)
         assertEquals(testUrl, pokemon?.url)
         assertEquals(testTypes.map(PersistableTypeSlot::toTypeSlot), pokemon?.types)
     }
@@ -64,26 +64,6 @@ class PokemonTest {
     }
 
     @Test
-    fun mapToPokemonDTO() {
-        val testName = "Test Name"
-        val testSprites = Sprites("Test")
-        val testUrl = "Test URL"
-        val testTypes = listOf(TypeSlot(1, Type("Test")))
-        val pokemon = Pokemon(
-            name = testName,
-            sprites = testSprites,
-            url = testUrl,
-            types = testTypes
-        )
-
-        val pokemonDTO = pokemon.toPokemonDTO()
-        assertEquals(testName, pokemonDTO.name)
-        assertEquals(testSprites.toSpritesDTO(), pokemonDTO.sprites)
-        assertEquals(testUrl, pokemonDTO.url)
-        assertEquals(testTypes.map(TypeSlot::toTypeSlotDTO), pokemonDTO.types)
-    }
-
-    @Test
     fun mapFromPokemonDTO() {
         val testName = "Test Name"
         val testSprites = SpritesDTO("Test")
@@ -98,7 +78,7 @@ class PokemonTest {
 
         val pokemon = pokemonDTO.toPokemon()
         assertEquals(testName, pokemon?.name)
-        assertEquals(testSprites.toSprites(), pokemon?.sprites)
+        assertEquals(testSprites.frontDefault, pokemon?.frontSpriteUrl)
         assertEquals(testUrl, pokemon?.url)
         assertEquals(testTypes.map(TypeSlotDTO::toTypeSlot), pokemon?.types)
     }

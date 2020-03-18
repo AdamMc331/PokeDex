@@ -48,7 +48,7 @@ class PokemonDetailViewModel(
     }
 
     val imageUrl: LiveData<String> = Transformations.map(pokemonDetail) { pokemon ->
-        pokemon?.sprites?.frontDefault.orEmpty()
+        pokemon?.frontSpriteUrl.orEmpty()
     }
 
     val showLoading: LiveData<Boolean> = Transformations.map(state) { state ->
