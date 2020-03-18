@@ -1,7 +1,6 @@
 package com.adammcneilly.pokedex.models
 
 import com.adammcneilly.pokedex.database.models.PersistablePokemon
-import com.adammcneilly.pokedex.database.models.PersistableSprites
 import com.adammcneilly.pokedex.database.models.PersistableType
 import com.adammcneilly.pokedex.database.models.PersistableTypeSlot
 import com.adammcneilly.pokedex.network.models.PokemonDTO
@@ -27,7 +26,7 @@ class PokemonTest {
 
         val persistablePokemon = pokemon.toPersistablePokemon()
         assertEquals(testName, persistablePokemon.name)
-        assertEquals(testSprites.toPersistableSprites(), persistablePokemon.sprites)
+        assertEquals(testSprites.frontDefault, persistablePokemon.frontSpriteUrl)
         assertEquals(testUrl, persistablePokemon.url)
         assertEquals(testTypes.map(TypeSlot::toPersistableTypeSlot), persistablePokemon.types)
     }
@@ -35,19 +34,19 @@ class PokemonTest {
     @Test
     fun mapFromPersistablePokemon() {
         val testName = "Test Name"
-        val testSprites = PersistableSprites("Test")
+        val testSprites = "Test"
         val testUrl = "Test URL"
         val testTypes = listOf(PersistableTypeSlot(1, PersistableType("Test")))
         val persistablePokemon = PersistablePokemon(
             name = testName,
-            sprites = testSprites,
+            frontSpriteUrl = testSprites,
             url = testUrl,
             types = testTypes
         )
 
         val pokemon = persistablePokemon.toPokemon()
         assertEquals(testName, pokemon?.name)
-        assertEquals(testSprites.toSprites(), pokemon?.sprites)
+        assertEquals(testSprites, pokemon?.sprites?.frontDefault)
         assertEquals(testUrl, pokemon?.url)
         assertEquals(testTypes.map(PersistableTypeSlot::toTypeSlot), pokemon?.types)
     }

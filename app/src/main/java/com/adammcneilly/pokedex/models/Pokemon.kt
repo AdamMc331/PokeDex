@@ -17,7 +17,7 @@ data class Pokemon(
     fun toPersistablePokemon(): PersistablePokemon {
         return PersistablePokemon(
             name = this.name.orEmpty(),
-            sprites = this.sprites?.toPersistableSprites(),
+            frontSpriteUrl = this.sprites?.frontDefault,
             url = this.url,
             types = this.types?.map(TypeSlot::toPersistableTypeSlot)
         )
@@ -37,7 +37,7 @@ fun PersistablePokemon?.toPokemon(): Pokemon? {
     return this?.let { dto ->
         Pokemon(
             name = dto.name,
-            sprites = dto.sprites?.toSprites(),
+            sprites = Sprites(frontDefault = dto.frontSpriteUrl),
             url = dto.url,
             types = dto.types?.mapNotNull(PersistableTypeSlot::toTypeSlot)
         )
