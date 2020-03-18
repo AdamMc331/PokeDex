@@ -22,8 +22,8 @@ android {
         named("release") {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
             )
         }
     }
@@ -32,9 +32,7 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(kotlin("stdlib", KotlinCompilerVersion.VERSION))
-    implementation(project(":core"))
-
-    addDependencies(Dependencies.databaseDependencies)
+    implementation(Dependencies.junit)
 }
 
 configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {

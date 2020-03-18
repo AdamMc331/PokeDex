@@ -1,6 +1,6 @@
 package com.adammcneilly.pokedex.detail
 
-import com.adammcneilly.pokedex.models.Pokemon
+import com.adammcneilly.pokedex.core.Pokemon
 
 sealed class PokemonDetailState {
     object Loading : PokemonDetailState()

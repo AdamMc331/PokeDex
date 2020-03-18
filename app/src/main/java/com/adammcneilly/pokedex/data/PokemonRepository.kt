@@ -1,7 +1,7 @@
 package com.adammcneilly.pokedex.data
 
-import com.adammcneilly.pokedex.models.Pokemon
-import com.adammcneilly.pokedex.models.PokemonResponse
+import com.adammcneilly.pokedex.core.Pokemon
+import com.adammcneilly.pokedex.core.PokemonResponse
 
 interface PokemonRepository {
     suspend fun getPokemon(): PokemonResponse?

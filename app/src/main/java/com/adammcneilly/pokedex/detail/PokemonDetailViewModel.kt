@@ -8,9 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.adammcneilly.pokedex.BaseObservableViewModel
 import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.R
+import com.adammcneilly.pokedex.core.Pokemon
+import com.adammcneilly.pokedex.core.Type
 import com.adammcneilly.pokedex.data.PokemonRepository
-import com.adammcneilly.pokedex.models.Pokemon
-import com.adammcneilly.pokedex.models.Type
+import com.adammcneilly.pokedex.models.colorRes
+import com.adammcneilly.pokedex.models.complimentaryColorRes
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -40,11 +42,11 @@ class PokemonDetailViewModel(
     }
 
     val toolbarColorRes: LiveData<Int> = Transformations.map(firstType) { firstType ->
-        firstType?.getColorRes() ?: R.color.colorPrimary
+        firstType?.colorRes() ?: R.color.colorPrimary
     }
 
     val toolbarTextColorRes: LiveData<Int> = Transformations.map(firstType) { firstType ->
-        firstType?.getComplementaryColorRes() ?: R.color.mds_white
+        firstType?.complimentaryColorRes() ?: R.color.mds_white
     }
 
     val imageUrl: LiveData<String> = Transformations.map(pokemonDetail) { pokemon ->

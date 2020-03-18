@@ -1,6 +1,6 @@
 package com.adammcneilly.pokedex.pokemonlist
 
-import com.adammcneilly.pokedex.models.PokemonResponse
+import com.adammcneilly.pokedex.core.PokemonResponse
 
 sealed class PokemonListState {
     object Loading : PokemonListState()

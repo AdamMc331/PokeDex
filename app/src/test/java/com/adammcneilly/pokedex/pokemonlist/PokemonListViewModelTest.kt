@@ -2,8 +2,8 @@ package com.adammcneilly.pokedex.pokemonlist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.adammcneilly.pokedex.CoroutinesTestRule
-import com.adammcneilly.pokedex.models.Pokemon
-import com.adammcneilly.pokedex.models.PokemonResponse
+import com.adammcneilly.pokedex.core.Pokemon
+import com.adammcneilly.pokedex.core.PokemonResponse
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
 import org.junit.Test
@@ -23,7 +23,7 @@ class PokemonListViewModelTest {
 
     @Test
     fun loadData() {
-        val testResult = PokemonResponse(count = 10)
+        val testResult = PokemonResponse()
 
         testRobot.mockPokemonResponse(testResult)
             .buildViewModel()

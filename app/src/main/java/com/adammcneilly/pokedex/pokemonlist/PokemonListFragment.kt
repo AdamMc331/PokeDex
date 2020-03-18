@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.R
+import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.data.PokemonService
 import com.adammcneilly.pokedex.databinding.FragmentPokemonListBinding
-import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.network.DefaultPokemonAPI
 import com.adammcneilly.pokedex.pokemonlist.PokemonListFragmentDirections.Companion.toPokemonDetail
 import com.adammcneilly.pokedex.views.PokemonAdapter
@@ -94,7 +94,7 @@ class PokemonListFragment : Fragment() {
 
     private fun onPokemonClicked(pokemon: Pokemon) {
         findNavController().navigate(
-            toPokemonDetail(pokemonName = pokemon.name.orEmpty())
+            toPokemonDetail(pokemonName = pokemon.name)
         )
     }
 }
