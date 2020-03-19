@@ -4,7 +4,7 @@ import com.apollographql.apollo.ApolloClient
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
-object GraphQLPokemonAPI {
+object ApolloPokemonAPI {
 
     fun defaultInstance(baseUrl: String): ApolloClient {
         val interceptor = HttpLoggingInterceptor().apply {

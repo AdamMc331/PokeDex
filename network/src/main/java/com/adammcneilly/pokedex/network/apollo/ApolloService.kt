@@ -6,11 +6,12 @@ import com.adammcneilly.pokedex.core.Type
 import com.adammcneilly.pokedex.network.PokemonAPI
 import com.adammcneily.pokedex.PokemonDetailQuery
 import com.adammcneily.pokedex.PokemonQuery
+import com.adammcneily.pokedex.fragment.ApolloPokemon
 import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.toDeferred
 
-class ApolloAPI(baseUrl: String) : PokemonAPI {
-    private val apolloClient = GraphQLPokemonAPI.defaultInstance(baseUrl)
+class ApolloService(baseUrl: String) : PokemonAPI {
+    private val apolloClient = ApolloPokemonAPI.defaultInstance(baseUrl)
 
     override suspend fun getPokemon(): PokemonResponse {
         val query = PokemonQuery(first = DEFAULT_LIMIT)
@@ -20,7 +21,9 @@ class ApolloAPI(baseUrl: String) : PokemonAPI {
         val pokemonList = response.data()
             ?.pokemonList
             ?.filterNotNull()
-            ?.map(PokemonQuery.PokemonList::toPokemon)
+            ?.map { apolloPokemonList ->
+                apolloPokemonList.fragments.apolloPokemon.toPokemon()
+            }
 
         return PokemonResponse(
             results = pokemonList
@@ -32,7 +35,7 @@ class ApolloAPI(baseUrl: String) : PokemonAPI {
 
         val response = apolloClient.query(query).toDeferred().await()
 
-        return response.data()?.pokemon?.toPokemon() ?: Pokemon()
+        return response.data()?.pokemon?.fragments?.apolloPokemon?.toPokemon() ?: Pokemon()
     }
 
     companion object {
@@ -40,16 +43,7 @@ class ApolloAPI(baseUrl: String) : PokemonAPI {
     }
 }
 
-private fun PokemonQuery.PokemonList.toPokemon(): Pokemon {
-    return Pokemon(
-        name = this.name.orEmpty(),
-        firstType = Type.fromString(this.types?.getOrNull(0)),
-        secondType = Type.fromString(this.types?.getOrNull(1)),
-        frontSpriteUrl = this.image
-    )
-}
-
-private fun PokemonDetailQuery.Pokemon.toPokemon(): Pokemon {
+private fun ApolloPokemon.toPokemon(): Pokemon {
     return Pokemon(
         name = this.name.orEmpty(),
         firstType = Type.fromString(this.types?.getOrNull(0)),

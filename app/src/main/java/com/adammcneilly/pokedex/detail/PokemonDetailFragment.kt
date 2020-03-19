@@ -13,7 +13,7 @@ import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.data.PokemonService
 import com.adammcneilly.pokedex.database.RoomDatabase
 import com.adammcneilly.pokedex.databinding.FragmentPokemonDetailBinding
-import com.adammcneilly.pokedex.network.RetrofitAPI
+import com.adammcneilly.pokedex.network.retrofit.RetrofitService
 
 class PokemonDetailFragment : Fragment() {
     private lateinit var binding: FragmentPokemonDetailBinding
@@ -21,7 +21,7 @@ class PokemonDetailFragment : Fragment() {
 
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val api = RetrofitAPI((activity?.application as? PokeApp)?.baseUrl.orEmpty())
+            val api = RetrofitService((activity?.application as? PokeApp)?.baseUrl.orEmpty())
             val database = RoomDatabase(requireContext())
             val repository = PokemonService(database, api)
             val arguments: PokemonDetailFragmentArgs by navArgs()
