@@ -4,12 +4,12 @@ import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.network.retrofit.RetrofitPokemonAPI
 
-abstract class PokemonAPI(baseUrl: String) {
-    abstract suspend fun getPokemon(): PokemonResponse
-    abstract suspend fun getPokemonDetail(pokemonName: String): Pokemon
+interface PokemonAPI {
+    suspend fun getPokemon(): PokemonResponse
+    suspend fun getPokemonDetail(pokemonName: String): Pokemon
 }
 
-class DefaultPokemonAPI(baseUrl: String) : PokemonAPI(baseUrl) {
+class RetrofitAPI(baseUrl: String) : PokemonAPI {
     private val retrofitAPI = RetrofitPokemonAPI.defaultInstance(baseUrl)
 
     override suspend fun getPokemon(): PokemonResponse {
