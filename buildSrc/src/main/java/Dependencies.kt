@@ -50,6 +50,8 @@ object Dependencies {
     private const val androidXJunitExtension = "androidx.test.ext:junit:${Versions.androidXJunit}"
     const val fragmentTesting = "androidx.fragment:fragment-testing:${Versions.fragments}"
     private const val mockwebserver = "com.squareup.okhttp3:mockwebserver:${Versions.okhttp}"
+    private const val apolloGraphql = "com.apollographql.apollo:apollo-runtime:${Versions.apolloGraphql}"
+    private const val apolloCoroutines = "com.apollographql.apollo:apollo-coroutines-support:${Versions.apolloGraphql}"
 
     val imageLoaderDependencies = listOf(
         DependencyConfig.Implementation(appCompat),
@@ -101,6 +103,8 @@ object Dependencies {
         DependencyConfig.Implementation(retrofit),
         DependencyConfig.Implementation(coroutinesAdapter),
         DependencyConfig.Implementation(okhttpLogging),
+        DependencyConfig.Implementation(apolloGraphql),
+        DependencyConfig.Implementation(apolloCoroutines),
         DependencyConfig.TestImplementation(junit),
         DependencyConfig.AndroidTestImplementation(androidXTestRunner),
         DependencyConfig.AndroidTestImplementation(espressoCore)

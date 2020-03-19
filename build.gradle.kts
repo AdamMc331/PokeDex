@@ -18,6 +18,7 @@ buildscript {
         classpath("com.novoda:gradle-static-analysis-plugin:${Versions.staticAnalysis}")
         classpath("com.github.ben-manes:gradle-versions-plugin:${Versions.versionsPlugin}")
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}")
+        classpath("com.apollographql.apollo:apollo-gradle-plugin:${Versions.apolloGraphql}")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -80,7 +81,7 @@ plugins {
 }
 
 tasks.withType<DependencyUpdatesTask> {
-    checkForGradleUpdate = true
+    checkForGradleUpdate = false
 
     resolutionStrategy {
         componentSelection {
@@ -94,8 +95,7 @@ tasks.withType<DependencyUpdatesTask> {
 }
 
 fun isNonStable(version: String): Boolean {
-    val stableKeyword = listOf("FINAL", "GA").any { version.toUpperCase().contains(it) }
     val regex = "^[0-9,.v-]+(-r)?$".toRegex()
-    val isStable = stableKeyword || regex.matches(version)
+    val isStable = regex.matches(version)
     return isStable.not()
 }
