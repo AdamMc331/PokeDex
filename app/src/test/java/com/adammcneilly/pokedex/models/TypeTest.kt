@@ -79,22 +79,18 @@ class TypeTest {
     @Test
     fun mapToPersistableType() {
         val testName = "Test Name"
-        val testURL = "Test URL"
-        val type = Type(name = testName, url = testURL)
+        val type = Type(name = testName)
 
         val persistableType = type.toPersistableType()
         assertEquals(testName, persistableType.name)
-        assertEquals(testURL, persistableType.url)
     }
 
     @Test
     fun mapFromPersistableType() {
         val testName = "Test Name"
-        val testURL = "Test URL"
-        val persistableType = PersistableType(name = testName, url = testURL)
+        val persistableType = PersistableType(name = testName)
 
         val type = persistableType.toType()
         assertEquals(testName, type?.name)
-        assertEquals(testURL, type?.url)
     }
 }

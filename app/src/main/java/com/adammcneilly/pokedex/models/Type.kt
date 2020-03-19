@@ -5,8 +5,7 @@ import com.adammcneilly.pokedex.database.models.PersistableType
 import com.adammcneilly.pokedex.network.models.TypeDTO
 
 data class Type(
-    val name: String? = null,
-    val url: String? = null
+    val name: String? = null
 ) {
     @Suppress("ComplexMethod")
     fun getColorRes(): Int {
@@ -42,8 +41,7 @@ data class Type(
 
     fun toPersistableType(): PersistableType {
         return PersistableType(
-            name = this.name,
-            url = this.url
+            name = this.name
         )
     }
 }
@@ -51,8 +49,7 @@ data class Type(
 fun PersistableType?.toType(): Type? {
     return this?.let {
         Type(
-            name = it.name,
-            url = it.url
+            name = it.name
         )
     }
 }
@@ -60,8 +57,7 @@ fun PersistableType?.toType(): Type? {
 fun TypeDTO?.toType(): Type? {
     return this?.let {
         Type(
-            name = it.name,
-            url = it.url
+            name = it.name
         )
     }
 }

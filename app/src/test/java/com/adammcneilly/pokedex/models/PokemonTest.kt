@@ -2,7 +2,6 @@ package com.adammcneilly.pokedex.models
 
 import com.adammcneilly.pokedex.database.models.PersistablePokemon
 import com.adammcneilly.pokedex.database.models.PersistableType
-import com.adammcneilly.pokedex.database.models.PersistableTypeSlot
 import com.adammcneilly.pokedex.network.models.PokemonDTO
 import com.adammcneilly.pokedex.network.models.SpritesDTO
 import com.adammcneilly.pokedex.network.models.TypeDTO
@@ -15,46 +14,36 @@ class PokemonTest {
     fun mapToPersistablePokemon() {
         val testName = "Test Name"
         val testSprites = "Test"
-        val testTypes = listOf(TypeSlot(1, Type("Test")))
+        val firstType = Type("Test")
         val pokemon = Pokemon(
             name = testName,
             frontSpriteUrl = testSprites,
-            types = testTypes
+            firstType = firstType
         )
 
         val persistablePokemon = pokemon.toPersistablePokemon()
         assertEquals(testName, persistablePokemon.name)
         assertEquals(testSprites, persistablePokemon.frontSpriteUrl)
-        assertEquals(testTypes.map(TypeSlot::toPersistableTypeSlot), persistablePokemon.types)
+        assertEquals(firstType.toPersistableType(), persistablePokemon.firstType)
+        assertEquals(null, persistablePokemon.secondType)
     }
 
     @Test
     fun mapFromPersistablePokemon() {
         val testName = "Test Name"
         val testSprites = "Test"
-        val testTypes = listOf(PersistableTypeSlot(1, PersistableType("Test")))
+        val testTypes = listOf(PersistableType("Test"))
         val persistablePokemon = PersistablePokemon(
             name = testName,
             frontSpriteUrl = testSprites,
-            types = testTypes
+            firstType = testTypes.getOrNull(0)
         )
 
         val pokemon = persistablePokemon.toPokemon()
         assertEquals(testName, pokemon?.name)
         assertEquals(testSprites, pokemon?.frontSpriteUrl)
-        assertEquals(testTypes.map(PersistableTypeSlot::toTypeSlot), pokemon?.types)
-    }
-
-    @Test
-    fun sortTypes() {
-        val secondTypeSlot = TypeSlot(2, Type("Second"))
-        val firstTypeSlot = TypeSlot(1, Type("First"))
-        val disorderedTypes = listOf(secondTypeSlot, firstTypeSlot)
-
-        val pokemon = Pokemon(types = disorderedTypes)
-        val sortedTypes = pokemon.sortedTypes
-        val expectedTypes = listOf(firstTypeSlot.type, secondTypeSlot.type)
-        assertEquals(expectedTypes, sortedTypes)
+        assertEquals(testTypes.getOrNull(0)?.toType(), pokemon?.firstType)
+        assertEquals(testTypes.getOrNull(1)?.toType(), pokemon?.secondType)
     }
 
     @Test
@@ -71,6 +60,7 @@ class PokemonTest {
         val pokemon = pokemonDTO.toPokemon()
         assertEquals(testName, pokemon?.name)
         assertEquals(testSprites.frontDefault, pokemon?.frontSpriteUrl)
-        assertEquals(testTypes.map(TypeSlotDTO::toTypeSlot), pokemon?.types)
+        assertEquals(testTypes.getOrNull(0)?.type?.toType(), pokemon?.firstType)
+        assertEquals(testTypes.getOrNull(1)?.type?.toType(), pokemon?.secondType)
     }
 }
