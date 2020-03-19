@@ -1,1 +1,1 @@
-include(":app", ":image-loader", ":database", ":network")
+include(":app", ":image-loader", ":database", ":network", ":core")

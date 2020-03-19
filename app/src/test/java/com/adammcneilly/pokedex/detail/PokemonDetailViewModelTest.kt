@@ -3,8 +3,8 @@ package com.adammcneilly.pokedex.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.adammcneilly.pokedex.CoroutinesTestRule
 import com.adammcneilly.pokedex.R
-import com.adammcneilly.pokedex.models.Pokemon
-import com.adammcneilly.pokedex.models.Type
+import com.adammcneilly.pokedex.core.Pokemon
+import com.adammcneilly.pokedex.core.Type
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
@@ -26,7 +26,7 @@ class PokemonDetailViewModelTest {
     @Test
     fun loadData() {
         val testName = "Adam"
-        val testPokemon = Pokemon(name = testName, firstType = Type("grass"))
+        val testPokemon = Pokemon(name = testName, firstType = Type.GRASS)
 
         testRobot.mockPokemonDetails(testPokemon)
             .setInitialPokemonName(testName)
@@ -45,15 +45,15 @@ class PokemonDetailViewModelTest {
 
         testRobot.mockPokemonDetails(testPokemon)
             .buildViewModel()
-            .assertFirstType(null)
+            .assertFirstType(Type.UNKNOWN)
             .assertSecondType(null)
-            .assertShowFirstType(false)
+            .assertShowFirstType(true)
             .assertShowSecondType(false)
     }
 
     @Test
     fun getTypesWithOneType() {
-        val firstType = Type("grass")
+        val firstType = Type.GRASS
         val testPokemon = Pokemon(
             firstType = firstType
         )
@@ -69,8 +69,8 @@ class PokemonDetailViewModelTest {
     @Test
     fun getTypesWithTwoTypes() {
         runBlocking {
-            val firstType = Type("grass")
-            val secondType = Type("bug")
+            val firstType = Type.GRASS
+            val secondType = Type.BUG
             val testPokemon = Pokemon(
                 firstType = firstType,
                 secondType = secondType

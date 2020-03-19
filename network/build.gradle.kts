@@ -33,6 +33,7 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(kotlin("stdlib", KotlinCompilerVersion.VERSION))
+    implementation(project(":core"))
 
     addDependencies(Dependencies.networkDependencies)
 }

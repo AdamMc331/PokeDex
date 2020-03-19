@@ -3,8 +3,8 @@ package com.adammcneilly.pokedex.views
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.databinding.ListItemPokemonBinding
-import com.adammcneilly.pokedex.models.Pokemon
 import com.adammcneilly.pokedex.viewmodels.PokemonViewModel
 
 class PokemonAdapter(

@@ -1,96 +1,78 @@
 package com.adammcneilly.pokedex.models
 
 import com.adammcneilly.pokedex.R
-import com.adammcneilly.pokedex.database.models.PersistableType
+import com.adammcneilly.pokedex.core.Type
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class TypeTest {
 
     @Test
-    fun getColorRes() {
-        val waterType = Type("water")
-        assertEquals(R.color.type_water, waterType.getColorRes())
+    fun colorRes() {
+        val waterType = Type.WATER
+        assertEquals(R.color.type_water, waterType.colorRes())
 
-        val normalType = Type("normal")
-        assertEquals(R.color.type_normal, normalType.getColorRes())
+        val normalType = Type.NORMAL
+        assertEquals(R.color.type_normal, normalType.colorRes())
 
-        val fireType = Type("fire")
-        assertEquals(R.color.type_fire, fireType.getColorRes())
+        val fireType = Type.FIRE
+        assertEquals(R.color.type_fire, fireType.colorRes())
 
-        val electricType = Type("electric")
-        assertEquals(R.color.type_electric, electricType.getColorRes())
+        val electricType = Type.ELECTRIC
+        assertEquals(R.color.type_electric, electricType.colorRes())
 
-        val grassType = Type("grass")
-        assertEquals(R.color.type_grass, grassType.getColorRes())
+        val grassType = Type.GRASS
+        assertEquals(R.color.type_grass, grassType.colorRes())
 
-        val iceType = Type("ice")
-        assertEquals(R.color.type_ice, iceType.getColorRes())
+        val iceType = Type.ICE
+        assertEquals(R.color.type_ice, iceType.colorRes())
 
-        val fightingType = Type("fighting")
-        assertEquals(R.color.type_fighting, fightingType.getColorRes())
+        val fightingType = Type.FIGHTING
+        assertEquals(R.color.type_fighting, fightingType.colorRes())
 
-        val poisonType = Type("poison")
-        assertEquals(R.color.type_poison, poisonType.getColorRes())
+        val poisonType = Type.POISON
+        assertEquals(R.color.type_poison, poisonType.colorRes())
 
-        val groundType = Type("ground")
-        assertEquals(R.color.type_ground, groundType.getColorRes())
+        val groundType = Type.GROUND
+        assertEquals(R.color.type_ground, groundType.colorRes())
 
-        val flyingType = Type("flying")
-        assertEquals(R.color.type_flying, flyingType.getColorRes())
+        val flyingType = Type.FLYING
+        assertEquals(R.color.type_flying, flyingType.colorRes())
 
-        val psychicType = Type("psychic")
-        assertEquals(R.color.type_psychic, psychicType.getColorRes())
+        val psychicType = Type.PSYCHIC
+        assertEquals(R.color.type_psychic, psychicType.colorRes())
 
-        val bugType = Type("bug")
-        assertEquals(R.color.type_bug, bugType.getColorRes())
+        val bugType = Type.BUG
+        assertEquals(R.color.type_bug, bugType.colorRes())
 
-        val rockType = Type("rock")
-        assertEquals(R.color.type_rock, rockType.getColorRes())
+        val rockType = Type.ROCK
+        assertEquals(R.color.type_rock, rockType.colorRes())
 
-        val ghostType = Type("ghost")
-        assertEquals(R.color.type_ghost, ghostType.getColorRes())
+        val ghostType = Type.GHOST
+        assertEquals(R.color.type_ghost, ghostType.colorRes())
 
-        val dragonType = Type("dragon")
-        assertEquals(R.color.type_dragon, dragonType.getColorRes())
+        val dragonType = Type.DRAGON
+        assertEquals(R.color.type_dragon, dragonType.colorRes())
 
-        val darkType = Type("dark")
-        assertEquals(R.color.type_dark, darkType.getColorRes())
+        val darkType = Type.DARK
+        assertEquals(R.color.type_dark, darkType.colorRes())
 
-        val steelType = Type("steel")
-        assertEquals(R.color.type_steel, steelType.getColorRes())
+        val steelType = Type.STEEL
+        assertEquals(R.color.type_steel, steelType.colorRes())
 
-        val fairyType = Type("fairy")
-        assertEquals(R.color.type_fairy, fairyType.getColorRes())
+        val fairyType = Type.FAIRY
+        assertEquals(R.color.type_fairy, fairyType.colorRes())
 
-        val defaultType = Type("blahblahblah")
-        assertEquals(R.color.type_normal, defaultType.getColorRes())
+        val defaultType = Type.UNKNOWN
+        assertEquals(R.color.type_normal, defaultType.colorRes())
     }
 
     @Test
     fun getComplementaryColorRes() {
-        val steelType = Type("steel")
-        assertEquals(R.color.mds_black, steelType.getComplementaryColorRes())
+        val steelType = Type.STEEL
+        assertEquals(R.color.mds_black, steelType.complimentaryColorRes())
 
-        val defaultType = Type("blahblahblah")
-        assertEquals(R.color.mds_white, defaultType.getComplementaryColorRes())
-    }
-
-    @Test
-    fun mapToPersistableType() {
-        val testName = "Test Name"
-        val type = Type(name = testName)
-
-        val persistableType = type.toPersistableType()
-        assertEquals(testName, persistableType.name)
-    }
-
-    @Test
-    fun mapFromPersistableType() {
-        val testName = "Test Name"
-        val persistableType = PersistableType(name = testName)
-
-        val type = persistableType.toType()
-        assertEquals(testName, type?.name)
+        val defaultType = Type.UNKNOWN
+        assertEquals(R.color.mds_white, defaultType.complimentaryColorRes())
     }
 }

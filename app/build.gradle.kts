@@ -68,6 +68,7 @@ dependencies {
     implementation(project(":image-loader"))
     implementation(project(":database"))
     implementation(project(":network"))
+    implementation(project(":core"))
     implementation(kotlin("stdlib", KotlinCompilerVersion.VERSION))
     debugImplementation(Dependencies.fragmentTesting) {
         exclude("androidx.test", "core")

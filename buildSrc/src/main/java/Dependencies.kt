@@ -15,7 +15,7 @@ object Dependencies {
     private const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
     private const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
     private const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
-    private const val junit = "junit:junit:${Versions.junit}"
+    const val junit = "junit:junit:${Versions.junit}"
     private const val roomTesting = "androidx.room:room-testing:${Versions.room}"
     private const val androidXTestRunner = "androidx.test:runner:${Versions.androidXTest}"
     private const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espresso}"

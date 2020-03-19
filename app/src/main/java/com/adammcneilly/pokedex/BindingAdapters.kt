@@ -10,7 +10,9 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.adammcneilly.imageloader.ImageLoader
-import com.adammcneilly.pokedex.models.Type
+import com.adammcneilly.pokedex.core.Type
+import com.adammcneilly.pokedex.models.colorRes
+import com.adammcneilly.pokedex.models.complimentaryColorRes
 
 private const val PROGRESS_STROKE_WIDTH = 10F
 private const val PROGRESS_CENTER_RADIUS = 30F
@@ -42,15 +44,15 @@ fun ImageView.imageUrl(imageUrl: String?) {
 @SuppressLint("DefaultLocale")
 @BindingAdapter("pokemonType")
 fun TextView.bindPokemonType(type: Type?) {
-    if (type?.name == null) return
+    if (type == null) return
 
     this.text = type.name.capitalize()
-    this.setTextColor(ContextCompat.getColor(context, type.getComplementaryColorRes()))
+    this.setTextColor(ContextCompat.getColor(context, type.complimentaryColorRes()))
 
     val shape = GradientDrawable().apply {
         shape = GradientDrawable.RECTANGLE
         cornerRadius = PILL_RADIUS
-        setColor(ContextCompat.getColor(context, type.getColorRes()))
+        setColor(ContextCompat.getColor(context, type.colorRes()))
         setStroke(1, ContextCompat.getColor(context, R.color.mds_white))
     }
     this.background = shape

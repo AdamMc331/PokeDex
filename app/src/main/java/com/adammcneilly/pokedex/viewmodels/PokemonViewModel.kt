@@ -2,7 +2,7 @@ package com.adammcneilly.pokedex.viewmodels
 
 import android.annotation.SuppressLint
 import androidx.databinding.BaseObservable
-import com.adammcneilly.pokedex.models.Pokemon
+import com.adammcneilly.pokedex.core.Pokemon
 
 class PokemonViewModel : BaseObservable() {
     var pokemon: Pokemon? = null
