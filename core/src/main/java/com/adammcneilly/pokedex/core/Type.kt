@@ -1,5 +1,7 @@
 package com.adammcneilly.pokedex.core
 
+import android.annotation.SuppressLint
+
 enum class Type {
     NORMAL,
     FIGHTING,
@@ -23,10 +25,11 @@ enum class Type {
     SHADOW;
 
     companion object {
+        @SuppressLint("DefaultLocale")
         fun fromString(input: String?): Type {
-            return Type.values().find { type ->
-                type.name == input
-            } ?: Type.UNKNOWN
+            return values().find { type ->
+                type.name == input?.toUpperCase()
+            } ?: UNKNOWN
         }
     }
 }

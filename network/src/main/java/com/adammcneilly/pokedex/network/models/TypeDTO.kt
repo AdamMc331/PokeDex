@@ -10,9 +10,7 @@ internal data class TypeDTO(
     val url: String? = null
 ) {
 
-    fun toType(): Type? {
-        return Type.values().find { type ->
-            type.name == this.name
-        }
+    fun toType(): Type {
+        return Type.fromString(this.name)
     }
 }
