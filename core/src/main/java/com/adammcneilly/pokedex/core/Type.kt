@@ -21,4 +21,12 @@ enum class Type {
     FAIRY,
     UNKNOWN,
     SHADOW;
+
+    companion object {
+        fun fromString(input: String?): Type {
+            return Type.values().find { type ->
+                type.name == input
+            } ?: Type.UNKNOWN
+        }
+    }
 }

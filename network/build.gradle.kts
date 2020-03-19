@@ -4,6 +4,7 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-android-extensions")
+    id("com.apollographql.apollo")
 }
 
 android {
@@ -40,4 +41,8 @@ dependencies {
 
 configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
     config = files("${rootProject.projectDir}/config/detekt/detekt.yml")
+}
+
+configure<com.apollographql.apollo.gradle.api.ApolloExtension> {
+    generateKotlinModels.set(true)
 }

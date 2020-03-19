@@ -1,0 +1,15 @@
+query PokemonQuery($first: Int!) {
+    pokemonList: pokemons(first: $first) {
+        name
+        types
+        image
+    }
+}
+
+query PokemonDetailQuery($pokemonName: String) {
+    pokemon: pokemon(name: $pokemonName) {
+        name
+        types
+        image
+    }
+}
