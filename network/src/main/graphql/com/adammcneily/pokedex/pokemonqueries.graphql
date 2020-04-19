@@ -9,3 +9,9 @@ query PokemonQuery($first: Int!) {
         ...ApolloPokemon
     }
 }
+
+query PokemonDetailQuery($pokemonName: String) {
+    pokemon: pokemon(name: $pokemonName) {
+        ...ApolloPokemon
+    }
+}
