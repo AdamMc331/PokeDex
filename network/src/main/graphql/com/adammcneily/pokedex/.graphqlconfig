@@ -4,7 +4,7 @@
   "extensions": {
     "endpoints": {
       "Pokedex": {
-        "url": "http://localhost:8080/graphql",
+        "url": "https://graphql-pokemon.now.sh/",
         "headers": {
           "user-agent": "JS GraphQL"
         },
