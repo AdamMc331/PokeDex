@@ -28,4 +28,5 @@ object Versions {
     const val archTesting = "2.1.0"
     const val androidXJunit = "1.1.1"
     const val apolloGraphql = "1.3.3"
+    const val androidSettings = "1.1.0"
 }

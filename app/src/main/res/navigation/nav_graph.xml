@@ -25,4 +25,7 @@
             android:id="@+id/deepLink"
             app:uri="pokedex://pokemon/{pokemonName}" />
     </fragment>
+    <fragment
+        android:id="@+id/preferencesFragment"
+        android:name="com.adammcneilly.pokedex.preferences.PreferenceFragment" />
 </navigation>

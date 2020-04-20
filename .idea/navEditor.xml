@@ -17,6 +17,15 @@
                             <option name="y" value="47" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="deepLink">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
@@ -31,12 +40,24 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_pokemonListFragment_to_pokemonDetailFragment">
+                            <entry key="toPokemonDetail">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="preferencesFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="153" />
+                            <option name="y" value="341" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
