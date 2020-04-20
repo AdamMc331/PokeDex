@@ -52,6 +52,7 @@ object Dependencies {
     private const val mockwebserver = "com.squareup.okhttp3:mockwebserver:${Versions.okhttp}"
     private const val apolloGraphql = "com.apollographql.apollo:apollo-runtime:${Versions.apolloGraphql}"
     private const val apolloCoroutines = "com.apollographql.apollo:apollo-coroutines-support:${Versions.apolloGraphql}"
+    private const val androidSettings = "androidx.preference:preference:${Versions.androidSettings}"
 
     val imageLoaderDependencies = listOf(
         DependencyConfig.Implementation(appCompat),
@@ -85,6 +86,7 @@ object Dependencies {
         DependencyConfig.Implementation(swipeRefreshLayout),
         DependencyConfig.Implementation(navigationFragmentKtx),
         DependencyConfig.Implementation(navigationUiKtx),
+        DependencyConfig.Implementation(androidSettings),
         DependencyConfig.TestImplementation(junit),
         DependencyConfig.TestImplementation(mockito),
         DependencyConfig.TestImplementation(archTesting),
