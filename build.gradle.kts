@@ -37,7 +37,7 @@ subprojects {
     apply(plugin = "com.novoda.static-analysis")
 
     ktlint {
-        version.set("0.35.0")
+        version.set("0.36.0")
         android.set(true)
         enableExperimentalRules.set(true)
         reporters {
