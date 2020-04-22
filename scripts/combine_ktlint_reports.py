@@ -7,16 +7,28 @@ import os.path
 from xml.etree import ElementTree
 
 first = None
-file_list = [
-"../app/build/reports/ktlint/ktlintMainSourceSetCheck.xml",
-"../app/build/reports/ktlint/ktlintTestSourceSetCheck.xml",
-"../app/build/reports/ktlint/ktlintAndroidTestSourceSetCheck.xml",
-"../app/build/reports/detekt/detekt.xml",
-"../image-loader/build/reports/ktlint/ktlintMainSourceSetCheck.xml",
-"../image-loader/build/reports/detekt/detekt.xml",
-"../database/build/reports/ktlint/ktlintMainSourceSetCheck.xml",
-"../database/build/reports/detekt/detekt.xml"
+parentDirectory = "../"
+ktlintMain = "/build/reports/ktlint/ktlintMainSourceSetCheck.xml"
+ktlintTest = "/build/reports/ktlint/ktlintTestSourceSetCheck.xml"
+ktlintAndroidTest = "/build/reports/ktlint/ktlintAndroidTestSourceSetCheck.xml"
+detekt = "/build/reports/detekt/detekt.xml"
+lint = "/build/reports/lint-results.xml"
+
+file_list = []
+
+module_list = [
+	"app",
+	"network",
+	"image-loader",
+	"database",
+	"core"
 ]
+
+for module in module_list:
+	file_list.append(parentDirectory + module + ktlintMain)
+	file_list.append(parentDirectory + module + ktlintTest)
+	file_list.append(parentDirectory + module + ktlintAndroidTest)
+	file_list.append(parentDirectory + module + detekt)
 
 ktlintFile = 'ktlint-report-orig.xml'
 editedKtlintFile = 'ktlint-report.xml'

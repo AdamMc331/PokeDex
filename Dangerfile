@@ -1,12 +1,11 @@
 # Ignore inline messages that are outside of current diff
-github.dismiss_out_of_range_messages
+# github.dismiss_out_of_range_messages
 
 message "Thanks @#{github.pr_author}!"
 
 # Report inline ktlint issues
-# TODO: checkstyle stopped working at some point and idk why
-# checkstyle_format.base_path = Dir.pwd
-# checkstyle_format.report 'scripts/ktlint-report.xml'
+checkstyle_format.base_path = Dir.pwd
+checkstyle_format.report 'scripts/ktlint-report.xml'
 
 # Notify of outdated dependencies
 update_count = File.readlines("build/dependencyUpdates/report.txt").select { |line| line =~ /->/ }.count
