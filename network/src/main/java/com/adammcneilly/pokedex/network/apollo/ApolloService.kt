@@ -1,5 +1,6 @@
 package com.adammcneilly.pokedex.network.apollo
 
+import android.annotation.SuppressLint
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.core.Type
@@ -18,7 +19,7 @@ class ApolloService(baseUrl: String) : PokemonAPI {
 
         val response = apolloClient.query(query).toDeferred().await()
 
-        val pokemonList = response.data()
+        val pokemonList = response.data
             ?.pokemonList
             ?.filterNotNull()
             ?.map { apolloPokemonList ->
@@ -35,7 +36,7 @@ class ApolloService(baseUrl: String) : PokemonAPI {
 
         val response = apolloClient.query(query).toDeferred().await()
 
-        return response.data()?.pokemon?.fragments?.apolloPokemon?.toPokemon() ?: Pokemon()
+        return response.data?.pokemon?.fragments?.apolloPokemon?.toPokemon() ?: Pokemon()
     }
 
     companion object {
@@ -43,11 +44,12 @@ class ApolloService(baseUrl: String) : PokemonAPI {
     }
 }
 
+@SuppressLint("DefaultLocale")
 private fun ApolloPokemon.toPokemon(): Pokemon {
     return Pokemon(
         name = this.name.orEmpty(),
-        firstType = Type.fromString(this.types?.getOrNull(0)),
-        secondType = Type.fromString(this.types?.getOrNull(1)),
+        firstType = Type.fromString(this.types?.getOrNull(0)?.toUpperCase()),
+        secondType = Type.fromString(this.types?.getOrNull(1)?.toUpperCase()),
         frontSpriteUrl = this.image
     )
 }

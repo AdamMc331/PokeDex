@@ -6,7 +6,7 @@ import com.adammcneilly.pokedex.core.Type
 internal class PokemonTypeConverter {
 
     @TypeConverter
-    fun fromInt(ordinal: Int): Type? {
+    fun fromInt(ordinal: Int?): Type? {
         return Type.values().find { type ->
             type.ordinal == ordinal
         }
