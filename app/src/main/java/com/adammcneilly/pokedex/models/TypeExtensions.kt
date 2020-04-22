@@ -3,6 +3,7 @@ package com.adammcneilly.pokedex.models
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.core.Type
 
+@Suppress("ComplexMethod")
 fun Type.colorRes(): Int {
     return when (this) {
         Type.WATER -> R.color.type_water
