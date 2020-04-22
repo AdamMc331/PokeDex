@@ -15,7 +15,11 @@ file_list = [
 "../image-loader/build/reports/ktlint/ktlintMainSourceSetCheck.xml",
 "../image-loader/build/reports/detekt/detekt.xml",
 "../database/build/reports/ktlint/ktlintMainSourceSetCheck.xml",
-"../database/build/reports/detekt/detekt.xml"
+"../database/build/reports/detekt/detekt.xml",
+"../network/build/reports/ktlint/ktlintMainSourceSetCheck.xml",
+"../network/build/reports/detekt/detekt.xml",
+"../core/build/reports/ktlint/ktlintMainSourceSetCheck.xml",
+"../core/build/reports/detekt/detekt.xml"
 ]
 
 ktlintFile = 'ktlint-report-orig.xml'
