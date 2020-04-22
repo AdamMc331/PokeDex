@@ -22,11 +22,11 @@ jdk:
 
 jobs:
   include:
-#  - stage: build
-#    script: ./gradlew clean build -PnoLint -x test -x detekt
-#
-#  - stage: test
-#    script: ./gradlew test
+  - stage: build
+    script: ./gradlew clean build -PnoLint -x test -x detekt
+
+  - stage: test
+    script: ./gradlew test
 
   - stage: danger checks
     script:
