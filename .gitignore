@@ -17,3 +17,6 @@ buildsrc/build/
 /build
 /captures
 .externalNativeBuild
+/buildSrc/local.properties
+/.idea/jarRepositories.xml
+/.idea/compiler.xml
