@@ -1,0 +1,38 @@
+{
+  "pokemonList": [
+    {
+      "name": "Bulbasaur"
+    },
+    {
+      "name": "Ivysaur"
+    },
+    {
+      "name": "Venusaur"
+    },
+    {
+      "name": "Charmander"
+    },
+    {
+      "name": "Charmeleon"
+    },
+    {
+      "name": "Charizard"
+    },
+    {
+      "name": "Squirtle"
+    },
+    {
+      "name": "Wartortle"
+    },
+    {
+      "name": "Blastoise"
+    }
+  ],
+  "pokemonDetail": {
+    "image": "@sample/bulbasaur",
+    "firstType": "Grass",
+    "firstTypeColor": "#7AC74C",
+    "secondType": "Poison",
+    "secondTypeColor": "#A33EA1"
+  }
+}
