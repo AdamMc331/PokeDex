@@ -10,6 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -29,7 +30,8 @@
                 app:imageUrl="@{viewModel.imageUrl}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@sample/pokedexsampledata.json/pokemonDetail/image" />
 
             <TextView
                 android:id="@+id/first_type"
@@ -44,7 +46,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/pokemon_image"
                 app:pokemonType="@{viewModel.firstType}"
-                app:visibilityCondition="@{viewModel.showFirstType}" />
+                app:visibilityCondition="@{viewModel.showFirstType}"
+                tools:background="@sample/pokedexsampledata.json/pokemonDetail/firstTypeColor"
+                tools:text="@sample/pokedexsampledata.json/pokemonDetail/firstType"
+                tools:textColor="@color/mds_white" />
 
             <TextView
                 android:id="@+id/second_type"
@@ -54,6 +59,9 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:textAllCaps="true"
+                tools:text="@sample/pokedexsampledata.json/pokemonDetail/secondType"
+                tools:textColor="@color/mds_white"
+                tools:background="@sample/pokedexsampledata.json/pokemonDetail/secondTypeColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/first_type"
                 app:layout_constraintTop_toTopOf="@id/first_type"
@@ -71,7 +79,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:visibilityCondition="@{viewModel.showLoading}" />
+            app:visibilityCondition="@{viewModel.showLoading}"
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/error_view"
@@ -85,7 +94,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:visibilityCondition="@{viewModel.showError}" />
+            app:visibilityCondition="@{viewModel.showError}"
+            tools:visibility="gone" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
