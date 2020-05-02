@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.adammcneilly.pokedex.database.models.PersistablePokemon
 
-@Database(entities = [(PersistablePokemon::class)], version = 1)
+@Database(entities = [(PersistablePokemon::class)], version = 2)
 @TypeConverters(PokemonTypeConverter::class)
 internal abstract class RoomPokedexDatabase : RoomDatabase() {
     abstract fun pokemonDao(): RoomPokemonDAO
@@ -21,6 +21,7 @@ internal abstract class RoomPokedexDatabase : RoomDatabase() {
                     context,
                     RoomPokedexDatabase::class.java, "pokedex.db"
                 )
+                    .addMigrations(MIGRATION_1_2)
                     .build()
             }
 

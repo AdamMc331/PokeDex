@@ -10,7 +10,8 @@ internal data class PersistablePokemon(
     @PrimaryKey val name: String = "",
     val frontSpriteUrl: String? = null,
     val firstType: Type = Type.UNKNOWN,
-    val secondType: Type? = null
+    val secondType: Type? = null,
+    val pokedexNumber: String = ""
 ) {
 
     fun toPokemon(): Pokemon {
