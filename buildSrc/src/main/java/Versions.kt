@@ -18,7 +18,7 @@ object Versions {
     const val retrofit = "2.8.1"
     const val lifecycle = "2.2.0"
     const val materialDesignSpecs = "2.0.1"
-    const val coroutines = "1.3.5"
+    const val coroutines = "1.3.6"
     const val retrofitCoroutinesAdapter = "0.9.2"
     const val swipeRefreshLayout = "1.0.0"
     const val okhttp = "4.6.0"
@@ -26,6 +26,6 @@ object Versions {
     const val mockito = "3.3.3"
     const val archTesting = "2.1.0"
     const val androidXJunit = "1.1.1"
-    const val apolloGraphql = "2.0.1"
+    const val apolloGraphql = "2.0.3"
     const val androidSettings = "1.1.1"
 }
