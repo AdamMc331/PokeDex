@@ -19,7 +19,8 @@ internal data class PersistablePokemon(
             name = this.name,
             frontSpriteUrl = this.frontSpriteUrl,
             firstType = this.firstType,
-            secondType = this.secondType
+            secondType = this.secondType,
+            pokedexNumber = this.pokedexNumber
         )
     }
 
@@ -29,7 +30,8 @@ internal data class PersistablePokemon(
                 name = pokemon.name,
                 frontSpriteUrl = pokemon.frontSpriteUrl,
                 firstType = pokemon.firstType,
-                secondType = pokemon.secondType
+                secondType = pokemon.secondType,
+                pokedexNumber = pokemon.pokedexNumber
             )
         }
     }
