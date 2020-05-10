@@ -5,6 +5,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-android-extensions")
     id("com.apollographql.apollo")
+    id("com.hiya.jacoco-android")
 }
 
 android {
@@ -49,4 +50,16 @@ configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
 
 configure<com.apollographql.apollo.gradle.api.ApolloExtension> {
     generateKotlinModels.set(true)
+}
+
+configure<JacocoPluginExtension> {
+    toolVersion = "0.8.4"
+}
+
+configure<com.hiya.plugins.JacocoAndroidUnitTestReportExtension> {
+    csv.enabled(false)
+    html.enabled(true)
+    xml.enabled(false)
+
+    excludes = this.excludes + listOf()
 }

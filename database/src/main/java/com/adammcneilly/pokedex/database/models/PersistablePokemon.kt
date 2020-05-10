@@ -5,6 +5,9 @@ import androidx.room.PrimaryKey
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.Type
 
+/**
+ * TODO: These need tests.
+ */
 @Entity
 internal data class PersistablePokemon(
     @PrimaryKey val name: String = "",

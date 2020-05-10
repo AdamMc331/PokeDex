@@ -3,6 +3,9 @@ package com.adammcneilly.pokedex.database.room
 import androidx.room.TypeConverter
 import com.adammcneilly.pokedex.core.Type
 
+/**
+ * TODO: This needs a test but also this is probably not a good idea.
+ */
 internal class PokemonTypeConverter {
 
     @TypeConverter
