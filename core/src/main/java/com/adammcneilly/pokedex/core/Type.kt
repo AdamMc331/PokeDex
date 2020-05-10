@@ -24,9 +24,9 @@ enum class Type {
 
     companion object {
         fun fromString(input: String?): Type {
-            return Type.values().find { type ->
-                type.name == input
-            } ?: Type.UNKNOWN
+            return values().find { type ->
+                type.name == input?.toUpperCase()
+            } ?: UNKNOWN
         }
     }
 }
