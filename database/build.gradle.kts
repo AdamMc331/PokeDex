@@ -16,6 +16,12 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = mapOf("room.schemaLocation" to "$projectDir/schemas")
+            }
+        }
     }
 
     buildTypes {
@@ -26,6 +32,13 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+
+    sourceSets {
+        // Adds exported schema location as test app assets.
+        val schemaFiles = files("$projectDir/schemas")
+        val initialAndroidTestDirs = getByName("androidTest").assets.srcDirs
+        getByName("androidTest").assets.setSrcDirs(initialAndroidTestDirs + schemaFiles)
     }
 
     kotlinOptions {
