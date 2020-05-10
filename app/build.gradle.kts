@@ -6,6 +6,7 @@ plugins {
     id("kotlin-android-extensions")
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.hiya.jacoco-android")
 }
 
 android {
@@ -79,4 +80,26 @@ dependencies {
 
 configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
     config = files("${rootProject.projectDir}/config/detekt/detekt.yml")
+}
+
+configure<JacocoPluginExtension> {
+    toolVersion = "0.8.4"
+}
+
+configure<com.hiya.plugins.JacocoAndroidUnitTestReportExtension> {
+    csv.enabled(false)
+    html.enabled(true)
+    xml.enabled(false)
+
+    excludes = this.excludes + listOf(
+        "**/databinding/**",
+        "**/views/**",
+        "**/*DataBinder*.*",
+        "**/*DataBinding*.*",
+        "**/*Fragment*.*",
+        "**/*Activity*.*",
+        "**/*BaseObservableViewModel.class",
+        "**/*PokeApp.class",
+        "**/*BindingAdaptersKt.class"
+    )
 }

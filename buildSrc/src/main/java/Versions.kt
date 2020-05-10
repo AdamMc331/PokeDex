@@ -29,4 +29,5 @@ object Versions {
     const val androidXJunit = "1.1.1"
     const val apolloGraphql = "2.0.0"
     const val androidSettings = "1.1.1"
+    const val jacoco = "0.2"
 }
