@@ -4,6 +4,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    id("com.hiya.jacoco-android")
 }
 
 android {
@@ -46,4 +47,16 @@ dependencies {
 
 configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
     config = files("${rootProject.projectDir}/config/detekt/detekt.yml")
+}
+
+configure<JacocoPluginExtension> {
+    toolVersion = "0.8.4"
+}
+
+configure<com.hiya.plugins.JacocoAndroidUnitTestReportExtension> {
+    csv.enabled(false)
+    html.enabled(true)
+    xml.enabled(false)
+
+    excludes = this.excludes + listOf()
 }
