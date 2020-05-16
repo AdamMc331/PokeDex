@@ -1,6 +1,6 @@
 name: Android Build
 
-on: commit
+on: push
 
 jobs:
   build:
