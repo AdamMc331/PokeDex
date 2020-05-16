@@ -1,6 +1,6 @@
 name: Android Build
 
-on: pull_request
+on: push
 
 jobs:
   build:
@@ -13,30 +13,8 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Set Up Ruby
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: 2.6
-
-      - name: Run Tests
-        run: ./gradlew test
-
       - name: Build Project
         run: ./gradlew assemble
 
-      - name: Danger Checks
-        run: |
-          ./gradlew detekt
-          ./gradlew ktlintCheck
-          ./gradlew lint
-          ./gradlew dependencyUpdates
-          cd scripts
-          touch ktlint-report-orig.xml
-          touch ktlint-report.xml
-          python combine_ktlint_reports.py
-          cd ..
-          gem install bundler
-          bundle install
-          bundle exec danger
-        env:
-          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Tests
+        run: ./gradlew test
