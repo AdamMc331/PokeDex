@@ -32,9 +32,6 @@ open class PokeApp : Application(), PokeGraph {
         )
     }
 
-    open val restBaseUrl: String
-        get() = "https://pokeapi.co/api/"
-
     private fun getPreferences(): PokePreferences {
         val defaultPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         return AndroidPreferences(defaultPreferences)
