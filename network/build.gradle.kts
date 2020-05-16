@@ -58,7 +58,7 @@ configure<com.apollographql.apollo.gradle.api.ApolloExtension> {
 }
 
 configure<JacocoPluginExtension> {
-    toolVersion = "0.8.4"
+    toolVersion = "0.8.5"
 }
 
 configure<com.hiya.plugins.JacocoAndroidUnitTestReportExtension> {
