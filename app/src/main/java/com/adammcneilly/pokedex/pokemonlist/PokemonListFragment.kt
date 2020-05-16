@@ -12,11 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.data.PokemonService
 import com.adammcneilly.pokedex.databinding.FragmentPokemonListBinding
+import com.adammcneilly.pokedex.pokeGraph
 import com.adammcneilly.pokedex.pokemonlist.PokemonListFragmentDirections.Companion.toPokemonDetail
 import com.adammcneilly.pokedex.views.PokemonAdapter
 
@@ -28,11 +28,9 @@ class PokemonListFragment : Fragment() {
 
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val pokemonAPI = (requireContext().applicationContext as PokeApp).getPokemonAPI()
-
             val repository = PokemonService(
                 database = null,
-                api = pokemonAPI
+                dataGraph = requireContext().pokeGraph().dataGraph
             )
 
             @Suppress("UNCHECKED_CAST")

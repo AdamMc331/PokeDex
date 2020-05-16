@@ -3,22 +3,24 @@ package com.adammcneilly.pokedex.data
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.database.PokedexDatabase
-import com.adammcneilly.pokedex.network.PokemonAPI
+import com.adammcneilly.pokedex.di.DataGraph
 
 /**
  * Implementation of a [PokemonRepository] that fetch from both local and remote sources.
  */
 open class PokemonService(
     private val database: PokedexDatabase?,
-    private val api: PokemonAPI?
+    dataGraph: DataGraph
 ) : PokemonRepository {
+    private val api = dataGraph.networkGraph.api
+
     override suspend fun getPokemon(): PokemonResponse? {
         val dbPokemon = database?.getAllPokemon()
 
         return if (dbPokemon?.isNotEmpty() == true) {
             PokemonResponse(results = dbPokemon)
         } else {
-            api?.getPokemon()?.also { pokemonResponse ->
+            api.getPokemon().also { pokemonResponse ->
                 val pokemonList = pokemonResponse.results.orEmpty()
 
                 database?.insertAllPokemon(pokemonList)
@@ -35,8 +37,8 @@ open class PokemonService(
     }
 
     private suspend fun getPokemonDetailFromNetwork(pokemonName: String): Pokemon {
-        return api?.getPokemonDetail(pokemonName)?.also {
+        return api.getPokemonDetail(pokemonName).also {
             database?.insertPokemon(it)
-        } ?: Pokemon()
+        }
     }
 }

@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import com.adammcneilly.pokedex.PokeApp
 import com.adammcneilly.pokedex.data.PokemonService
 import com.adammcneilly.pokedex.database.RoomDatabase
 import com.adammcneilly.pokedex.databinding.FragmentPokemonDetailBinding
+import com.adammcneilly.pokedex.pokeGraph
 
 class PokemonDetailFragment : Fragment() {
     private lateinit var binding: FragmentPokemonDetailBinding
@@ -20,9 +20,11 @@ class PokemonDetailFragment : Fragment() {
 
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val api = (requireContext().applicationContext as PokeApp).getPokemonAPI()
             val database = RoomDatabase(requireContext())
-            val repository = PokemonService(database, api)
+            val repository = PokemonService(
+                database = database,
+                dataGraph = requireContext().pokeGraph().dataGraph
+            )
             val arguments: PokemonDetailFragmentArgs by navArgs()
             val pokemonName = arguments.pokemonName
 
