@@ -41,7 +41,7 @@ jobs:
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  android test:
+  android-test:
     runs-on: macos-latest
     steps:
       - name: checkout
