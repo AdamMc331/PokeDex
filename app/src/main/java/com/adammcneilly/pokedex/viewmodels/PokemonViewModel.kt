@@ -35,6 +35,7 @@ class PokemonViewModel : BaseObservable() {
          * so we can just use this string and format it with the corresponding pokedex number
          * if we don't have an imageUrl.
          */
-        private const val POKE_API_SPRITE_FORMAT = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/%s.png"
+        private const val POKE_API_SPRITE_FORMAT =
+            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/%s.png"
     }
 }
