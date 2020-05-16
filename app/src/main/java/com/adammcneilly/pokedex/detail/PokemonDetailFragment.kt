@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import androidx.transition.TransitionInflater
 import com.adammcneilly.pokedex.databinding.FragmentPokemonDetailBinding
 import com.adammcneilly.pokedex.pokeGraph
 
@@ -28,6 +29,8 @@ class PokemonDetailFragment : Fragment() {
 
         viewModel =
             ViewModelProvider(this, viewModelFactory).get(PokemonDetailViewModel::class.java)
+
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
     override fun onCreateView(
@@ -39,6 +42,13 @@ class PokemonDetailFragment : Fragment() {
         binding.lifecycleOwner = this
         setupViewModel()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val arguments: PokemonDetailFragmentArgs by navArgs()
+        binding.pokemonImage.transitionName = arguments.pokemonName
     }
 
     override fun onResume() {

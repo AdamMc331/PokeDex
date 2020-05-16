@@ -2,13 +2,14 @@ package com.adammcneilly.pokedex.views
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.databinding.ListItemPokemonBinding
 import com.adammcneilly.pokedex.viewmodels.PokemonViewModel
 
 class PokemonAdapter(
-    private val pokemonClickListener: ((Pokemon) -> Unit)
+    private val pokemonClickListener: ((Pokemon, ImageView) -> Unit)
 ) : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
 
     var items: List<Pokemon> = emptyList()
@@ -34,19 +35,22 @@ class PokemonAdapter(
 
     class PokemonViewHolder(
         private val binding: ListItemPokemonBinding,
-        pokemonClickListener: (Pokemon) -> Unit
+        pokemonClickListener: (Pokemon, ImageView) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         private val viewModel = PokemonViewModel()
 
         init {
             binding.viewModel = viewModel
             binding.root.setOnClickListener {
-                viewModel.pokemon?.let(pokemonClickListener::invoke)
+                viewModel.pokemon?.let { pokemon ->
+                    pokemonClickListener.invoke(pokemon.copy(frontSpriteUrl = viewModel.imageUrl), binding.pokemonImage)
+                }
             }
         }
 
         fun bindPokemon(pokemon: Pokemon) {
             viewModel.pokemon = pokemon
+            binding.pokemonImage.transitionName = pokemon.name
             binding.executePendingBindings()
         }
     }

@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -79,9 +81,17 @@ class PokemonListFragment : Fragment() {
         )
     }
 
-    private fun onPokemonClicked(pokemon: Pokemon) {
+    private fun onPokemonClicked(pokemon: Pokemon, imageView: ImageView) {
+        val extras = FragmentNavigatorExtras(
+            imageView to pokemon.name
+        )
+
         findNavController().navigate(
-            toPokemonDetail(pokemonName = pokemon.name)
+            toPokemonDetail(
+                pokemonName = pokemon.name,
+                pokemonImage = pokemon.frontSpriteUrl.orEmpty()
+            ),
+            extras
         )
     }
 }

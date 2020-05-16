@@ -27,6 +27,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:contentDescription="@string/pokemon_image"
+                android:transitionName="pokemonImage"
                 app:imageUrl="@{viewModel.imageUrl}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,14 +60,14 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:textAllCaps="true"
-                tools:text="@sample/pokedexsampledata.json/pokemonDetail/secondType"
-                tools:textColor="@color/mds_white"
-                tools:background="@sample/pokedexsampledata.json/pokemonDetail/secondTypeColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/first_type"
                 app:layout_constraintTop_toTopOf="@id/first_type"
                 app:pokemonType="@{viewModel.secondType}"
-                app:visibilityCondition="@{viewModel.showSecondType}" />
+                app:visibilityCondition="@{viewModel.showSecondType}"
+                tools:background="@sample/pokedexsampledata.json/pokemonDetail/secondTypeColor"
+                tools:text="@sample/pokedexsampledata.json/pokemonDetail/secondType"
+                tools:textColor="@color/mds_white" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
