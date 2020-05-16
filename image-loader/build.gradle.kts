@@ -50,7 +50,7 @@ configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
 }
 
 configure<JacocoPluginExtension> {
-    toolVersion = "0.8.4"
+    toolVersion = "0.8.5"
 }
 
 configure<com.hiya.plugins.JacocoAndroidUnitTestReportExtension> {
