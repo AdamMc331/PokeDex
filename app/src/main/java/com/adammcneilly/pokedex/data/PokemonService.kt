@@ -10,20 +10,15 @@ import com.adammcneilly.pokedex.network.PokemonAPI
  */
 open class PokemonService(
     private val database: PokedexDatabase?,
-    private val api: PokemonAPI?
+    private val api: PokemonAPI
 ) : PokemonRepository {
+
+    /**
+     * At this point, we only want to request the pokemon list from the server. In the
+     * future we should store and request that list from the database as well.
+     */
     override suspend fun getPokemon(): PokemonResponse? {
-        val dbPokemon = database?.getAllPokemon()
-
-        return if (dbPokemon?.isNotEmpty() == true) {
-            PokemonResponse(results = dbPokemon)
-        } else {
-            api?.getPokemon()?.also { pokemonResponse ->
-                val pokemonList = pokemonResponse.results.orEmpty()
-
-                database?.insertAllPokemon(pokemonList)
-            }
-        }
+        return api.getPokemon()
     }
 
     override suspend fun getPokemonDetail(pokemonName: String): Pokemon? {
@@ -35,8 +30,8 @@ open class PokemonService(
     }
 
     private suspend fun getPokemonDetailFromNetwork(pokemonName: String): Pokemon {
-        return api?.getPokemonDetail(pokemonName)?.also {
+        return api.getPokemonDetail(pokemonName).also {
             database?.insertPokemon(it)
-        } ?: Pokemon()
+        }
     }
 }

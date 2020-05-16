@@ -36,20 +36,6 @@ class PokemonServiceTest {
     }
 
     @Test
-    fun `get all pokemon from Database before API`() {
-        val testPokemon = listOf(Pokemon(name = "Adam"))
-
-        val expectedResponse = PokemonResponse(
-            results = testPokemon
-        )
-
-        testRobot
-            .mockDatabasePokemon(testPokemon)
-            .mockNetworkPokemon(PokemonResponse())
-            .assertPokemonResponse(expectedResponse)
-    }
-
-    @Test
     fun `get pokemon detail from API without database`() {
         val testName = "Adam"
         val networkDetail = Pokemon(name = "From Network")
