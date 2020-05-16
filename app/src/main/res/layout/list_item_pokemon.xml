@@ -12,18 +12,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/pokemon_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="8dp"
             android:text="@{viewModel.name}"
             android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/pokemon_image"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/pokemon_image"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@sample/pokedexsampledata.json/pokemonList/name" />
 
@@ -34,7 +33,7 @@
             android:contentDescription="@string/pokemon_image_content_description"
             app:imageUrl="@{viewModel.imageUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@sample/pokedexsampledata.json/pokemonList/image" />
 
