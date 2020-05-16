@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.core.Pokemon
-import com.adammcneilly.pokedex.data.PokemonService
 import com.adammcneilly.pokedex.databinding.FragmentPokemonListBinding
 import com.adammcneilly.pokedex.pokeGraph
 import com.adammcneilly.pokedex.pokemonlist.PokemonListFragmentDirections.Companion.toPokemonDetail
@@ -28,10 +27,7 @@ class PokemonListFragment : Fragment() {
 
     private val viewModelFactory = object : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val repository = PokemonService(
-                database = null,
-                dataGraph = requireContext().pokeGraph().dataGraph
-            )
+            val repository = requireContext().pokeGraph().dataGraph.pokemonRepository
 
             @Suppress("UNCHECKED_CAST")
             return PokemonListViewModel(repository) as T
