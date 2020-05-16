@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,13 +10,34 @@
             type="com.adammcneilly.pokedex.viewmodels.PokemonViewModel" />
     </data>
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/pokemon_name"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="@{viewModel.name}"
-        android:textColor="@android:color/black"
-        tools:text="@sample/pokedexsampledata.json/pokemonList/name" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/pokemon_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@{viewModel.name}"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/pokemon_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@sample/pokedexsampledata.json/pokemonList/name" />
+
+        <ImageView
+            android:id="@+id/pokemon_image"
+            android:layout_width="@dimen/list_item_sprite_width"
+            android:layout_height="@dimen/list_item_sprite_width"
+            android:contentDescription="@string/pokemon_image_content_description"
+            app:imageUrl="@{viewModel.imageUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@sample/pokedexsampledata.json/pokemonList/image" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
