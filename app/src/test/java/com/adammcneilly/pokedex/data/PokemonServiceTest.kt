@@ -48,12 +48,12 @@ class PokemonServiceTest {
     @Test
     fun `get pokemon detail from Database before API`() {
         val testName = "Adam"
-        val networkDetail = Pokemon(name = "From Network")
-        val databaseDetail = Pokemon(name = "From Database")
+        val networkDetail = Pokemon(name = testName, frontSpriteUrl = "From Network")
+        val databaseDetail = Pokemon(name = testName, frontSpriteUrl = "From Database")
 
         testRobot
             .mockNetworkPokemonDetailForPokemon(testName, networkDetail)
-            .mockLocalPokemonDetailForPokemon(testName, databaseDetail)
+            .mockLocalPokemonDetailForPokemon(databaseDetail)
             .assertPokemonDetail(testName, databaseDetail)
     }
 }
