@@ -22,11 +22,17 @@ class PokemonListViewModelTest {
     private val testRobot = PokemonListViewModelRobot()
 
     @Test
-    fun loadData() {
+    fun showLoadingBeforeData() {
         val testResult = PokemonResponse()
 
-        testRobot.mockPokemonResponse(testResult)
+        testRobot
             .buildViewModel()
+            .assertShowLoading(true)
+            .assertShowData(false)
+            .assertShowError(false)
+
+        testRobot
+            .mockPokemonResponse(testResult)
             .assertShowLoading(false)
             .assertShowError(false)
             .assertShowData(true)
@@ -34,8 +40,9 @@ class PokemonListViewModelTest {
 
     @Test
     fun loadError() {
-        testRobot.mockPokemonResponseError()
+        testRobot
             .buildViewModel()
+            .mockPokemonResponseError()
             .assertShowLoading(false)
             .assertShowData(false)
             .assertShowError(true)
@@ -46,8 +53,9 @@ class PokemonListViewModelTest {
         val testPokemon = listOf(Pokemon(name = "Adam"))
         val testResult = PokemonResponse(results = testPokemon)
 
-        testRobot.mockPokemonResponse(testResult)
+        testRobot
             .buildViewModel()
+            .mockPokemonResponse(testResult)
             .assertShowLoading(false)
             .assertShowError(false)
             .assertShowData(true)
