@@ -2,24 +2,25 @@ package com.adammcneilly.pokedex.detail
 
 import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.core.Pokemon
+import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.core.Type
 import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.testObserver
-import com.adammcneilly.pokedex.whenever
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
-import org.mockito.ArgumentMatchers.anyString
-import org.mockito.Mockito.mock
 
 class PokemonDetailViewModelRobot(
-    private val mockRepository: PokemonRepository = mock(PokemonRepository::class.java),
     private val dispatcherProvider: DispatcherProvider = DispatcherProvider(
         IO = Dispatchers.Unconfined,
         Main = Dispatchers.Unconfined
     ),
     private var pokemonName: String = ""
 ) {
+    private val mockRepository = FakeRepository()
     private lateinit var viewModel: PokemonDetailViewModel
 
     fun setInitialPokemonName(pokemonName: String) = apply {
@@ -27,15 +28,11 @@ class PokemonDetailViewModelRobot(
     }
 
     fun mockPokemonDetails(pokemonDetails: Pokemon) = apply {
-        runBlocking {
-            whenever(mockRepository.getPokemonDetail(anyString())).thenReturn(pokemonDetails)
-        }
+        mockRepository.mockPokemonDetail(pokemonDetails)
     }
 
     fun mockPokemonDetailsError(error: Throwable = IllegalArgumentException()) = apply {
-        runBlocking {
-            whenever(mockRepository.getPokemonDetail(anyString())).thenThrow(error)
-        }
+        mockRepository.mockPokemonDetailError(error)
     }
 
     fun buildViewModel() = apply {
@@ -84,5 +81,38 @@ class PokemonDetailViewModelRobot(
 
     fun assertShowSecondType(showSecondType: Boolean) = apply {
         assertEquals(showSecondType, viewModel.showSecondType.testObserver().observedValue)
+    }
+}
+
+/**
+ * This is a fake implementation of a [PokemonRepository] that gives us greater control over the
+ * responses and timing of responses from the repository.
+ */
+private class FakeRepository : PokemonRepository {
+    private lateinit var pokemonDetailContinuation: Continuation<Pokemon?>
+
+    override suspend fun getPokemon(): PokemonResponse? {
+        TODO("The function getPokemon should not be called for this test case.")
+    }
+
+    /**
+     * When this method is called, let's continue to suspend and not return right away. This will
+     * allow us to verify that a loading state occurs before this call finishes.
+     *
+     * When we want it to finish, we can call [mockPokemonDetail] or [mockPokemonDetailError] which
+     * will cause the [pokemonDetailContinuation] to resume with a response.
+     */
+    override suspend fun getPokemonDetail(pokemonName: String): Pokemon? {
+        return suspendCoroutine { continuation ->
+            pokemonDetailContinuation = continuation
+        }
+    }
+
+    fun mockPokemonDetail(detail: Pokemon) {
+        pokemonDetailContinuation.resume(detail)
+    }
+
+    fun mockPokemonDetailError(error: Throwable) {
+        pokemonDetailContinuation.resumeWithException(error)
     }
 }
