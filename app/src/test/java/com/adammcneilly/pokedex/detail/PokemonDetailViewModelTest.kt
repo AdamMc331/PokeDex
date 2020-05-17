@@ -24,13 +24,51 @@ class PokemonDetailViewModelTest {
     private val testRobot = PokemonDetailViewModelRobot()
 
     @Test
+    fun showLoadingBeforeData() {
+        val testName = "Adam"
+        val testPokemon = Pokemon(name = testName, firstType = Type.GRASS)
+
+        testRobot
+            .setInitialPokemonName(testName)
+            .buildViewModel()
+            .assertShowLoading(true)
+            .assertShowData(false)
+            .assertShowError(false)
+
+        testRobot
+            .mockPokemonDetails(testPokemon)
+            .assertShowData(true)
+            .assertShowLoading(false)
+            .assertShowError(false)
+    }
+
+    @Test
+    fun showLoadingBeforeError() {
+        val testName = "Adam"
+
+        testRobot
+            .setInitialPokemonName(testName)
+            .buildViewModel()
+            .assertShowLoading(true)
+            .assertShowData(false)
+            .assertShowError(false)
+
+        testRobot
+            .mockPokemonDetailsError()
+            .assertShowData(false)
+            .assertShowLoading(false)
+            .assertShowError(true)
+    }
+
+    @Test
     fun loadData() {
         val testName = "Adam"
         val testPokemon = Pokemon(name = testName, firstType = Type.GRASS)
 
-        testRobot.mockPokemonDetails(testPokemon)
+        testRobot
             .setInitialPokemonName(testName)
             .buildViewModel()
+            .mockPokemonDetails(testPokemon)
             .assertShowLoading(false)
             .assertShowError(false)
             .assertShowData(true)
@@ -43,8 +81,9 @@ class PokemonDetailViewModelTest {
     fun getTypesWithNoTypes() {
         val testPokemon = Pokemon()
 
-        testRobot.mockPokemonDetails(testPokemon)
+        testRobot
             .buildViewModel()
+            .mockPokemonDetails(testPokemon)
             .assertFirstType(Type.UNKNOWN)
             .assertSecondType(null)
             .assertShowFirstType(true)
@@ -58,8 +97,9 @@ class PokemonDetailViewModelTest {
             firstType = firstType
         )
 
-        testRobot.mockPokemonDetails(testPokemon)
+        testRobot
             .buildViewModel()
+            .mockPokemonDetails(testPokemon)
             .assertFirstType(firstType)
             .assertSecondType(null)
             .assertShowFirstType(true)
@@ -76,8 +116,9 @@ class PokemonDetailViewModelTest {
                 secondType = secondType
             )
 
-            testRobot.mockPokemonDetails(testPokemon)
+            testRobot
                 .buildViewModel()
+                .mockPokemonDetails(testPokemon)
                 .assertFirstType(firstType)
                 .assertSecondType(secondType)
                 .assertShowFirstType(true)
@@ -87,8 +128,9 @@ class PokemonDetailViewModelTest {
 
     @Test
     fun loadError() {
-        testRobot.mockPokemonDetailsError()
+        testRobot
             .buildViewModel()
+            .mockPokemonDetailsError()
             .assertShowLoading(false)
             .assertShowData(false)
             .assertShowError(true)
