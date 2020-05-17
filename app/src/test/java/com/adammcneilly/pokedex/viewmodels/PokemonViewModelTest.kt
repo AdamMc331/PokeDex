@@ -52,6 +52,8 @@ class PokemonViewModelTest {
 
         testRobot
             .setPokemon(pokemon)
-            .assertImageUrl("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")
+            .assertImageUrl(
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+            )
     }
 }
