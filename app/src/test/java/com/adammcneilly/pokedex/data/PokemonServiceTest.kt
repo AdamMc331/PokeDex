@@ -41,7 +41,7 @@ class PokemonServiceTest {
         val networkDetail = Pokemon(name = "From Network")
 
         testRobot
-            .mockNetworkPokemonDetailForPokemon(testName, networkDetail)
+            .mockNetworkPokemonDetailForPokemon(networkDetail)
             .assertPokemonDetail(testName, networkDetail)
     }
 
@@ -52,7 +52,7 @@ class PokemonServiceTest {
         val databaseDetail = Pokemon(name = testName, frontSpriteUrl = "From Database")
 
         testRobot
-            .mockNetworkPokemonDetailForPokemon(testName, networkDetail)
+            .mockNetworkPokemonDetailForPokemon(networkDetail)
             .mockLocalPokemonDetailForPokemon(databaseDetail)
             .assertPokemonDetail(testName, databaseDetail)
     }

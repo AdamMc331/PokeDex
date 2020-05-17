@@ -23,7 +23,6 @@ object Versions {
     const val swipeRefreshLayout = "1.0.0"
     const val okhttp = "4.6.0"
     const val fragments = "1.2.4"
-    const val mockito = "3.3.3"
     const val archTesting = "2.1.0"
     const val androidXJunit = "1.1.1"
     const val apolloGraphql = "2.0.3"

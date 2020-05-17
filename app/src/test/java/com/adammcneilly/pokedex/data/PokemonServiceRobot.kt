@@ -4,14 +4,12 @@ import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.database.PokedexDatabase
 import com.adammcneilly.pokedex.network.PokemonAPI
-import com.adammcneilly.pokedex.whenever
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
-import org.mockito.Mockito.mock
 
 class PokemonServiceRobot {
     private val mockDatabase = FakeDatabase()
-    private val mockAPI = mock(PokemonAPI::class.java)
+    private val mockAPI = FakeAPI()
     private val service = PokemonService(mockDatabase, mockAPI)
 
     fun mockDatabasePokemon(response: List<Pokemon>?) = apply {
@@ -19,15 +17,11 @@ class PokemonServiceRobot {
     }
 
     fun mockNetworkPokemon(response: PokemonResponse) = apply {
-        runBlocking {
-            whenever(mockAPI.getPokemon()).thenReturn(response)
-        }
+        mockAPI.mockPokemonResponse(response)
     }
 
-    fun mockNetworkPokemonDetailForPokemon(pokemonName: String, detail: Pokemon) = apply {
-        runBlocking {
-            whenever(mockAPI.getPokemonDetail(pokemonName)).thenReturn(detail)
-        }
+    fun mockNetworkPokemonDetailForPokemon(detail: Pokemon) = apply {
+        mockAPI.mockPokemonDetail(detail)
     }
 
     fun mockLocalPokemonDetailForPokemon(detail: Pokemon) = apply {
@@ -75,5 +69,26 @@ private class FakeDatabase : PokedexDatabase {
 
     fun mockPokemon(pokemon: Pokemon) {
         this.pokemonList = listOf(pokemon)
+    }
+}
+
+private class FakeAPI : PokemonAPI {
+    private var pokemonResponse = PokemonResponse()
+    private var pokemonDetail = Pokemon()
+
+    override suspend fun getPokemon(): PokemonResponse {
+        return this.pokemonResponse
+    }
+
+    override suspend fun getPokemonDetail(pokemonName: String): Pokemon {
+        return this.pokemonDetail
+    }
+
+    fun mockPokemonResponse(response: PokemonResponse) {
+        this.pokemonResponse = response
+    }
+
+    fun mockPokemonDetail(detail: Pokemon) {
+        this.pokemonDetail = detail
     }
 }
