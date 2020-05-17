@@ -9,11 +9,9 @@ fun <T> whenever(methodCall: T): OngoingStubbing<T> = Mockito.`when`(methodCall)
 
 class TestObserver<T> : Observer<T> {
     var observedValue: T? = null
-    var observedValues: MutableList<T?> = mutableListOf()
 
     override fun onChanged(t: T) {
         observedValue = t
-        observedValues.add(t)
     }
 }
 
