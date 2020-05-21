@@ -5,31 +5,28 @@ import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.testObserver
-import com.adammcneilly.pokedex.whenever
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
-import org.mockito.Mockito.mock
 
 class PokemonListViewModelRobot(
-    private val mockRepository: PokemonRepository = mock(PokemonRepository::class.java),
     private val testDispatcherProvider: DispatcherProvider = DispatcherProvider(
         IO = Dispatchers.Unconfined,
         Main = Dispatchers.Unconfined
     )
 ) {
+    private val mockRepository = FakeRepository()
     private lateinit var viewModel: PokemonListViewModel
 
     fun mockPokemonResponse(response: PokemonResponse) = apply {
-        runBlocking {
-            whenever(mockRepository.getPokemon()).thenReturn(response)
-        }
+        mockRepository.mockPokemonResponse(response)
     }
 
     fun mockPokemonResponseError(error: Throwable = IllegalArgumentException()) = apply {
-        runBlocking {
-            whenever(mockRepository.getPokemon()).thenThrow(error)
-        }
+        mockRepository.mockPokemonResponseError(error)
     }
 
     fun buildViewModel() = apply {
@@ -53,5 +50,27 @@ class PokemonListViewModelRobot(
 
     fun assertPokemonList(pokemonList: List<Pokemon>) = apply {
         assertEquals(pokemonList, viewModel.pokemon.testObserver().observedValue)
+    }
+}
+
+private class FakeRepository : PokemonRepository {
+    private lateinit var pokemonResponseContinuation: Continuation<PokemonResponse?>
+
+    override suspend fun getPokemon(): PokemonResponse? {
+        return suspendCoroutine { continuation ->
+            pokemonResponseContinuation = continuation
+        }
+    }
+
+    override suspend fun getPokemonDetail(pokemonName: String): Pokemon? {
+        TODO("The function getPokemonDetail should not be called for this test case.")
+    }
+
+    fun mockPokemonResponse(response: PokemonResponse?) {
+        pokemonResponseContinuation.resume(response)
+    }
+
+    fun mockPokemonResponseError(error: Throwable) {
+        pokemonResponseContinuation.resumeWithException(error)
     }
 }

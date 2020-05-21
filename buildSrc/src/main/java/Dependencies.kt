@@ -41,7 +41,6 @@ object Dependencies {
         "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     private const val navigationUiKtx = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
     private const val gson = "com.google.code.gson:gson:${Versions.gson}"
-    private const val mockito = "org.mockito:mockito-core:${Versions.mockito}"
     private const val archTesting = "androidx.arch.core:core-testing:${Versions.archTesting}"
     private const val coroutinesTest =
         "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
@@ -88,7 +87,6 @@ object Dependencies {
         DependencyConfig.Implementation(navigationUiKtx),
         DependencyConfig.Implementation(androidSettings),
         DependencyConfig.TestImplementation(junit),
-        DependencyConfig.TestImplementation(mockito),
         DependencyConfig.TestImplementation(archTesting),
         DependencyConfig.TestImplementation(coroutinesTest),
         DependencyConfig.AndroidTestImplementation(androidXTestCore),
