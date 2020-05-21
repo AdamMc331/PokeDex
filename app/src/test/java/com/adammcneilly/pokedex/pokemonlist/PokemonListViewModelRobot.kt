@@ -10,6 +10,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import org.junit.Assert.assertEquals
 
 class PokemonListViewModelRobot(
@@ -62,7 +63,7 @@ private class FakeRepository : PokemonRepository {
         }
     }
 
-    override suspend fun getPokemonDetail(pokemonName: String): Pokemon? {
+    override fun getPokemonDetail(pokemonName: String): Flow<Result<Pokemon>> {
         TODO("The function getPokemonDetail should not be called for this test case.")
     }
 
