@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -25,17 +24,13 @@ class PokemonListFragment : Fragment() {
     private lateinit var viewModel: PokemonListViewModel
     private lateinit var binding: FragmentPokemonListBinding
 
-    private val viewModelFactory = object : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val repository = requireContext().pokeGraph().dataGraph.pokemonRepository
-
-            @Suppress("UNCHECKED_CAST")
-            return PokemonListViewModel(repository) as T
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val viewModelFactory = requireContext()
+            .pokeGraph()
+            .viewModelFactoryGraph
+            .pokemonListViewModelFactory()
 
         viewModel =
             ViewModelProvider(this, viewModelFactory).get(PokemonListViewModel::class.java)
