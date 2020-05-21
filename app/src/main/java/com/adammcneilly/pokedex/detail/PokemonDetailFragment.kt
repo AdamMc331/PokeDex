@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.adammcneilly.pokedex.databinding.FragmentPokemonDetailBinding
@@ -16,20 +15,16 @@ class PokemonDetailFragment : Fragment() {
     private lateinit var binding: FragmentPokemonDetailBinding
     private lateinit var viewModel: PokemonDetailViewModel
 
-    private val viewModelFactory = object : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            val repository = requireContext().pokeGraph().dataGraph.pokemonRepository
-
-            val arguments: PokemonDetailFragmentArgs by navArgs()
-            val pokemonName = arguments.pokemonName
-
-            @Suppress("UNCHECKED_CAST")
-            return PokemonDetailViewModel(repository, pokemonName) as T
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val arguments: PokemonDetailFragmentArgs by navArgs()
+        val pokemonName = arguments.pokemonName
+
+        val viewModelFactory = requireContext()
+            .pokeGraph()
+            .viewModelFactoryGraph
+            .pokemonDetailViewModelFactory(pokemonName)
 
         viewModel =
             ViewModelProvider(this, viewModelFactory).get(PokemonDetailViewModel::class.java)
