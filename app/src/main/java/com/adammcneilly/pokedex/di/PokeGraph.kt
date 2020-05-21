@@ -15,7 +15,7 @@ interface PokeGraph {
  * This is a concrete implementation of a [PokeGraph] that allows us to create all of our application
  * graph dependencies in one spot without bloating the application class.
  */
-class BasePokeGraph(
+open class BasePokeGraph(
     private val useGraphQL: Boolean,
     private val context: Context
 ) : PokeGraph {
