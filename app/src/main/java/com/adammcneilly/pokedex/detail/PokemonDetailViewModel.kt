@@ -78,7 +78,7 @@ class PokemonDetailViewModel(
 
     private fun fetchPokemonDetail() {
         viewModelScope.launch {
-            startLoading()
+            setState(PokemonDetailState.Loading)
 
             repository
                 .getPokemonDetail(pokemonName)
@@ -89,10 +89,6 @@ class PokemonDetailViewModel(
                     setState(newState)
                 }
         }
-    }
-
-    private fun startLoading() {
-        setState(PokemonDetailState.Loading)
     }
 
     private fun setState(newState: PokemonDetailState) {
