@@ -31,7 +31,7 @@ class PokemonServiceRobot {
 
     fun assertPokemonResponse(expectedResponse: PokemonResponse) = apply {
         runBlocking {
-            assertEquals(expectedResponse, service.getPokemon())
+            assertEquals(expectedResponse, service.getPokemon().first().getOrNull())
         }
     }
 

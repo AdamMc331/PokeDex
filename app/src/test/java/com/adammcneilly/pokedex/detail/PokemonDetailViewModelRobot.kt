@@ -84,7 +84,7 @@ class PokemonDetailViewModelRobot(
 private class FakeRepository : PokemonRepository {
     private val pokemonDetailChannel = Channel<Result<Pokemon>>()
 
-    override suspend fun getPokemon(): PokemonResponse? {
+    override fun getPokemon(): Flow<Result<PokemonResponse>> {
         TODO("The function getPokemon should not be called for this test case.")
     }
 

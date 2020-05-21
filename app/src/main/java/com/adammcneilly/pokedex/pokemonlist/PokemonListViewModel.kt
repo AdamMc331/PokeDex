@@ -5,15 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.adammcneilly.pokedex.BaseObservableViewModel
-import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.core.Pokemon
+import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.data.PokemonRepository
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class PokemonListViewModel(
-    private val repository: PokemonRepository,
-    private val dispatcherProvider: DispatcherProvider = DispatcherProvider()
+    private val repository: PokemonRepository
 ) : BaseObservableViewModel() {
     private val state = MutableLiveData<PokemonListState>().apply {
         value = PokemonListState.Loading
@@ -42,35 +42,28 @@ class PokemonListViewModel(
     @Suppress("TooGenericExceptionCaught")
     private fun fetchPokemonList() {
         viewModelScope.launch {
-            startLoading()
+            setState(PokemonListState.Loading)
 
-            val newState = withContext(dispatcherProvider.IO) {
-                try {
-                    val response = repository.getPokemon()
-                    return@withContext if (response != null) {
-                        PokemonListState.Loaded(response)
-                    } else {
-                        PokemonListState.Error(
-                            Throwable("Unable to fetch Pokemon.")
-                        )
-                    }
-                } catch (error: Throwable) {
-                    return@withContext PokemonListState.Error(
-                        error
-                    )
+            repository
+                .getPokemon()
+                .map { result ->
+                    result.toPokemonListState()
                 }
-            }
-
-            setState(newState)
+                .collect { newState ->
+                    setState(newState)
+                }
         }
-    }
-
-    private fun startLoading() {
-        setState(PokemonListState.Loading)
     }
 
     private fun setState(newState: PokemonListState) {
         this.state.value = newState
         notifyChange()
+    }
+}
+
+private fun Result<PokemonResponse>.toPokemonListState(): PokemonListState {
+    return when {
+        this.isSuccess -> PokemonListState.Loaded(this.getOrThrow())
+        else -> PokemonListState.Error(this.exceptionOrNull())
     }
 }
