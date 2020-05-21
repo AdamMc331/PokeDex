@@ -1,31 +1,40 @@
 {
   "pokemonList": [
     {
-      "name": "Bulbasaur"
+      "name": "Bulbasaur",
+      "image": "@sample/bulbasaur"
     },
     {
-      "name": "Ivysaur"
+      "name": "Ivysaur",
+      "image": "@sample/ivysaur"
     },
     {
-      "name": "Venusaur"
+      "name": "Venusaur",
+      "image": "@sample/venusaur"
     },
     {
-      "name": "Charmander"
+      "name": "Charmander",
+      "image": "@sample/bulbasaur"
     },
     {
-      "name": "Charmeleon"
+      "name": "Charmeleon",
+      "image": "@sample/bulbasaur"
     },
     {
-      "name": "Charizard"
+      "name": "Charizard",
+      "image": "@sample/bulbasaur"
     },
     {
-      "name": "Squirtle"
+      "name": "Squirtle",
+      "image": "@sample/bulbasaur"
     },
     {
-      "name": "Wartortle"
+      "name": "Wartortle",
+      "image": "@sample/bulbasaur"
     },
     {
-      "name": "Blastoise"
+      "name": "Blastoise",
+      "image": "@sample/bulbasaur"
     }
   ],
   "pokemonDetail": {

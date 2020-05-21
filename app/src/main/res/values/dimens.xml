@@ -1,2 +1,3 @@
 <resources>
+    <dimen name="list_item_sprite_width">50dp</dimen>
 </resources>
