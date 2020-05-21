@@ -9,6 +9,7 @@ interface PokeGraph {
     val networkGraph: NetworkGraph
     val localStorageGraph: LocalStorageGraph
     val dataGraph: DataGraph
+    val viewModelFactoryGraph: ViewModelFactoryGraph
 }
 
 /**
@@ -31,6 +32,12 @@ open class BasePokeGraph(
         BaseDataGraph(
             networkGraph = networkGraph,
             localStorageGraph = localStorageGraph
+        )
+    }
+
+    override val viewModelFactoryGraph: ViewModelFactoryGraph by lazy {
+        BaseViewModelFactoryGraph(
+            dataGraph = dataGraph
         )
     }
 }
