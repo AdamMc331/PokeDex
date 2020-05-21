@@ -13,8 +13,8 @@ import com.adammcneilly.pokedex.core.Type
 import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.models.colorRes
 import com.adammcneilly.pokedex.models.complimentaryColorRes
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class PokemonDetailViewModel(
     private val repository: PokemonRepository,
@@ -77,27 +77,23 @@ class PokemonDetailViewModel(
         fetchPokemonDetail()
     }
 
-    @Suppress("TooGenericExceptionCaught")
     private fun fetchPokemonDetail() {
         viewModelScope.launch {
             startLoading()
 
-            val newState = withContext(dispatcherProvider.IO) {
-                return@withContext try {
-                    val pokemon = repository.getPokemonDetail(pokemonName)
-                    if (pokemon != null) {
-                        PokemonDetailState.Loaded(pokemon)
-                    } else {
-                        PokemonDetailState.Error(
-                            Throwable("Unable to fetch Pokemon details.")
-                        )
-                    }
-                } catch (error: Throwable) {
-                    PokemonDetailState.Error(error)
-                }
-            }
+            val flow = repository.getPokemonDetail(pokemonName)
 
-            setState(newState)
+            flow.collect { result ->
+                val data = result.getOrNull()
+
+                val newState = if (data != null) {
+                    PokemonDetailState.Loaded(data)
+                } else {
+                    PokemonDetailState.Error(result.exceptionOrNull())
+                }
+
+                setState(newState)
+            }
         }
     }
 

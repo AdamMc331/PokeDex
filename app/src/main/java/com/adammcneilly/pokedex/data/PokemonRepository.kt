@@ -2,8 +2,9 @@ package com.adammcneilly.pokedex.data
 
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
+import kotlinx.coroutines.flow.Flow
 
 interface PokemonRepository {
     suspend fun getPokemon(): PokemonResponse?
-    suspend fun getPokemonDetail(pokemonName: String): Pokemon?
+    fun getPokemonDetail(pokemonName: String): Flow<Result<Pokemon>>
 }
