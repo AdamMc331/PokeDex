@@ -27,5 +27,5 @@ open class PokeApp : Application(), PokeGraphProvider {
 }
 
 fun Context.pokeGraph(): PokeGraph {
-    return (this.applicationContext as PokeGraph)
+    return (this.applicationContext as PokeGraphProvider).pokeGraph
 }
