@@ -4,6 +4,7 @@ import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.database.PokedexDatabase
 import com.adammcneilly.pokedex.network.PokemonAPI
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 
@@ -36,7 +37,7 @@ class PokemonServiceRobot {
 
     fun assertPokemonDetail(pokemonName: String, expectedDetail: Pokemon?) = apply {
         runBlocking {
-            assertEquals(expectedDetail, service.getPokemonDetail(pokemonName))
+            assertEquals(expectedDetail, service.getPokemonDetail(pokemonName).first().getOrNull())
         }
     }
 }

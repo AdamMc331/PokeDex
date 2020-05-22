@@ -1,23 +1,17 @@
 package com.adammcneilly.pokedex.detail
 
-import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.core.Type
 import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.testObserver
-import kotlin.coroutines.Continuation
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 
 class PokemonDetailViewModelRobot(
-    private val dispatcherProvider: DispatcherProvider = DispatcherProvider(
-        IO = Dispatchers.Unconfined,
-        Main = Dispatchers.Unconfined
-    ),
     private var pokemonName: String = ""
 ) {
     private val mockRepository = FakeRepository()
@@ -38,7 +32,6 @@ class PokemonDetailViewModelRobot(
     fun buildViewModel() = apply {
         this.viewModel = PokemonDetailViewModel(
             repository = this.mockRepository,
-            dispatcherProvider = this.dispatcherProvider,
             pokemonName = this.pokemonName
         )
     }
@@ -89,7 +82,7 @@ class PokemonDetailViewModelRobot(
  * responses and timing of responses from the repository.
  */
 private class FakeRepository : PokemonRepository {
-    private lateinit var pokemonDetailContinuation: Continuation<Pokemon?>
+    private val pokemonDetailChannel = Channel<Result<Pokemon>>()
 
     override suspend fun getPokemon(): PokemonResponse? {
         TODO("The function getPokemon should not be called for this test case.")
@@ -100,19 +93,21 @@ private class FakeRepository : PokemonRepository {
      * allow us to verify that a loading state occurs before this call finishes.
      *
      * When we want it to finish, we can call [mockPokemonDetail] or [mockPokemonDetailError] which
-     * will cause the [pokemonDetailContinuation] to resume with a response.
+     * will cause the [pokemonDetailChannel] to resume with a response.
      */
-    override suspend fun getPokemonDetail(pokemonName: String): Pokemon? {
-        return suspendCoroutine { continuation ->
-            pokemonDetailContinuation = continuation
-        }
+    override fun getPokemonDetail(pokemonName: String): Flow<Result<Pokemon>> {
+        return pokemonDetailChannel.consumeAsFlow()
     }
 
     fun mockPokemonDetail(detail: Pokemon) {
-        pokemonDetailContinuation.resume(detail)
+        runBlocking {
+            pokemonDetailChannel.send(Result.success(detail))
+        }
     }
 
     fun mockPokemonDetailError(error: Throwable) {
-        pokemonDetailContinuation.resumeWithException(error)
+        runBlocking {
+            pokemonDetailChannel.send(Result.failure(error))
+        }
     }
 }

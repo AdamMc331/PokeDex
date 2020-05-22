@@ -6,20 +6,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.adammcneilly.pokedex.BaseObservableViewModel
-import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.Type
 import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.models.colorRes
 import com.adammcneilly.pokedex.models.complimentaryColorRes
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class PokemonDetailViewModel(
     private val repository: PokemonRepository,
-    private val pokemonName: String,
-    private val dispatcherProvider: DispatcherProvider = DispatcherProvider()
+    private val pokemonName: String
 ) : BaseObservableViewModel() {
     private val state = MutableLiveData<PokemonDetailState>().apply {
         value = PokemonDetailState.Loading
@@ -77,36 +76,30 @@ class PokemonDetailViewModel(
         fetchPokemonDetail()
     }
 
-    @Suppress("TooGenericExceptionCaught")
     private fun fetchPokemonDetail() {
         viewModelScope.launch {
-            startLoading()
+            setState(PokemonDetailState.Loading)
 
-            val newState = withContext(dispatcherProvider.IO) {
-                return@withContext try {
-                    val pokemon = repository.getPokemonDetail(pokemonName)
-                    if (pokemon != null) {
-                        PokemonDetailState.Loaded(pokemon)
-                    } else {
-                        PokemonDetailState.Error(
-                            Throwable("Unable to fetch Pokemon details.")
-                        )
-                    }
-                } catch (error: Throwable) {
-                    PokemonDetailState.Error(error)
+            repository
+                .getPokemonDetail(pokemonName)
+                .map { result ->
+                    result.toPokemonDetailState()
                 }
-            }
-
-            setState(newState)
+                .collect { newState ->
+                    setState(newState)
+                }
         }
-    }
-
-    private fun startLoading() {
-        setState(PokemonDetailState.Loading)
     }
 
     private fun setState(newState: PokemonDetailState) {
         this.state.value = newState
         notifyChange()
+    }
+}
+
+private fun Result<Pokemon>.toPokemonDetailState(): PokemonDetailState {
+    return when {
+        this.isSuccess -> PokemonDetailState.Loaded(this.getOrThrow())
+        else -> PokemonDetailState.Error(this.exceptionOrNull())
     }
 }
