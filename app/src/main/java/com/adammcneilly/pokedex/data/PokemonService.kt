@@ -19,12 +19,14 @@ open class PokemonService(
     private val dispatcherProvider: DispatcherProvider = DispatcherProvider()
 ) : PokemonRepository {
 
-    /**
-     * At this point, we only want to request the pokemon list from the server. In the
-     * future we should store and request that list from the database as well.
-     */
-    override suspend fun getPokemon(): PokemonResponse? {
-        return api.getPokemon()
+    override fun getPokemon(): Flow<Result<PokemonResponse>> {
+        return flow {
+            val pokemonResponse = api.getPokemon()
+            emit(Result.success(pokemonResponse))
+        }.catch { exception ->
+            emit(Result.failure(exception))
+        }
+            .flowOn(dispatcherProvider.IO)
     }
 
     override fun getPokemonDetail(pokemonName: String): Flow<Result<Pokemon>> {

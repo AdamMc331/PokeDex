@@ -1,24 +1,16 @@
 package com.adammcneilly.pokedex.pokemonlist
 
-import com.adammcneilly.pokedex.DispatcherProvider
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.testObserver
-import kotlin.coroutines.Continuation
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 
-class PokemonListViewModelRobot(
-    private val testDispatcherProvider: DispatcherProvider = DispatcherProvider(
-        IO = Dispatchers.Unconfined,
-        Main = Dispatchers.Unconfined
-    )
-) {
+class PokemonListViewModelRobot {
     private val mockRepository = FakeRepository()
     private lateinit var viewModel: PokemonListViewModel
 
@@ -32,8 +24,7 @@ class PokemonListViewModelRobot(
 
     fun buildViewModel() = apply {
         viewModel = PokemonListViewModel(
-            mockRepository,
-            testDispatcherProvider
+            mockRepository
         )
     }
 
@@ -55,23 +46,25 @@ class PokemonListViewModelRobot(
 }
 
 private class FakeRepository : PokemonRepository {
-    private lateinit var pokemonResponseContinuation: Continuation<PokemonResponse?>
+    private val pokemonResponseChannel = Channel<Result<PokemonResponse>>()
 
-    override suspend fun getPokemon(): PokemonResponse? {
-        return suspendCoroutine { continuation ->
-            pokemonResponseContinuation = continuation
-        }
+    override fun getPokemon(): Flow<Result<PokemonResponse>> {
+        return pokemonResponseChannel.consumeAsFlow()
     }
 
     override fun getPokemonDetail(pokemonName: String): Flow<Result<Pokemon>> {
         TODO("The function getPokemonDetail should not be called for this test case.")
     }
 
-    fun mockPokemonResponse(response: PokemonResponse?) {
-        pokemonResponseContinuation.resume(response)
+    fun mockPokemonResponse(response: PokemonResponse) {
+        runBlocking {
+            pokemonResponseChannel.send(Result.success(response))
+        }
     }
 
     fun mockPokemonResponseError(error: Throwable) {
-        pokemonResponseContinuation.resumeWithException(error)
+        runBlocking {
+            pokemonResponseChannel.send(Result.failure(error))
+        }
     }
 }
