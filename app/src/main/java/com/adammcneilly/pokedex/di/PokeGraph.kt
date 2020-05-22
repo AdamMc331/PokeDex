@@ -1,21 +1,25 @@
 package com.adammcneilly.pokedex.di
 
 import android.content.Context
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
  * This interface defines all of the application's dependencies and sub graphs of dependencies.
  */
+@ExperimentalCoroutinesApi
 interface PokeGraph {
     val networkGraph: NetworkGraph
     val localStorageGraph: LocalStorageGraph
     val dataGraph: DataGraph
     val viewModelFactoryGraph: ViewModelFactoryGraph
+    val storeGraph: StoreGraph
 }
 
 /**
  * This is a concrete implementation of a [PokeGraph] that allows us to create all of our application
  * graph dependencies in one spot without bloating the application class.
  */
+@ExperimentalCoroutinesApi
 open class BasePokeGraph(
     private val useGraphQL: Boolean,
     private val context: Context
@@ -35,9 +39,14 @@ open class BasePokeGraph(
         )
     }
 
+    override val storeGraph: StoreGraph by lazy {
+        ReduxStoreGraph()
+    }
+
     override val viewModelFactoryGraph: ViewModelFactoryGraph by lazy {
         BaseViewModelFactoryGraph(
-            dataGraph = dataGraph
+            dataGraph = dataGraph,
+            storeGraph = storeGraph
         )
     }
 }

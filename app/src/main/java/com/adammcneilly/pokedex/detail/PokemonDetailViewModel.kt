@@ -2,8 +2,8 @@ package com.adammcneilly.pokedex.detail
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.adammcneilly.pokedex.BaseObservableViewModel
 import com.adammcneilly.pokedex.R
@@ -12,17 +12,20 @@ import com.adammcneilly.pokedex.core.Type
 import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.models.colorRes
 import com.adammcneilly.pokedex.models.complimentaryColorRes
+import com.adammcneilly.pokedex.redux.Store
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
+@ExperimentalCoroutinesApi
 class PokemonDetailViewModel(
     private val repository: PokemonRepository,
-    private val pokemonName: String
+    private val pokemonName: String,
+    private val store: Store<PokemonDetailState, PokemonDetailAction>
 ) : BaseObservableViewModel() {
-    private val state = MutableLiveData<PokemonDetailState>().apply {
-        value = PokemonDetailState.Loading
-    }
+
+    private val state: LiveData<PokemonDetailState> = store.state.asLiveData()
 
     val title: String
         @SuppressLint("DefaultLocale")
@@ -78,28 +81,13 @@ class PokemonDetailViewModel(
 
     private fun fetchPokemonDetail() {
         viewModelScope.launch {
-            setState(PokemonDetailState.Loading)
+            store.dispatch(PokemonDetailAction.Loading)
 
             repository
                 .getPokemonDetail(pokemonName)
-                .map { result ->
-                    result.toPokemonDetailState()
-                }
-                .collect { newState ->
-                    setState(newState)
+                .collect { action ->
+                    store.dispatch(action)
                 }
         }
-    }
-
-    private fun setState(newState: PokemonDetailState) {
-        this.state.value = newState
-        notifyChange()
-    }
-}
-
-private fun Result<Pokemon>.toPokemonDetailState(): PokemonDetailState {
-    return when {
-        this.isSuccess -> PokemonDetailState.Loaded(this.getOrThrow())
-        else -> PokemonDetailState.Error(this.exceptionOrNull())
     }
 }

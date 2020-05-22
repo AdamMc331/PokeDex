@@ -24,7 +24,7 @@ object Dependencies {
     private const val materialDesign = "com.google.android.material:material:${Versions.materialDesign}"
     private const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     private const val moshiConverter = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
-    private const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
+    private const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
     private const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     private const val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
     private const val materialDesignSpecs =
@@ -77,7 +77,7 @@ object Dependencies {
         DependencyConfig.Implementation(ktxCore),
         DependencyConfig.Implementation(constraintLayout),
         DependencyConfig.Implementation(materialDesign),
-        DependencyConfig.Implementation(lifecycleExtensions),
+        DependencyConfig.Implementation(liveDataKtx),
         DependencyConfig.Implementation(viewModelKtx),
         DependencyConfig.Implementation(materialDesignSpecs),
         DependencyConfig.Implementation(coroutinesCore),
