@@ -4,8 +4,10 @@ package com.adammcneilly.pokedex.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.adammcneilly.pokedex.detail.PokemonDetailNetworkingMiddleware
 import com.adammcneilly.pokedex.detail.PokemonDetailViewModel
 import com.adammcneilly.pokedex.pokemonlist.PokemonListViewModel
+import com.adammcneilly.pokedex.redux.LoggingMiddleware
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
@@ -57,8 +59,12 @@ class PokemonDetailViewModelFactory(
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        val loggingMiddleware = LoggingMiddleware()
+        val networkingMiddleware = PokemonDetailNetworkingMiddleware(dataGraph.pokemonRepository)
+        val middlewares = listOf(loggingMiddleware, networkingMiddleware)
+
         return PokemonDetailViewModel(
-            store = storeGraph.pokemonDetailStore,
+            store = storeGraph.pokemonDetailStore(middlewares),
             repository = dataGraph.pokemonRepository,
             pokemonName = pokemonName
         ) as T

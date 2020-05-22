@@ -14,15 +14,12 @@ import com.adammcneilly.pokedex.models.colorRes
 import com.adammcneilly.pokedex.models.complimentaryColorRes
 import com.adammcneilly.pokedex.redux.Store
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 class PokemonDetailViewModel(
     private val repository: PokemonRepository,
     private val pokemonName: String,
-    private val store: Store<PokemonDetailState, PokemonDetailAction>
+    store: Store<PokemonDetailState>
 ) : BaseObservableViewModel() {
 
     private val state: LiveData<PokemonDetailState> = store.state.asLiveData()
@@ -76,18 +73,10 @@ class PokemonDetailViewModel(
     }
 
     init {
-        fetchPokemonDetail()
-    }
-
-    private fun fetchPokemonDetail() {
-        viewModelScope.launch {
-            store.dispatch(PokemonDetailAction.Loading)
-
-            repository
-                .getPokemonDetail(pokemonName)
-                .collect { action ->
-                    store.dispatch(action)
-                }
-        }
+        val fetchAction = PokemonDetailAction.FetchPokemon(
+            pokemonName = pokemonName,
+            requestScope = viewModelScope
+        )
+        store.dispatch(fetchAction)
     }
 }
