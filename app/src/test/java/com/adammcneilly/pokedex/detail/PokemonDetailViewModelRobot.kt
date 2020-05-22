@@ -88,6 +88,13 @@ private class FakeRepository : PokemonRepository {
         TODO("The function getPokemon should not be called for this test case.")
     }
 
+    /**
+     * When this method is called, let's continue to suspend and not return right away. This will
+     * allow us to verify that a loading state occurs before this call finishes.
+     *
+     * When we want it to finish, we can call [mockPokemonDetail] or [mockPokemonDetailError] which
+     * will cause the [pokemonDetailChannel] to resume with a response.
+     */
     override fun getPokemonDetail(pokemonName: String): Flow<Result<Pokemon>> {
         return pokemonDetailChannel.consumeAsFlow()
     }
