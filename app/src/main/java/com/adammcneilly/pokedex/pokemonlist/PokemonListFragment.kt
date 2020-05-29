@@ -9,8 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.adammcneilly.pokedex.R
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.databinding.FragmentPokemonListBinding
@@ -58,14 +57,13 @@ class PokemonListFragment : Fragment() {
     private fun setupRecyclerView() {
         val recyclerView = binding.pokemonList
 
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = pokemonAdapter
-        recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                LinearLayoutManager.VERTICAL
-            )
+        recyclerView.layoutManager = GridLayoutManager(
+            requireContext(),
+            LIST_SPAN_COUNT,
+            GridLayoutManager.VERTICAL,
+            false
         )
+        recyclerView.adapter = pokemonAdapter
     }
 
     private fun setupViewModel() {
@@ -83,5 +81,9 @@ class PokemonListFragment : Fragment() {
         findNavController().navigate(
             toPokemonDetail(pokemonName = pokemon.name)
         )
+    }
+
+    companion object {
+        private const val LIST_SPAN_COUNT = 2
     }
 }

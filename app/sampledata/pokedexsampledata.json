@@ -38,6 +38,7 @@
     }
   ],
   "pokemonDetail": {
+    "name": "Bulbasaur",
     "image": "@sample/bulbasaur",
     "firstType": "Grass",
     "firstTypeColor": "#7AC74C",

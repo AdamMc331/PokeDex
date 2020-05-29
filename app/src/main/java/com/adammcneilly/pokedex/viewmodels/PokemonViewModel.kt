@@ -3,6 +3,7 @@ package com.adammcneilly.pokedex.viewmodels
 import android.annotation.SuppressLint
 import androidx.databinding.BaseObservable
 import com.adammcneilly.pokedex.core.Pokemon
+import com.adammcneilly.pokedex.models.colorRes
 
 class PokemonViewModel : BaseObservable() {
     var pokemon: Pokemon? = null
@@ -27,6 +28,9 @@ class PokemonViewModel : BaseObservable() {
                 }
             }
         }
+
+    val backgroundColorRes: Int?
+        get() = pokemon?.firstType?.colorRes()
 
     companion object {
         /**

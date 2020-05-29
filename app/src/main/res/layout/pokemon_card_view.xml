@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.adammcneilly.pokedex.viewmodels.PokemonViewModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:backgroundRes="@{viewModel.backgroundColorRes}"
+        tools:backgroundTint="@sample/pokedexsampledata.json/pokemonDetail/firstTypeColor">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/pokemon_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@{viewModel.name}"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/mds_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@sample/pokedexsampledata.json/pokemonDetail/name" />
+
+            <ImageView
+                android:id="@+id/pokemon_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/pokemon_image_content_description"
+                android:src="@drawable/bulbasaur"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pokemon_name"
+                tools:src="@sample/pokedexsampledata.json/pokemonDetail/image" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -57,3 +57,8 @@ fun TextView.bindPokemonType(type: Type?) {
     }
     this.background = shape
 }
+
+@BindingAdapter("backgroundRes")
+fun View.backgroundRes(resourceId: Int?) {
+    resourceId?.let(this::setBackgroundResource)
+}
