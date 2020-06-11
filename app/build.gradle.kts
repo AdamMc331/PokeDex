@@ -21,6 +21,11 @@ android {
         testInstrumentationRunner = "com.adammcneilly.pokedex.MockTestRunner"
     }
 
+    buildFeatures {
+        // Enables Jetpack Compose for this module
+        compose = true
+    }
+
     buildTypes {
         getByName("debug") {
             buildConfigField(
@@ -58,6 +63,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    composeOptions {
+        kotlinCompilerVersion = "1.3.70-dev-withExperimentalGoogleExtensions-20200424"
+        kotlinCompilerExtensionVersion = "0.1.0-dev13"
+    }
 }
 
 repositories {
@@ -76,6 +86,11 @@ dependencies {
     }
 
     addDependencies(Dependencies.appDependencies)
+
+    implementation("androidx.ui:ui-tooling:0.1.0-dev13")
+    implementation("androidx.ui:ui-layout:0.1.0-dev13")
+    implementation("androidx.ui:ui-material:0.1.0-dev13")
+    implementation("androidx.compose:compose-runtime:0.1.0-dev13")
 }
 
 configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
