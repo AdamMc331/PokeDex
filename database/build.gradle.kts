@@ -20,7 +20,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = mutableMapOf("room.schemaLocation" to "$projectDir/schemas")
+                arguments["room.schemaLocation"] = "$projectDir/schemas"
             }
         }
     }
