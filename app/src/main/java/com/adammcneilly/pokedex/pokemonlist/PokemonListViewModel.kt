@@ -8,31 +8,34 @@ import com.adammcneilly.pokedex.BaseObservableViewModel
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.data.PokemonRepository
+import com.adammcneilly.pokedex.views.ViewState
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+
+typealias PokemonListState = ViewState<PokemonResponse>
 
 class PokemonListViewModel(
     private val repository: PokemonRepository
 ) : BaseObservableViewModel() {
     private val state = MutableLiveData<PokemonListState>().apply {
-        value = PokemonListState.Loading
+        value = ViewState.Loading()
     }
 
     val pokemon: LiveData<List<Pokemon>> = Transformations.map(state) { state ->
-        (state as? PokemonListState.Loaded)?.data?.results
+        (state as? ViewState.Loaded)?.data?.results
     }
 
     val showLoading: LiveData<Boolean> = Transformations.map(state) { state ->
-        state is PokemonListState.Loading
+        state is ViewState.Loading
     }
 
     val showError: LiveData<Boolean> = Transformations.map(state) { state ->
-        state is PokemonListState.Error
+        state is ViewState.Error
     }
 
     val showData: LiveData<Boolean> = Transformations.map(state) { state ->
-        state is PokemonListState.Loaded
+        state is ViewState.Loaded
     }
 
     init {
@@ -42,7 +45,7 @@ class PokemonListViewModel(
     @Suppress("TooGenericExceptionCaught")
     private fun fetchPokemonList() {
         viewModelScope.launch {
-            setState(PokemonListState.Loading)
+            setState(ViewState.Loading())
 
             repository
                 .getPokemon()
@@ -63,7 +66,7 @@ class PokemonListViewModel(
 
 private fun Result<PokemonResponse>.toPokemonListState(): PokemonListState {
     return when {
-        this.isSuccess -> PokemonListState.Loaded(this.getOrThrow())
-        else -> PokemonListState.Error(this.exceptionOrNull())
+        this.isSuccess -> ViewState.Loaded(this.getOrThrow())
+        else -> ViewState.Error(this.exceptionOrNull())
     }
 }
