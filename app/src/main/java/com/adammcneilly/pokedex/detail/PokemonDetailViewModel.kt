@@ -12,16 +12,19 @@ import com.adammcneilly.pokedex.core.Type
 import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.models.colorRes
 import com.adammcneilly.pokedex.models.complimentaryColorRes
+import com.adammcneilly.pokedex.views.ViewState
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+
+typealias PokemonDetailState = ViewState<Pokemon>
 
 class PokemonDetailViewModel(
     private val repository: PokemonRepository,
     private val pokemonName: String
 ) : BaseObservableViewModel() {
     private val state = MutableLiveData<PokemonDetailState>().apply {
-        value = PokemonDetailState.Loading
+        value = ViewState.Loading()
     }
 
     val title: String
@@ -29,7 +32,7 @@ class PokemonDetailViewModel(
         get() = pokemonName.capitalize()
 
     private val pokemonDetail: LiveData<Pokemon> = Transformations.map(state) { state ->
-        (state as? PokemonDetailState.Loaded)?.pokemon
+        (state as? ViewState.Loaded)?.data
     }
 
     val firstType: LiveData<Type> = Transformations.map(pokemonDetail) { pokemon ->
@@ -53,15 +56,15 @@ class PokemonDetailViewModel(
     }
 
     val showLoading: LiveData<Boolean> = Transformations.map(state) { state ->
-        state is PokemonDetailState.Loading
+        state is ViewState.Loading
     }
 
     val showData: LiveData<Boolean> = Transformations.map(state) { state ->
-        state is PokemonDetailState.Loaded
+        state is ViewState.Loaded
     }
 
     val showError: LiveData<Boolean> = Transformations.map(state) { state ->
-        state is PokemonDetailState.Error
+        state is ViewState.Error
     }
 
     val showFirstType: LiveData<Boolean> = Transformations.map(firstType) { type ->
@@ -78,7 +81,7 @@ class PokemonDetailViewModel(
 
     private fun fetchPokemonDetail() {
         viewModelScope.launch {
-            setState(PokemonDetailState.Loading)
+            setState(ViewState.Loading())
 
             repository
                 .getPokemonDetail(pokemonName)
@@ -99,7 +102,7 @@ class PokemonDetailViewModel(
 
 private fun Result<Pokemon>.toPokemonDetailState(): PokemonDetailState {
     return when {
-        this.isSuccess -> PokemonDetailState.Loaded(this.getOrThrow())
-        else -> PokemonDetailState.Error(this.exceptionOrNull())
+        this.isSuccess -> ViewState.Loaded(this.getOrThrow())
+        else -> ViewState.Error(this.exceptionOrNull())
     }
 }
