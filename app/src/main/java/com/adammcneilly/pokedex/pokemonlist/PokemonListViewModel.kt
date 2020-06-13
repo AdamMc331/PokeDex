@@ -47,7 +47,7 @@ class PokemonListViewModel(
             repository
                 .getPokemon()
                 .map { result ->
-                    result.toPokemonListState()
+                    PokemonListState.Loaded(result)
                 }
                 .collect { newState ->
                     setState(newState)

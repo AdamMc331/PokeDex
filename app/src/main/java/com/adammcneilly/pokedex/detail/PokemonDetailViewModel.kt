@@ -83,7 +83,7 @@ class PokemonDetailViewModel(
             repository
                 .getPokemonDetail(pokemonName)
                 .map { result ->
-                    result.toPokemonDetailState()
+                    PokemonDetailState.Loaded(result)
                 }
                 .collect { newState ->
                     setState(newState)

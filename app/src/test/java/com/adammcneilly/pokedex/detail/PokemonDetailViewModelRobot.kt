@@ -82,9 +82,9 @@ class PokemonDetailViewModelRobot(
  * responses and timing of responses from the repository.
  */
 private class FakeRepository : PokemonRepository {
-    private val pokemonDetailChannel = Channel<Result<Pokemon>>()
+    private val pokemonDetailChannel = Channel<Pokemon>()
 
-    override fun getPokemon(): Flow<Result<PokemonResponse>> {
+    override fun getPokemon(): Flow<PokemonResponse> {
         TODO("The function getPokemon should not be called for this test case.")
     }
 
@@ -95,19 +95,19 @@ private class FakeRepository : PokemonRepository {
      * When we want it to finish, we can call [mockPokemonDetail] or [mockPokemonDetailError] which
      * will cause the [pokemonDetailChannel] to resume with a response.
      */
-    override fun getPokemonDetail(pokemonName: String): Flow<Result<Pokemon>> {
+    override fun getPokemonDetail(pokemonName: String): Flow<Pokemon> {
         return pokemonDetailChannel.consumeAsFlow()
     }
 
     fun mockPokemonDetail(detail: Pokemon) {
         runBlocking {
-            pokemonDetailChannel.send(Result.success(detail))
+            pokemonDetailChannel.send(detail)
         }
     }
 
     fun mockPokemonDetailError(error: Throwable) {
         runBlocking {
-            pokemonDetailChannel.send(Result.failure(error))
+            // pokemonDetailChannel.send(Result.failure(error))
         }
     }
 }

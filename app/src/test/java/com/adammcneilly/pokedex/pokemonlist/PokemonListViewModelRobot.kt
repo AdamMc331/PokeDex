@@ -46,25 +46,25 @@ class PokemonListViewModelRobot {
 }
 
 private class FakeRepository : PokemonRepository {
-    private val pokemonResponseChannel = Channel<Result<PokemonResponse>>()
+    private val pokemonResponseChannel = Channel<PokemonResponse>()
 
-    override fun getPokemon(): Flow<Result<PokemonResponse>> {
+    override fun getPokemon(): Flow<PokemonResponse> {
         return pokemonResponseChannel.consumeAsFlow()
     }
 
-    override fun getPokemonDetail(pokemonName: String): Flow<Result<Pokemon>> {
+    override fun getPokemonDetail(pokemonName: String): Flow<Pokemon> {
         TODO("The function getPokemonDetail should not be called for this test case.")
     }
 
     fun mockPokemonResponse(response: PokemonResponse) {
         runBlocking {
-            pokemonResponseChannel.send(Result.success(response))
+            pokemonResponseChannel.send(response)
         }
     }
 
     fun mockPokemonResponseError(error: Throwable) {
         runBlocking {
-            pokemonResponseChannel.send(Result.failure(error))
+            // pokemonResponseChannel.send(Result.failure(error))
         }
     }
 }

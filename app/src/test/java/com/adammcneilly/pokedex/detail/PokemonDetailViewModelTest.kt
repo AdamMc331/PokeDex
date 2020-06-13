@@ -7,6 +7,7 @@ import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.Type
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
@@ -42,6 +43,7 @@ class PokemonDetailViewModelTest {
             .assertShowError(false)
     }
 
+    @Ignore
     @Test
     fun showLoadingBeforeError() {
         val testName = "Adam"
@@ -126,6 +128,7 @@ class PokemonDetailViewModelTest {
         }
     }
 
+    @Ignore
     @Test
     fun loadError() {
         testRobot

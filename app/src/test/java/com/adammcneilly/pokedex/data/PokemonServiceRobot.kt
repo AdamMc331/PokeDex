@@ -31,13 +31,13 @@ class PokemonServiceRobot {
 
     fun assertPokemonResponse(expectedResponse: PokemonResponse) = apply {
         runBlocking {
-            assertEquals(expectedResponse, service.getPokemon().first().getOrNull())
+            assertEquals(expectedResponse, service.getPokemon().first())
         }
     }
 
     fun assertPokemonDetail(pokemonName: String, expectedDetail: Pokemon?) = apply {
         runBlocking {
-            assertEquals(expectedDetail, service.getPokemonDetail(pokemonName).first().getOrNull())
+            assertEquals(expectedDetail, service.getPokemonDetail(pokemonName).first())
         }
     }
 }

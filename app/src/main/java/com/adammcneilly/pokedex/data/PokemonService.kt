@@ -19,24 +19,26 @@ open class PokemonService(
     private val dispatcherProvider: DispatcherProvider = DispatcherProvider()
 ) : PokemonRepository {
 
-    override fun getPokemon(): Flow<Result<PokemonResponse>> {
+    override fun getPokemon(): Flow<PokemonResponse> {
         return flow {
             val pokemonResponse = api.getPokemon()
-            emit(Result.success(pokemonResponse))
-        }.catch { exception ->
-            emit(Result.failure(exception))
+            emit(pokemonResponse)
+            // emit(Result.success(pokemonResponse))
+        }.catch {
+            // emit(Result.failure(exception))
         }
             .flowOn(dispatcherProvider.IO)
     }
 
-    override fun getPokemonDetail(pokemonName: String): Flow<Result<Pokemon>> {
+    override fun getPokemonDetail(pokemonName: String): Flow<Pokemon> {
         return flow {
             val pokemonResult = getPokemonDetailFromDatabase(pokemonName)
                 ?: getPokemonDetailFromNetwork(pokemonName)
 
-            emit(Result.success(pokemonResult))
-        }.catch { exception ->
-            emit(Result.failure(exception))
+            emit(pokemonResult)
+            // emit(Result.success(pokemonResult))
+        }.catch {
+            // emit(Result.failure(exception))
         }
             .flowOn(dispatcherProvider.IO)
     }

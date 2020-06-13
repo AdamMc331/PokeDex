@@ -5,6 +5,7 @@ import com.adammcneilly.pokedex.CoroutinesTestRule
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
@@ -38,6 +39,7 @@ class PokemonListViewModelTest {
             .assertShowData(true)
     }
 
+    @Ignore
     @Test
     fun loadError() {
         testRobot
