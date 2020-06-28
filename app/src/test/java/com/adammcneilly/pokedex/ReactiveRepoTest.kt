@@ -1,6 +1,6 @@
 package com.adammcneilly.pokedex
 
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -15,12 +15,12 @@ class ReactiveRepoTest {
 
         launch {
             repo.loadData()
+            repo.cleanUp()
         }
 
-        repo.actionFlow.collect { action ->
-            val expectedAction = Action.Loaded("Testing")
-            assertEquals(expectedAction, action)
-        }
+        val events = repo.actionFlow.toList(mutableListOf())
+
+        assertEquals(2, events.size)
     }
 }
 
