@@ -1,10 +1,10 @@
 object Versions {
     const val kotlin = "1.3.71"
     const val ktlint = "9.2.1"
-    const val detekt = "1.9.1"
+    const val detekt = "1.10.0"
     const val staticAnalysis = "1.2"
     const val versionsPlugin = "0.28.0"
-    const val navigation = "2.2.2"
+    const val navigation = "2.3.0"
     const val appCompat = "1.1.0"
     const val ktxCore = "1.3.0"
     const val coil = "0.11.0"
@@ -25,7 +25,7 @@ object Versions {
     const val fragments = "1.2.5"
     const val archTesting = "2.1.0"
     const val androidXJunit = "1.1.1"
-    const val apolloGraphql = "2.2.0"
+    const val apolloGraphql = "2.2.2"
     const val androidSettings = "1.1.1"
     const val jacoco = "0.2"
 }
