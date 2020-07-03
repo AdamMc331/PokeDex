@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.databinding.ListItemPokemonBinding
+import com.adammcneilly.pokedex.imageUrl
 import com.adammcneilly.pokedex.viewmodels.PokemonViewModel
 
 class PokemonAdapter(
@@ -39,7 +40,6 @@ class PokemonAdapter(
         private val viewModel = PokemonViewModel()
 
         init {
-            binding.viewModel = viewModel
             binding.root.setOnClickListener {
                 viewModel.pokemon?.let(pokemonClickListener::invoke)
             }
@@ -47,7 +47,9 @@ class PokemonAdapter(
 
         fun bindPokemon(pokemon: Pokemon) {
             viewModel.pokemon = pokemon
-            binding.executePendingBindings()
+
+            binding.pokemonImage.imageUrl(viewModel.imageUrl)
+            binding.pokemonName.text = viewModel.name
         }
     }
 }
