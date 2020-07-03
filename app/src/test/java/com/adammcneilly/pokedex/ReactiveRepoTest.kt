@@ -18,7 +18,7 @@ class ReactiveRepoTest {
             repo.cleanUp()
         }
 
-        val events = repo.actionFlow.toList(mutableListOf())
+        val events = repo.loadDataChannelFlow().toList(mutableListOf())
 
         assertEquals(2, events.size)
     }

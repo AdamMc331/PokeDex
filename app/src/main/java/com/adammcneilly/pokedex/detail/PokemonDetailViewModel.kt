@@ -13,6 +13,9 @@ import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.models.colorRes
 import com.adammcneilly.pokedex.models.complimentaryColorRes
 import com.adammcneilly.pokedex.views.ViewState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -79,7 +82,15 @@ class PokemonDetailViewModel(
         fetchPokemonDetail()
     }
 
+    val test: LiveData<String> = liveData {
+    }
+
+    private var job: Job? = null
+
     private fun fetchPokemonDetail() {
+        val job = CoroutineScope(Dispatchers.Main).launch {
+        }
+
         viewModelScope.launch {
             setState(ViewState.Loading())
 
@@ -97,6 +108,11 @@ class PokemonDetailViewModel(
     private fun setState(newState: PokemonDetailState) {
         this.state.value = newState
         notifyChange()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job?.cancel()
     }
 }
 
