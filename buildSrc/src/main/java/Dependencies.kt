@@ -52,6 +52,7 @@ object Dependencies {
     private const val apolloGraphql = "com.apollographql.apollo:apollo-runtime:${Versions.apolloGraphql}"
     private const val apolloCoroutines = "com.apollographql.apollo:apollo-coroutines-support:${Versions.apolloGraphql}"
     private const val androidSettings = "androidx.preference:preference:${Versions.androidSettings}"
+    private const val dropboxStore = "com.dropbox.mobile.store:store4:${Versions.dropboxStore}"
 
     val imageLoaderDependencies = listOf(
         DependencyConfig.Implementation(appCompat),
@@ -86,6 +87,7 @@ object Dependencies {
         DependencyConfig.Implementation(navigationFragmentKtx),
         DependencyConfig.Implementation(navigationUiKtx),
         DependencyConfig.Implementation(androidSettings),
+        DependencyConfig.Implementation(dropboxStore),
         DependencyConfig.TestImplementation(junit),
         DependencyConfig.TestImplementation(archTesting),
         DependencyConfig.TestImplementation(coroutinesTest),
