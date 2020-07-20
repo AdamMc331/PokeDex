@@ -17,12 +17,6 @@ internal interface RetrofitPokemonAPI {
     fun getPokemonAsync(): Deferred<PokemonResponseDTO>
 
     @GET("v2/pokemon/{name}")
-    fun getPokemonDetailAsync(
-        @Path("name")
-        name: String
-    ): Deferred<PokemonDTO>
-
-    @GET("v2/pokemon/{name}")
     fun getPokemonDetailFlow(
         @Path("name")
         name: String
