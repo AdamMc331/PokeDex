@@ -1,7 +1,6 @@
 package com.adammcneilly.pokedex.detail
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -86,7 +85,6 @@ class PokemonDetailViewModel(
             repository
                 .getPokemonDetailFromStore(pokemonName)
                 .collect { response ->
-                    Log.d("ARM - PDEX", "Response origin: ${response.origin}")
                     when (response) {
                         is StoreResponse.Loading -> setState(ViewState.Loading())
                         is StoreResponse.Data -> {
@@ -100,29 +98,10 @@ class PokemonDetailViewModel(
                     }
                 }
         }
-        // viewModelScope.launch {
-        //     setState(ViewState.Loading())
-        //
-        //     repository
-        //         .getPokemonDetail(pokemonName)
-        //         .map { result ->
-        //             result.toPokemonDetailState()
-        //         }
-        //         .collect { newState ->
-        //             setState(newState)
-        //         }
-        // }
     }
 
     private fun setState(newState: PokemonDetailState) {
         this.state.value = newState
         notifyChange()
-    }
-}
-
-private fun Result<Pokemon>.toPokemonDetailState(): PokemonDetailState {
-    return when {
-        this.isSuccess -> ViewState.Loaded(this.getOrThrow())
-        else -> ViewState.Error(this.exceptionOrNull())
     }
 }

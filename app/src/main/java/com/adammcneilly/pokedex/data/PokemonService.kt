@@ -47,30 +47,8 @@ open class PokemonService(
             .flowOn(dispatcherProvider.IO)
     }
 
-    override fun getPokemonDetail(pokemonName: String): Flow<Result<Pokemon>> {
-        return flow {
-            val pokemonResult = getPokemonDetailFromDatabase(pokemonName)
-                ?: getPokemonDetailFromNetwork(pokemonName)
-
-            emit(Result.success(pokemonResult))
-        }.catch { exception ->
-            emit(Result.failure(exception))
-        }
-            .flowOn(dispatcherProvider.IO)
-    }
-
     override fun getPokemonDetailFromStore(pokemonName: String): Flow<StoreResponse<Pokemon>> {
         val request = StoreRequest.cached(key = pokemonName, refresh = false)
         return store.stream(request)
-    }
-
-    private suspend fun getPokemonDetailFromDatabase(pokemonName: String): Pokemon? {
-        return database.getPokemonByName(pokemonName)
-    }
-
-    private suspend fun getPokemonDetailFromNetwork(pokemonName: String): Pokemon {
-        return api.getPokemonDetail(pokemonName).also {
-            database.insertPokemon(it)
-        }
     }
 }

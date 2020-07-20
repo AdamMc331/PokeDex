@@ -7,6 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface PokemonRepository {
     fun getPokemon(): Flow<Result<PokemonResponse>>
-    fun getPokemonDetail(pokemonName: String): Flow<Result<Pokemon>>
     fun getPokemonDetailFromStore(pokemonName: String): Flow<StoreResponse<Pokemon>>
 }

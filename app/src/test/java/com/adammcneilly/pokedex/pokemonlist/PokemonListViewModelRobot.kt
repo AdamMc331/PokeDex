@@ -4,6 +4,7 @@ import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.testObserver
+import com.dropbox.android.external.store4.StoreResponse
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.consumeAsFlow
@@ -52,8 +53,8 @@ private class FakeRepository : PokemonRepository {
         return pokemonResponseChannel.consumeAsFlow()
     }
 
-    override fun getPokemonDetail(pokemonName: String): Flow<Result<Pokemon>> {
-        TODO("The function getPokemonDetail should not be called for this test case.")
+    override fun getPokemonDetailFromStore(pokemonName: String): Flow<StoreResponse<Pokemon>> {
+        TODO("Not yet implemented")
     }
 
     fun mockPokemonResponse(response: PokemonResponse) {

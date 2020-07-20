@@ -3,6 +3,7 @@ package com.adammcneilly.pokedex.data
 import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 
 class PokemonServiceTest {
@@ -35,6 +36,7 @@ class PokemonServiceTest {
             .assertPokemonResponse(testResponse)
     }
 
+    @Ignore
     @Test
     fun `get pokemon detail from API without database`() {
         val testName = "Adam"

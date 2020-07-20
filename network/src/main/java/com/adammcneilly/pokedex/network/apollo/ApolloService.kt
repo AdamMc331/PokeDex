@@ -34,14 +34,6 @@ class ApolloService(baseUrl: String) : PokemonAPI {
         )
     }
 
-    override suspend fun getPokemonDetail(pokemonName: String): Pokemon {
-        val query = PokemonDetailQuery(pokemonName = Input.fromNullable(pokemonName))
-
-        val response = apolloClient.query(query).toDeferred().await()
-
-        return response.data?.pokemon?.fragments?.apolloPokemon?.toPokemon() ?: Pokemon()
-    }
-
     override fun getPokemonDetailFlow(pokemonName: String): Flow<Pokemon> {
         val query = PokemonDetailQuery(pokemonName = Input.fromNullable(pokemonName))
 

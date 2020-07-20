@@ -13,10 +13,6 @@ class RetrofitService(baseUrl: String) : PokemonAPI {
         return retrofitAPI.getPokemonAsync().await().toPokemonResponse()
     }
 
-    override suspend fun getPokemonDetail(pokemonName: String): Pokemon {
-        return retrofitAPI.getPokemonDetailAsync(pokemonName).await().toPokemon()
-    }
-
     override fun getPokemonDetailFlow(pokemonName: String): Flow<Pokemon> {
         return retrofitAPI.getPokemonDetailFlow(pokemonName).map {
             it.toPokemon()

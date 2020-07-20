@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.map
 interface PokedexDatabase {
     suspend fun insertPokemon(pokemon: Pokemon): Long
     suspend fun insertAllPokemon(pokemon: List<Pokemon>): List<Long>
-    suspend fun getPokemonByName(name: String): Pokemon?
     fun getPokemonByNameFlow(name: String): Flow<Pokemon?>
     suspend fun getAllPokemon(): List<Pokemon>?
 }
@@ -26,10 +25,6 @@ class RoomDatabase(context: Context) : PokedexDatabase {
     override suspend fun insertAllPokemon(pokemon: List<Pokemon>): List<Long> {
         val persistablePokemon = pokemon.map(PersistablePokemon.Companion::fromPokemon)
         return roomDatabase.pokemonDao().insertAll(persistablePokemon)
-    }
-
-    override suspend fun getPokemonByName(name: String): Pokemon? {
-        return roomDatabase.pokemonDao().getPokemonByName(name)?.toPokemon()
     }
 
     override suspend fun getAllPokemon(): List<Pokemon>? {

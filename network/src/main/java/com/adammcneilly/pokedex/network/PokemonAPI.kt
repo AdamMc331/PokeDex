@@ -6,6 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface PokemonAPI {
     suspend fun getPokemon(): PokemonResponse
-    suspend fun getPokemonDetail(pokemonName: String): Pokemon
     fun getPokemonDetailFlow(pokemonName: String): Flow<Pokemon>
 }
