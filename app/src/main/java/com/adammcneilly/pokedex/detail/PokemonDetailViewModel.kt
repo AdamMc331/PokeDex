@@ -1,6 +1,7 @@
 package com.adammcneilly.pokedex.detail
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -13,6 +14,7 @@ import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.models.colorRes
 import com.adammcneilly.pokedex.models.complimentaryColorRes
 import com.adammcneilly.pokedex.views.ViewState
+import com.dropbox.android.external.store4.StoreResponse
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -81,17 +83,35 @@ class PokemonDetailViewModel(
 
     private fun fetchPokemonDetail() {
         viewModelScope.launch {
-            setState(ViewState.Loading())
-
             repository
-                .getPokemonDetail(pokemonName)
-                .map { result ->
-                    result.toPokemonDetailState()
-                }
-                .collect { newState ->
-                    setState(newState)
+                .getPokemonDetailFromStore(pokemonName)
+                .collect { response ->
+                    Log.d("ARM - PDEX", "Response origin: ${response.origin}")
+                    when (response) {
+                        is StoreResponse.Loading -> setState(ViewState.Loading())
+                        is StoreResponse.Data -> {
+                            val state = ViewState.Loaded(response.value)
+                            setState(state)
+                        }
+                        is StoreResponse.Error -> {
+                            val state = ViewState.Error<Pokemon>(Throwable(response.errorMessageOrNull()))
+                            setState(state)
+                        }
+                    }
                 }
         }
+        // viewModelScope.launch {
+        //     setState(ViewState.Loading())
+        //
+        //     repository
+        //         .getPokemonDetail(pokemonName)
+        //         .map { result ->
+        //             result.toPokemonDetailState()
+        //         }
+        //         .collect { newState ->
+        //             setState(newState)
+        //         }
+        // }
     }
 
     private fun setState(newState: PokemonDetailState) {

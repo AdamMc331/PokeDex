@@ -4,6 +4,7 @@ import com.adammcneilly.pokedex.network.models.PokemonDTO
 import com.adammcneilly.pokedex.network.models.PokemonResponseDTO
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.flow.Flow
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -20,6 +21,12 @@ internal interface RetrofitPokemonAPI {
         @Path("name")
         name: String
     ): Deferred<PokemonDTO>
+
+    @GET("v2/pokemon/{name}")
+    fun getPokemonDetailFlow(
+        @Path("name")
+        name: String
+    ): Flow<PokemonDTO>
 
     companion object {
         fun defaultInstance(baseUrl: String): RetrofitPokemonAPI {
