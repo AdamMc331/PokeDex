@@ -5,6 +5,7 @@ import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.database.PokedexDatabase
 import com.adammcneilly.pokedex.network.PokemonAPI
+import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.StoreResponse
@@ -27,7 +28,13 @@ open class PokemonService(
     private val store = StoreBuilder.from(
         fetcher = valueFetcher<String, Pokemon> { pokemonName ->
             api.getPokemonDetailFlow(pokemonName)
-        }
+        },
+        sourceOfTruth = SourceOfTruth.from(
+            reader = database::getPokemonByNameFlow,
+            writer = { _, input ->
+                database.insertPokemon(input)
+            }
+        )
     ).build()
 
     override fun getPokemon(): Flow<Result<PokemonResponse>> {

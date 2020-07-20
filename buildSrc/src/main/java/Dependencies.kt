@@ -15,6 +15,7 @@ object Dependencies {
     private const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
     private const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
     private const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+    private const val roomCoroutines = "androidx.room:room-ktx:${Versions.room}"
     const val junit = "junit:junit:${Versions.junit}"
     private const val roomTesting = "androidx.room:room-testing:${Versions.room}"
     private const val androidXTestRunner = "androidx.test:runner:${Versions.androidXTest}"
@@ -65,6 +66,7 @@ object Dependencies {
         DependencyConfig.Implementation(roomRuntime),
         DependencyConfig.Implementation(roomKtx),
         DependencyConfig.Implementation(gson),
+        DependencyConfig.Implementation(roomCoroutines),
         DependencyConfig.Kapt(roomCompiler),
         DependencyConfig.AnnotationProcessor(roomCompiler),
         DependencyConfig.TestImplementation(junit),
