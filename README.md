@@ -31,3 +31,5 @@ Check out [this blog post](https://androidessence.com/repository-pattern) for un
 ## Static Analysis
 
 In October 2019 I spoke at the NY Android Developers meetup and presented on static analysis tools. I used this repo as a sample project. You can find the slides [here](nyandroid_staticanalysis_pres/static_analysis.pdf). 
+
+// This isn't real text, I'm just committing code to test something that won't ever be merged. 
