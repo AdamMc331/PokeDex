@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.adammcneilly.pokedex.database.models.PersistablePokemon
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 internal interface RoomPokemonDAO {
@@ -18,6 +19,9 @@ internal interface RoomPokemonDAO {
 
     @Query("SELECT * FROM PersistablePokemon WHERE name = :name")
     suspend fun getPokemonByName(name: String): PersistablePokemon?
+
+    @Query("SELECT * FROM PersistablePokemon WHERE name = :name")
+    fun getPokemonByNameFlow(name: String): Flow<PersistablePokemon?>
 
     @Query("SELECT * FROM PersistablePokemon")
     suspend fun getAllPokemon(): List<PersistablePokemon>

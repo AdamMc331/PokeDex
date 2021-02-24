@@ -10,6 +10,9 @@ import com.adammcneily.pokedex.PokemonQuery
 import com.adammcneily.pokedex.fragment.ApolloPokemon
 import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.coroutines.toDeferred
+import com.apollographql.apollo.coroutines.toFlow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class ApolloService(baseUrl: String) : PokemonAPI {
     private val apolloClient = ApolloPokemonAPI.defaultInstance(baseUrl)
@@ -31,12 +34,14 @@ class ApolloService(baseUrl: String) : PokemonAPI {
         )
     }
 
-    override suspend fun getPokemonDetail(pokemonName: String): Pokemon {
+    override fun getPokemonDetailFlow(pokemonName: String): Flow<Pokemon> {
         val query = PokemonDetailQuery(pokemonName = Input.fromNullable(pokemonName))
 
-        val response = apolloClient.query(query).toDeferred().await()
+        val apolloResponse = apolloClient.query(query).toFlow()
 
-        return response.data?.pokemon?.fragments?.apolloPokemon?.toPokemon() ?: Pokemon()
+        return apolloResponse.map { response ->
+            response.data?.pokemon?.fragments?.apolloPokemon?.toPokemon() ?: Pokemon()
+        }
     }
 
     companion object {

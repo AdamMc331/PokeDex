@@ -28,4 +28,5 @@ object Versions {
     const val apolloGraphql = "2.2.0"
     const val androidSettings = "1.1.1"
     const val jacoco = "0.2"
+    const val dropboxStore = "4.0.0-alpha06"
 }

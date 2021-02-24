@@ -5,9 +5,12 @@ import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.core.Type
 import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.testObserver
+import com.dropbox.android.external.store4.ResponseOrigin
+import com.dropbox.android.external.store4.StoreResponse
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 
@@ -82,7 +85,7 @@ class PokemonDetailViewModelRobot(
  * responses and timing of responses from the repository.
  */
 private class FakeRepository : PokemonRepository {
-    private val pokemonDetailChannel = Channel<Result<Pokemon>>()
+    private val pokemonDetailChannel = Channel<StoreResponse<Pokemon>>()
 
     override fun getPokemon(): Flow<Result<PokemonResponse>> {
         TODO("The function getPokemon should not be called for this test case.")
@@ -95,19 +98,19 @@ private class FakeRepository : PokemonRepository {
      * When we want it to finish, we can call [mockPokemonDetail] or [mockPokemonDetailError] which
      * will cause the [pokemonDetailChannel] to resume with a response.
      */
-    override fun getPokemonDetail(pokemonName: String): Flow<Result<Pokemon>> {
+    override fun getPokemonDetailFromStore(pokemonName: String): Flow<StoreResponse<Pokemon>> {
         return pokemonDetailChannel.consumeAsFlow()
     }
 
     fun mockPokemonDetail(detail: Pokemon) {
         runBlocking {
-            pokemonDetailChannel.send(Result.success(detail))
+            pokemonDetailChannel.send(StoreResponse.Data(detail, ResponseOrigin.Fetcher))
         }
     }
 
     fun mockPokemonDetailError(error: Throwable) {
         runBlocking {
-            pokemonDetailChannel.send(Result.failure(error))
+            pokemonDetailChannel.send(StoreResponse.Error.Exception(error, ResponseOrigin.Fetcher))
         }
     }
 }

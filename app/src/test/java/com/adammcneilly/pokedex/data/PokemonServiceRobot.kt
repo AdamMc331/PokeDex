@@ -4,7 +4,9 @@ import com.adammcneilly.pokedex.core.Pokemon
 import com.adammcneilly.pokedex.core.PokemonResponse
 import com.adammcneilly.pokedex.database.PokedexDatabase
 import com.adammcneilly.pokedex.network.PokemonAPI
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 
@@ -37,7 +39,7 @@ class PokemonServiceRobot {
 
     fun assertPokemonDetail(pokemonName: String, expectedDetail: Pokemon?) = apply {
         runBlocking {
-            assertEquals(expectedDetail, service.getPokemonDetail(pokemonName).first().getOrNull())
+            assertEquals(expectedDetail, service.getPokemonDetailFromStore(pokemonName).first().dataOrNull())
         }
     }
 }
@@ -54,10 +56,12 @@ private class FakeDatabase : PokedexDatabase {
         TODO("The function insertAllPokemon should not be called for this test case.")
     }
 
-    override suspend fun getPokemonByName(name: String): Pokemon? {
-        return pokemonList?.find { pokemon ->
+    override fun getPokemonByNameFlow(name: String): Flow<Pokemon?> {
+        val pokemon = pokemonList?.find { pokemon ->
             pokemon.name == name
         }
+
+        return flowOf(pokemon)
     }
 
     override suspend fun getAllPokemon(): List<Pokemon>? {
@@ -81,8 +85,8 @@ private class FakeAPI : PokemonAPI {
         return this.pokemonResponse
     }
 
-    override suspend fun getPokemonDetail(pokemonName: String): Pokemon {
-        return this.pokemonDetail
+    override fun getPokemonDetailFlow(pokemonName: String): Flow<Pokemon> {
+        return flowOf(this.pokemonDetail)
     }
 
     fun mockPokemonResponse(response: PokemonResponse) {

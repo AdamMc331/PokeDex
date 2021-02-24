@@ -13,6 +13,7 @@ import com.adammcneilly.pokedex.data.PokemonRepository
 import com.adammcneilly.pokedex.models.colorRes
 import com.adammcneilly.pokedex.models.complimentaryColorRes
 import com.adammcneilly.pokedex.views.ViewState
+import com.dropbox.android.external.store4.StoreResponse
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -81,15 +82,20 @@ class PokemonDetailViewModel(
 
     private fun fetchPokemonDetail() {
         viewModelScope.launch {
-            setState(ViewState.Loading())
-
             repository
-                .getPokemonDetail(pokemonName)
-                .map { result ->
-                    result.toPokemonDetailState()
-                }
-                .collect { newState ->
-                    setState(newState)
+                .getPokemonDetailFromStore(pokemonName)
+                .collect { response ->
+                    when (response) {
+                        is StoreResponse.Loading -> setState(ViewState.Loading())
+                        is StoreResponse.Data -> {
+                            val state = ViewState.Loaded(response.value)
+                            setState(state)
+                        }
+                        is StoreResponse.Error -> {
+                            val state = ViewState.Error<Pokemon>(Throwable(response.errorMessageOrNull()))
+                            setState(state)
+                        }
+                    }
                 }
         }
     }
@@ -97,12 +103,5 @@ class PokemonDetailViewModel(
     private fun setState(newState: PokemonDetailState) {
         this.state.value = newState
         notifyChange()
-    }
-}
-
-private fun Result<Pokemon>.toPokemonDetailState(): PokemonDetailState {
-    return when {
-        this.isSuccess -> ViewState.Loaded(this.getOrThrow())
-        else -> ViewState.Error(this.exceptionOrNull())
     }
 }

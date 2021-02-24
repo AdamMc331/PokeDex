@@ -15,6 +15,7 @@ object Dependencies {
     private const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
     private const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
     private const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+    private const val roomCoroutines = "androidx.room:room-ktx:${Versions.room}"
     const val junit = "junit:junit:${Versions.junit}"
     private const val roomTesting = "androidx.room:room-testing:${Versions.room}"
     private const val androidXTestRunner = "androidx.test:runner:${Versions.androidXTest}"
@@ -52,6 +53,7 @@ object Dependencies {
     private const val apolloGraphql = "com.apollographql.apollo:apollo-runtime:${Versions.apolloGraphql}"
     private const val apolloCoroutines = "com.apollographql.apollo:apollo-coroutines-support:${Versions.apolloGraphql}"
     private const val androidSettings = "androidx.preference:preference:${Versions.androidSettings}"
+    private const val dropboxStore = "com.dropbox.mobile.store:store4:${Versions.dropboxStore}"
 
     val imageLoaderDependencies = listOf(
         DependencyConfig.Implementation(appCompat),
@@ -64,6 +66,7 @@ object Dependencies {
         DependencyConfig.Implementation(roomRuntime),
         DependencyConfig.Implementation(roomKtx),
         DependencyConfig.Implementation(gson),
+        DependencyConfig.Implementation(roomCoroutines),
         DependencyConfig.Kapt(roomCompiler),
         DependencyConfig.AnnotationProcessor(roomCompiler),
         DependencyConfig.TestImplementation(junit),
@@ -86,6 +89,7 @@ object Dependencies {
         DependencyConfig.Implementation(navigationFragmentKtx),
         DependencyConfig.Implementation(navigationUiKtx),
         DependencyConfig.Implementation(androidSettings),
+        DependencyConfig.Implementation(dropboxStore),
         DependencyConfig.TestImplementation(junit),
         DependencyConfig.TestImplementation(archTesting),
         DependencyConfig.TestImplementation(coroutinesTest),
